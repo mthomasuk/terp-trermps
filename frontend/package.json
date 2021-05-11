@@ -1,0 +1,7 @@
+{
+  "name": "terp-trermps-frontend",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "license": "UNLICENSE",
+  "author": "Mark Thomas<hello@mpjthomas.com>"
+}
