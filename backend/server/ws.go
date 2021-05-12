@@ -14,9 +14,9 @@ import (
 func WSServer(port string) {
 	ws := echo.New()
 
-	ws.Use(session.Middleware(sessions.NewCookieStore([]byte("fartypants"))))
+	ws.Use(session.Middleware(sessions.NewCookieStore([]byte("poopyass"))))
 
-	ws.GET("/", handler.WsHandler(hub))
+	ws.GET("/:id", handler.WsHandler(hub))
 
 	ws.Logger.Fatal(ws.Start(port))
 }

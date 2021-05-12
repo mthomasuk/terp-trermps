@@ -24,13 +24,15 @@ type Round struct {
 	ID        string     `json:"id"`
 	StartedAt NullTime   `db:"started_at" json:"started_at,omitempty"`
 	Winner    NullString `json:"winner,omitempty"`
+	Hands     []Hand     `json:"hands,omitempty"`
 }
 
 // Hand represents a users selection of cards during a round
 type Hand struct {
 	ID      string `json:"id"`
-	UserID  string `db:"user_id" json:"user_id"`
-	RoundID string `db:"round_id" json:"round_id"`
+	Name    string `json:"name,omitempty"`
+	UserID  string `db:"user_id" json:"user_id,omitempty"`
+	RoundID string `db:"round_id" json:"round_id,omitempty"`
 	Cards   []Card `json:"cards,omitempty"`
 }
 

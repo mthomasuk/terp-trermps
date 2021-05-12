@@ -26,29 +26,43 @@ func chunkCards(slice []types.Card, chunkSize int) [][]types.Card {
 
 // CreateHand creates a new hand for a given user in a given round
 func CreateHand(userID, roundID string) (*types.Hand, error) {
-	id := uuid.NewV4()
-
-	_, err := Conn.NamedExec(`
-		INSERT INTO "hand" (id,user_id,round_id)
-    VALUES (:id,:user_id,:round_id)
-  `,
-		map[string]interface{}{
-			"id":       id.String(),
-			"user_id":  userID,
-			"round_id": roundID,
-		},
-	)
-	if err != nil {
-		return nil, err
-	}
-
 	hnd := types.Hand{}
 
-	err = Conn.Get(
-		&hnd, `SELECT * FROM "hand" WHERE "hand"."id" = $1`, id,
+	err := Conn.Get(
+		&hnd,
+		`SELECT * FROM "hand" WHERE "hand"."round_id" = $1 AND "hand"."user_id" = $2`,
+		roundID,
+		userID,
 	)
 	if err != nil {
-		return nil, err
+		if err.Error() != "sql: no rows in result set" {
+			return nil, err
+		}
+
+		id := uuid.NewV4()
+
+		_, err := Conn.NamedExec(`
+  		INSERT INTO "hand" (id,user_id,round_id)
+      VALUES (:id,:user_id,:round_id)
+    `,
+			map[string]interface{}{
+				"id":       id.String(),
+				"user_id":  userID,
+				"round_id": roundID,
+			},
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		err = Conn.Get(
+			&hnd, `SELECT * FROM "hand" WHERE "hand"."id" = $1`, id,
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		return &hnd, nil
 	}
 
 	return &hnd, nil

@@ -2,6 +2,7 @@ package handler
 
 import (
 	"bytes"
+	"encoding/json"
 	"log"
 	"time"
 
@@ -13,6 +14,7 @@ type Client struct {
 	hub  *Hub
 	conn *websocket.Conn
 	send chan []byte
+	id   string
 }
 
 // Hub maintains the set of active clients and broadcasts messages to the clients
@@ -55,11 +57,16 @@ func (h *Hub) Run() {
 
 		case message := <-h.broadcast:
 			for client := range h.clients {
-				select {
-				case client.send <- message:
-				default:
-					close(client.send)
-					delete(h.clients, client)
+				m := make(map[string]string)
+				_ = json.Unmarshal(message, &m)
+
+				if m["round_id"] == client.id {
+					select {
+					case client.send <- message:
+					default:
+						close(client.send)
+						delete(h.clients, client)
+					}
 				}
 			}
 		}
@@ -91,6 +98,7 @@ func (c *Client) readPump() {
 		}
 
 		message = bytes.TrimSpace(bytes.Replace(message, []byte{'\n'}, []byte{' '}, -1))
+
 		c.hub.broadcast <- message
 	}
 }

@@ -34,12 +34,69 @@ func CreateRound() (*types.Round, error) {
 	return &rnd, nil
 }
 
+// RetrieveRound retrieves a given round
+func RetrieveRound(roundID, userID string) (*types.Round, error) {
+	rnd := types.Round{}
+	hnds := []types.Hand{}
+
+	err := Conn.Get(
+		&rnd, `SELECT * FROM "round" WHERE "round"."id" = $1`, roundID,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	err = Conn.Select(
+		&hnds,
+		`SELECT "hand"."id",
+      "user"."name",
+      "user"."id" as "user_id"
+    FROM "hand"
+    INNER JOIN "user" ON "user"."id" = "hand"."user_id"
+    WHERE "hand"."round_id" = $1 AND "hand"."user_id" = $2`,
+		roundID,
+		userID,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	rnd.Hands = hnds
+
+	for idx, hnd := range hnds {
+		crds := []types.Card{}
+
+		err := Conn.Select(
+			&crds,
+			`SELECT "card"."id",
+        "card"."name",
+        "card"."type",
+        "card"."strength",
+        "card"."skill",
+        "card"."magical_force",
+        "card"."weapons",
+        "card"."power"
+      FROM "card_in_hand"
+      INNER JOIN "card" ON "card_in_hand"."card_id" = "card"."id"
+      WHERE "card_in_hand"."hand_id" = $1`,
+			hnd.ID,
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		rnd.Hands[idx].Cards = crds
+	}
+
+	return &rnd, nil
+}
+
 // StartRound adds a started_at timestamp to a round by id
 func StartRound(roundID string) (*types.Round, error) {
 	now := time.Now().Local()
 	hnd := []types.Hand{}
 
-	err := Conn.Get(
+	err := Conn.Select(
 		&hnd, `SELECT id FROM "hand" WHERE "hand"."round_id" = $1`, roundID,
 	)
 	if err != nil {

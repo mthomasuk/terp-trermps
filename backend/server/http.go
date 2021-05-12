@@ -22,6 +22,9 @@ func HTTPServer(port string) {
 	e.POST("/api/login", handler.LogUserIn)
 
 	e.POST("/api/round/new", handler.CreateRound)
+	e.GET("/api/round/:id", handler.RoundByID)
+
+	e.POST("/api/hand/:id", handler.JoinRound(hub))
 
 	e.POST("/api/round/:id/start", handler.RoundStart(hub))
 	e.POST("/api/round/:id/end", handler.RoundEnd(hub))
