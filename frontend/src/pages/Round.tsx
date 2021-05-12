@@ -67,7 +67,7 @@ const Round = ({ match }: Props): ReactElement => {
 
   const { messages, roundHasStarted, roundHasEnded } = useSocket(id);
 
-  const { getRoundById, joinRound, startRound, endRound } =
+  const { getRoundById, joinRound, startRound } =
     useContext(RoundControlContext);
 
   const { push } = useHistory();
@@ -87,13 +87,6 @@ const Round = ({ match }: Props): ReactElement => {
     await fetchRound();
   };
 
-  const onEndRound = async () => {
-    await endRound(id);
-    await fetchRound();
-
-    push(`/round/${id}/results`);
-  };
-
   const statusMessage =
     currentRound?.started_at || roundHasStarted
       ? `started at ${format(
@@ -103,7 +96,7 @@ const Round = ({ match }: Props): ReactElement => {
       : "hasn't started yet";
 
   const canStartRound = !roundHasStarted && !currentRound?.started_at;
-  const canEndRound = roundHasStarted || currentRound?.started_at;
+  const roundInProgress = roundHasStarted || currentRound?.started_at;
 
   useEffect(() => {
     if (!roundHasStarted) {
@@ -126,48 +119,39 @@ const Round = ({ match }: Props): ReactElement => {
   }, [currentRound, messages]);
 
   return !roundHasEnded ? (
-    <>
-      <Wrapper>
-        <Info>
-          <p>
-            <strong>Round:</strong> {id}
-          </p>
-          <Share>
-            <p>Share this link to join the round:</p>
-            <pre>{window.location.href}</pre>
-          </Share>
-          <H2>
-            This round <strong>{statusMessage}</strong>
-          </H2>
-          <Combatants>
-            {!canEndRound ? (
-              <div>
-                {currentHands.map(({ user_id, name }: any) => (
-                  <div key={user_id}>{name} is ready to do battle</div>
-                ))}
-              </div>
-            ) : (
-              <div>BATTLE HAS COMMENCED</div>
-            )}
-          </Combatants>
-          {canStartRound && (
-            <Buttons>
-              <button type="button" onClick={onStartRound}>
-                Start round
-              </button>
-            </Buttons>
+    <Wrapper>
+      <Info>
+        <p>
+          <strong>Round:</strong> {id}
+        </p>
+        <Share>
+          <p>Share this link to join the round:</p>
+          <pre>{window.location.href}</pre>
+        </Share>
+        <H2>
+          This round <strong>{statusMessage}</strong>
+        </H2>
+        <Combatants>
+          {!roundInProgress ? (
+            <div>
+              {currentHands.map(({ user_id, name }: any) => (
+                <div key={user_id}>{name} is ready to do battle</div>
+              ))}
+            </div>
+          ) : (
+            <div>BATTLE HAS COMMENCED</div>
           )}
-          {canEndRound && <Cards cards={currentRound.hands[0].cards} />}
-          {canEndRound && (
-            <Buttons>
-              <button type="button" onClick={onEndRound}>
-                End round
-              </button>
-            </Buttons>
-          )}
-        </Info>
-      </Wrapper>
-    </>
+        </Combatants>
+        {canStartRound && (
+          <Buttons>
+            <button type="button" onClick={onStartRound}>
+              Start round
+            </button>
+          </Buttons>
+        )}
+        {roundInProgress && <Cards cards={currentRound.hands[0].cards} />}
+      </Info>
+    </Wrapper>
   ) : (
     <Redirect to={`/round/${id}/results`} />
   );
