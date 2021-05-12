@@ -4,10 +4,8 @@ import styled from "styled-components";
 
 import Card from "../atoms/Card";
 
-import { Card as CardType } from "../../../../types";
-
 interface Props {
-  cards: CardType[];
+  cards: any[];
 }
 
 const Container = styled.div``;
@@ -42,10 +40,16 @@ const InPlay = styled.div`
 `;
 
 const Cards = ({ cards }: Props): ReactElement => {
-  const [selectedCard, selectCard] = useState<CardType | null>();
+  const [selectedCard, selectCard] = useState<any | undefined>();
+  const [selectedAttr, selectAttr] = useState<string | undefined>();
 
-  const onSelect = (card: CardType) => selectCard(card);
-  const onDeselect = (_: CardType) => selectCard(null);
+  const onSelect = (card: any) => {
+    selectAttr(undefined);
+    selectCard(card);
+  };
+
+  const onSelectAttribute = (attr: string) =>
+    selectAttr((prev) => (attr === prev ? undefined : attr));
 
   return (
     <Container>
@@ -53,14 +57,19 @@ const Cards = ({ cards }: Props): ReactElement => {
         {cards &&
           cards
             .filter(({ id }) => id !== selectedCard?.id)
-            .map((card: CardType) => (
-              <Card key={card.id} card={card} onSelect={onSelect} />
+            .map((card: any) => (
+              <Card key={card.id} card={card} onSelectCard={onSelect} />
             ))}
       </Deck>
       <Hand>
         <InPlay>
           {selectedCard && (
-            <Card card={selectedCard} selected onSelect={onDeselect} />
+            <Card
+              selected
+              card={selectedCard}
+              selectedAttr={selectedAttr}
+              onSelectAttribute={onSelectAttribute}
+            />
           )}
         </InPlay>
       </Hand>

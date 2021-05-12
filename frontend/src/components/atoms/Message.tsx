@@ -2,11 +2,10 @@ import { ReactElement } from "react";
 
 import styled from "styled-components";
 
-import { SocketMessage } from "../../../../types";
 import { ROUND_START } from "../../constants";
 
 interface Props {
-  message: SocketMessage;
+  message: any;
 }
 
 const ListItem = styled.li`

@@ -2,12 +2,12 @@ import { ReactElement } from "react";
 
 import styled from "styled-components";
 
-import { Card as CardType } from "../../../../types";
-
 interface Props {
-  card: CardType;
+  card: any;
   selected?: boolean;
-  onSelect?: (card: CardType) => void;
+  selectedAttr?: string;
+  onSelectCard?: (card: any) => void;
+  onSelectAttribute?: (attr: any) => void;
 }
 
 const Wrapper = styled.button<{ selected?: boolean }>`
@@ -27,10 +27,12 @@ const Wrapper = styled.button<{ selected?: boolean }>`
   z-index: 1;
   transition: transform 0.25s ease-in-out;
 
-  &:hover {
-    transform: ${({ selected }) =>
-      selected ? "rotate(5deg)" : "translateY(-40px)"};
-  }
+  ${({ selected }) =>
+    !selected
+      ? `&:hover {
+      transform: translateY(-30px);
+    }`
+      : ""}
 `;
 
 const Image = styled.img`
@@ -59,14 +61,48 @@ const Name = styled.p`
 
 const Stats = styled.div``;
 
-const Row = styled.div`
+const Row = styled.div<{ selected?: boolean; isAttr?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: all 0.25s ease-in-out;
+
+  ${({ isAttr }) =>
+    isAttr
+      ? `
+    background-color: #efefef;
+    color: #e65252;
+    padding: 0.25rem;
+    transform: scale(1.05);
+  `
+      : ""}
+
+  ${({ selected }) =>
+    selected
+      ? `&:hover {
+      background-color: #efefef;
+      padding: 0.25rem;
+      transform: scale(1.05);
+    }`
+      : ""}
 `;
 
-const Card = ({ card, onSelect, selected = false }: Props): ReactElement => {
-  const onClick = () => (onSelect ? onSelect(card) : {});
+const Card = ({
+  card,
+  onSelectCard,
+  onSelectAttribute,
+  selectedAttr,
+  selected = false,
+}: Props): ReactElement => {
+  const onClick = () => (onSelectCard ? onSelectCard(card) : {});
+  const onSelect = (attr: any) =>
+    onSelectAttribute ? onSelectAttribute(attr) : {};
+
+  const selectStrength = () => onSelect("strength");
+  const selectSkill = () => onSelect("skill");
+  const selectMagic = () => onSelect("magical_force");
+  const selectWeapons = () => onSelect("weapons");
+  const selectPower = () => onSelect("power");
 
   return (
     <Wrapper onClick={onClick} selected={selected}>
@@ -75,23 +111,43 @@ const Card = ({ card, onSelect, selected = false }: Props): ReactElement => {
         <Type>{card.type}</Type>
         <Name>{card.name}</Name>
         <Stats>
-          <Row>
+          <Row
+            selected={selected}
+            onClick={selectStrength}
+            isAttr={selectedAttr === "strength"}
+          >
             <span>Strength</span>
             <span>{card.strength}</span>
           </Row>
-          <Row>
+          <Row
+            selected={selected}
+            onClick={selectSkill}
+            isAttr={selectedAttr === "skill"}
+          >
             <span>Skill</span>
             <span>{card.skill}</span>
           </Row>
-          <Row>
+          <Row
+            selected={selected}
+            onClick={selectMagic}
+            isAttr={selectedAttr === "magical_force"}
+          >
             <span>Magical Force</span>
             <span>{card.magical_force}</span>
           </Row>
-          <Row>
+          <Row
+            selected={selected}
+            onClick={selectWeapons}
+            isAttr={selectedAttr === "weapons"}
+          >
             <span>Weapons</span>
             <span>{card.weapons}</span>
           </Row>
-          <Row>
+          <Row
+            selected={selected}
+            onClick={selectPower}
+            isAttr={selectedAttr === "power"}
+          >
             <span>Power</span>
             <span>{card.power}</span>
           </Row>

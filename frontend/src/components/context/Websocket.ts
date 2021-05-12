@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import uniqBy from "lodash.uniqby";
 
-import { SocketMessage } from "../../../../types";
-
 import { USER_JOINED_ROUND, ROUND_START, ROUND_END } from "../../constants";
 
 const SOCKET_SERVER_URL =
@@ -11,7 +9,7 @@ const SOCKET_SERVER_URL =
 let reconnect: any = null;
 
 export function useSocket(id: string) {
-  const [messages, setMessages] = useState<SocketMessage[]>([]);
+  const [messages, setMessages] = useState<any[]>([]);
 
   const [roundHasStarted, startRound] = useState(false);
   const [roundHasEnded, endRound] = useState(false);
@@ -48,7 +46,7 @@ export function useSocket(id: string) {
                   type,
                 };
 
-                setMessages((messages: SocketMessage[]) =>
+                setMessages((messages: any[]) =>
                   uniqBy([...messages, incomingMessage], "user_id")
                 );
               }

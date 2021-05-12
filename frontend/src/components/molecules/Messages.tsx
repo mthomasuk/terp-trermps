@@ -4,8 +4,6 @@ import styled from "styled-components";
 
 import Message from "../atoms/Message";
 
-import { SocketMessage } from "../../../../types";
-
 const Bar = styled.div`
   background: #fff;
   position: fixed;
@@ -32,11 +30,7 @@ const List = styled.ul`
   margin: 0;
 `;
 
-const Messages = ({
-  messages,
-}: {
-  messages: SocketMessage[];
-}): ReactElement => (
+const Messages = ({ messages }: { messages: any[] }): ReactElement => (
   <Bar>
     <List>
       {messages && messages.length ? (
