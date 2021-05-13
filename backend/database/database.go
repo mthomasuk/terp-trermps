@@ -30,7 +30,7 @@ var schema = `
     power         INTEGER NOT NULL
   );
 
-  CREATE TABLE IF NOT EXISTS "round" (
+  CREATE TABLE IF NOT EXISTS "battle" (
     id            UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
     started_at    TIMESTAMPTZ,
     winner        UUID,
@@ -39,25 +39,51 @@ var schema = `
       ON DELETE NO ACTION
   );
 
-  CREATE TABLE IF NOT EXISTS "hand" (
+  CREATE TABLE IF NOT EXISTS "deck" (
     id            UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
     user_id       UUID,
-    round_id      UUID,
+    battle_id     UUID,
     FOREIGN KEY (user_id)
       REFERENCES "user" (id)
       ON DELETE CASCADE,
-    FOREIGN KEY (round_id)
-      REFERENCES "round" (id)
+    FOREIGN KEY (battle_id)
+      REFERENCES "battle" (id)
       ON DELETE CASCADE
   );
 
-  CREATE TABLE IF NOT EXISTS "card_in_hand" (
+  CREATE TABLE IF NOT EXISTS "card_in_deck" (
     card_id       UUID,
-    hand_id       UUID,
+    deck_id       UUID,
     FOREIGN KEY (card_id)
       REFERENCES "card" (id)
       ON DELETE CASCADE,
-    FOREIGN KEY (hand_id)
+    FOREIGN KEY (deck_id)
+      REFERENCES "deck" (id)
+      ON DELETE CASCADE
+  );
+
+  CREATE TABLE IF NOT EXISTS "hand" (
+    id            UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
+    user_id       UUID,
+    deck_id       UUID,
+    card_id       UUID,
+    attribute     VARCHAR NOT NULL,
+    value         INTEGER NOT NULL,
+    FOREIGN KEY (user_id)
+      REFERENCES "user" (id)
+      ON DELETE CASCADE,
+    FOREIGN KEY (deck_id)
+      REFERENCES "deck" (id)
+      ON DELETE CASCADE,
+    FOREIGN KEY (card_id)
+      REFERENCES "card" (id)
+      ON DELETE CASCADE
+  );
+
+  CREATE TABLE IF NOT EXISTS "round" (
+    id            UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
+    winning_hand  UUID,
+    FOREIGN KEY (winning_hand)
       REFERENCES "hand" (id)
       ON DELETE CASCADE
   );

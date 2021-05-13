@@ -20,7 +20,7 @@ const Wrapper = styled.button<{ selected?: boolean; played?: boolean }>`
   justify-content: center;
   flex-direction: column;
   margin-right: ${({ played, selected }) =>
-    played || selected ? "0" : "-60px"};
+    played || selected ? "0" : "-30px"};
   padding: 0.5rem;
   border: solid 1px #dedede;
   box-shadow: 2px 2px 2px #ededed;
@@ -30,10 +30,15 @@ const Wrapper = styled.button<{ selected?: boolean; played?: boolean }>`
   z-index: 1;
   transition: transform 0.25s ease-in-out;
 
+  &:first-of-type {
+    margin-right: 0px;
+  }
+
   ${({ selected }) =>
     !selected
       ? `&:hover {
       transform: translateY(-30px);
+      z-index: 2;
     }`
       : ""}
 
@@ -42,7 +47,7 @@ const Wrapper = styled.button<{ selected?: boolean; played?: boolean }>`
       ? `
     box-shadow:
       0 0 30px 15px #fff,
-      0 0 30px 10px #ffd700;
+      0 0 30px 10px #e3c20f;
     `
       : ""}
 `;

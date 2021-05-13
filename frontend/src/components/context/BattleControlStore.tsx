@@ -1,8 +1,8 @@
 import { ReactElement, createContext } from "react";
 
-const createNewRound = async (): Promise<any> => {
+const createNewBattle = async (): Promise<any> => {
   try {
-    const newRound = await fetch("/api/round/new", {
+    const newBattle = await fetch("/api/battle/new", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -11,7 +11,7 @@ const createNewRound = async (): Promise<any> => {
       .then((response) => response.json())
       .then((data) => data);
 
-    return newRound;
+    return newBattle;
   } catch (error) {
     console.warn(error);
   }
@@ -19,9 +19,9 @@ const createNewRound = async (): Promise<any> => {
   return;
 };
 
-const getRoundById = async (id: string): Promise<any> => {
+const getBattleById = async (id: string): Promise<any> => {
   try {
-    const round = await fetch(`/api/round/${id}`, {
+    const battle = await fetch(`/api/battle/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ const getRoundById = async (id: string): Promise<any> => {
       .then((response) => response.json())
       .then((data) => data);
 
-    return round;
+    return battle;
   } catch (error) {
     console.warn(error);
   }
@@ -38,7 +38,7 @@ const getRoundById = async (id: string): Promise<any> => {
   return;
 };
 
-const joinRound = async (id: string): Promise<any> => {
+const joinBattle = async (id: string): Promise<any> => {
   try {
     const newHand = await fetch(`/api/hand/${id}`, {
       method: "POST",
@@ -57,9 +57,9 @@ const joinRound = async (id: string): Promise<any> => {
   return;
 };
 
-const startRound = async (id: string): Promise<any> => {
+const startBattle = async (id: string): Promise<any> => {
   try {
-    const round = await fetch(`/api/round/${id}/start`, {
+    const battle = await fetch(`/api/battle/${id}/start`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -68,7 +68,7 @@ const startRound = async (id: string): Promise<any> => {
       .then((response) => response.json())
       .then((data) => data);
 
-    return round;
+    return battle;
   } catch (error) {
     console.warn(error);
   }
@@ -76,9 +76,9 @@ const startRound = async (id: string): Promise<any> => {
   return;
 };
 
-const endRound = async (id: string): Promise<any> => {
+const endBattle = async (id: string): Promise<any> => {
   try {
-    const round = await fetch(`/api/round/${id}/end`, {
+    const battle = await fetch(`/api/battle/${id}/end`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,7 +87,7 @@ const endRound = async (id: string): Promise<any> => {
       .then((response) => response.json())
       .then((data) => data);
 
-    return round;
+    return battle;
   } catch (error) {
     console.warn(error);
   }
@@ -95,26 +95,30 @@ const endRound = async (id: string): Promise<any> => {
   return;
 };
 
-export const RoundControlContext = createContext({
-  createNewRound,
-  getRoundById,
-  joinRound,
-  startRound,
-  endRound,
+export const BattleControlContext = createContext({
+  createNewBattle,
+  getBattleById,
+  joinBattle,
+  startBattle,
+  endBattle,
 });
 
-export function RoundControlProvider({ children }: { children: ReactElement }) {
+export function BattleControlProvider({
+  children,
+}: {
+  children: ReactElement;
+}) {
   return (
-    <RoundControlContext.Provider
+    <BattleControlContext.Provider
       value={{
-        createNewRound,
-        getRoundById,
-        joinRound,
-        startRound,
-        endRound,
+        createNewBattle,
+        getBattleById,
+        joinBattle,
+        startBattle,
+        endBattle,
       }}
     >
       {children}
-    </RoundControlContext.Provider>
+    </BattleControlContext.Provider>
   );
 }

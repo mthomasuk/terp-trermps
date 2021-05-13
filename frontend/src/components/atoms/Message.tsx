@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 
 import styled from "styled-components";
 
-import { ROUND_START } from "../../constants";
+import { BATTLE_START } from "../../constants";
 
 interface Props {
   message: any;
@@ -13,8 +13,8 @@ const ListItem = styled.li`
 `;
 
 const Message = ({ message }: Props): ReactElement => {
-  if (message.type === ROUND_START) {
-    return <ListItem>Round {message.id} has started!</ListItem>;
+  if (message.type === BATTLE_START) {
+    return <ListItem>Battle {message.id} has started!</ListItem>;
   }
 
   return <ListItem>{message.body}</ListItem>;

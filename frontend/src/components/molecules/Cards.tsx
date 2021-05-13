@@ -13,8 +13,9 @@ const Container = styled.div``;
 const Deck = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-left: -60px;
+  justify-content: flex-start;
+  flex-direction: row-reverse;
+  margin: 0 2rem;
   padding: 1rem;
   padding-top: 3rem;
   overflow-x: scroll;
@@ -28,7 +29,7 @@ const Hand = styled.div`
   padding: 2rem 1rem;
 `;
 
-const InPlay = styled.div`
+const Play = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,7 +40,9 @@ const InPlay = styled.div`
   width: 210px;
   display: flex;
   position: relative;
+`;
 
+const InPlay = styled(Play)`
   &:after {
     position: absolute;
     color: #acacac;
@@ -49,14 +52,25 @@ const InPlay = styled.div`
   }
 `;
 
-const ToPlay = styled(InPlay)<{ isDraggedOver?: boolean }>`
+const ToPlay = styled(Play)<{ isDraggedOver?: boolean; error?: string }>`
   transition: transform 0.25s ease-in-out;
 
   &:after {
     position: absolute;
     color: #acacac;
-    content: "Drop to play card";
-    font-size: 1.5rem;
+    ${({ error }) => {
+      if (error) {
+        return `
+          color: #e3c20f;
+          font-size: 1.15rem;
+          content: "${error}";
+        `;
+      }
+      return `
+        font-size: 1.5rem;
+        content: "Drop to play card"
+      `;
+    }};
     text-transform: uppercase;
   }
 
@@ -74,6 +88,7 @@ const Cards = ({ cards }: Props): ReactElement => {
   const [droppedCard, setDroppedCard] = useState<any | undefined>();
 
   const [selectedAttr, selectAttr] = useState<string | undefined>();
+  const [dropErr, setDropErr] = useState<string | undefined>();
 
   const [isDraggedOver, setDragOver] = useState<boolean>(false);
 
@@ -98,7 +113,10 @@ const Cards = ({ cards }: Props): ReactElement => {
   const onDrop = (event: any) => {
     setDragOver(false);
 
-    if (!selectedAttr) return false;
+    if (!selectedAttr) {
+      setDropErr("Select a category first e.g. strength/skill etc.");
+      return false;
+    }
 
     event.stopPropagation();
 
@@ -141,6 +159,7 @@ const Cards = ({ cards }: Props): ReactElement => {
           onDragOver={onDragOver}
           onDragLeave={onDragLeave}
           onDrop={onDrop}
+          error={dropErr}
         >
           {droppedCard && (
             <Card played card={droppedCard} selectedAttr={selectedAttr} />

@@ -21,13 +21,13 @@ func HTTPServer(port string) {
 
 	e.POST("/api/login", handler.LogUserIn)
 
-	e.POST("/api/round/new", handler.CreateRound)
-	e.GET("/api/round/:id", handler.RoundByID)
+	e.POST("/api/battle/new", handler.CreateBattle)
+	e.GET("/api/battle/:id", handler.BattleByID)
 
-	e.POST("/api/hand/:id", handler.JoinRound(hub))
+	e.POST("/api/hand/:id", handler.JoinBattle(hub))
 
-	e.POST("/api/round/:id/start", handler.RoundStart(hub))
-	e.POST("/api/round/:id/end", handler.RoundEnd(hub))
+	e.POST("/api/battle/:id/start", handler.BattleStart(hub))
+	e.POST("/api/battle/:id/end", handler.BattleEnd(hub))
 
 	e.Logger.Fatal(e.Start(port))
 }

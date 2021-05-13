@@ -3,27 +3,27 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { UserControlProvider } from "./components/context/UserControlStore";
-import { RoundControlProvider } from "./components/context/RoundControlStore";
+import { BattleControlProvider } from "./components/context/BattleControlStore";
 import { ProtectedRoute } from "./components/utils/ProtectedRoute";
 
 import LandingPage from "./pages/Landing";
 import LoginPage from "./pages/Login";
-import RoundPage from "./pages/Round";
+import BattlePage from "./pages/Battle";
 
 import "./index.css";
 
 const App = (): ReactElement => (
   <StrictMode>
     <UserControlProvider>
-      <RoundControlProvider>
+      <BattleControlProvider>
         <Router>
           <Switch>
             <Route component={LoginPage} exact path={"/login"} />
             <ProtectedRoute component={LandingPage} exact path={"/"} />
-            <ProtectedRoute component={RoundPage} exact path={"/round/:id"} />
+            <ProtectedRoute component={BattlePage} exact path={"/battle/:id"} />
           </Switch>
         </Router>
-      </RoundControlProvider>
+      </BattleControlProvider>
     </UserControlProvider>
   </StrictMode>
 );

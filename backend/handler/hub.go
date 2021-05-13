@@ -60,7 +60,7 @@ func (h *Hub) Run() {
 				m := make(map[string]string)
 				_ = json.Unmarshal(message, &m)
 
-				if m["round_id"] == client.id {
+				if m["battle_id"] == client.id {
 					select {
 					case client.send <- message:
 					default:

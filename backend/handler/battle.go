@@ -11,8 +11,8 @@ import (
 	types "github.com/mthomasuk/terp-trermps/types"
 )
 
-// CreateRound creates a round and returns it
-func CreateRound(c echo.Context) error {
+// CreateBattle creates a battle and returns it
+func CreateBattle(c echo.Context) error {
 	sess, _ := session.Get("session", c)
 
 	_, ok := sess.Values["userId"].(string)
@@ -21,17 +21,17 @@ func CreateRound(c echo.Context) error {
 		return c.String(http.StatusForbidden, "Forbidden")
 	}
 
-	round, err := database.CreateRound()
+	battle, err := database.CreateBattle()
 	if err != nil {
 		c.Logger().Error(err)
-		return c.String(http.StatusBadRequest, "Failed to create round")
+		return c.String(http.StatusBadRequest, "Failed to create battle")
 	}
 
-	return c.JSON(http.StatusOK, &round)
+	return c.JSON(http.StatusOK, &battle)
 }
 
-// RoundByID retrieves a round by it's id
-func RoundByID(c echo.Context) error {
+// BattleByID retrieves a battle by it's id
+func BattleByID(c echo.Context) error {
 	sess, _ := session.Get("session", c)
 
 	userID, ok := sess.Values["userId"].(string)
@@ -40,19 +40,19 @@ func RoundByID(c echo.Context) error {
 		return c.String(http.StatusForbidden, "Forbidden")
 	}
 
-	roundID := c.Param("id")
+	battleID := c.Param("id")
 
-	round, err := database.RetrieveRound(roundID, userID)
+	battle, err := database.RetrieveBattle(battleID, userID)
 	if err != nil {
 		c.Logger().Error(err)
 		return c.String(http.StatusNotFound, "Not found")
 	}
 
-	return c.JSON(http.StatusOK, &round)
+	return c.JSON(http.StatusOK, &battle)
 }
 
-// JoinRound creates a hand for a given round and returns it
-func JoinRound(hub *Hub) func(echo.Context) error {
+// JoinBattle creates a hand for a given battle and returns it
+func JoinBattle(hub *Hub) func(echo.Context) error {
 	return func(c echo.Context) error {
 		sess, _ := session.Get("session", c)
 
@@ -62,12 +62,12 @@ func JoinRound(hub *Hub) func(echo.Context) error {
 			return c.String(http.StatusForbidden, "Forbidden")
 		}
 
-		roundID := c.Param("id")
+		battleID := c.Param("id")
 
-		round, err := database.CreateHand(userID, roundID)
+		battle, err := database.CreateDeck(userID, battleID)
 		if err != nil {
 			c.Logger().Error(err)
-			return c.String(http.StatusBadRequest, "Failed to create round")
+			return c.String(http.StatusBadRequest, "Failed to create battle")
 		}
 
 		user, err := database.GetUserByID(userID)
@@ -77,15 +77,15 @@ func JoinRound(hub *Hub) func(echo.Context) error {
 		}
 
 		msg := struct {
-			Type    string `json:"type"`
-			RoundID string `json:"round_id"`
-			UserID  string `json:"user_id"`
-			Name    string `json:"name"`
+			Type     string `json:"type"`
+			BattleID string `json:"battle_id"`
+			UserID   string `json:"user_id"`
+			Name     string `json:"name"`
 		}{
-			Type:    "user-joined-round",
-			RoundID: roundID,
-			UserID:  user.ID,
-			Name:    user.Name,
+			Type:     "user-joined-battle",
+			BattleID: battleID,
+			UserID:   user.ID,
+			Name:     user.Name,
 		}
 
 		b, err := json.Marshal(msg)
@@ -96,12 +96,12 @@ func JoinRound(hub *Hub) func(echo.Context) error {
 
 		hub.broadcast <- b
 
-		return c.JSON(http.StatusOK, &round)
+		return c.JSON(http.StatusOK, &battle)
 	}
 }
 
-// RoundStart starts a round (natch)
-func RoundStart(hub *Hub) func(echo.Context) error {
+// BattleStart starts a battle (natch)
+func BattleStart(hub *Hub) func(echo.Context) error {
 	return func(c echo.Context) error {
 		sess, _ := session.Get("session", c)
 
@@ -111,20 +111,20 @@ func RoundStart(hub *Hub) func(echo.Context) error {
 			return c.String(http.StatusForbidden, "Forbidden")
 		}
 
-		roundID := c.Param("id")
+		battleID := c.Param("id")
 
-		round, err := database.StartRound(roundID)
+		battle, err := database.StartBattle(battleID)
 		if err != nil {
 			c.Logger().Error(err)
 			return c.String(http.StatusNotFound, "Not found")
 		}
 
 		msg := struct {
-			Type    string `json:"type"`
-			RoundID string `json:"round_id"`
+			Type     string `json:"type"`
+			BattleID string `json:"battle_id"`
 		}{
-			Type:    "round-started",
-			RoundID: roundID,
+			Type:     "battle-started",
+			BattleID: battleID,
 		}
 
 		b, err := json.Marshal(msg)
@@ -135,12 +135,12 @@ func RoundStart(hub *Hub) func(echo.Context) error {
 
 		hub.broadcast <- b
 
-		return c.JSON(http.StatusOK, &round)
+		return c.JSON(http.StatusOK, &battle)
 	}
 }
 
-// RoundEnd ends a round (natch)
-func RoundEnd(hub *Hub) func(echo.Context) error {
+// BattleEnd ends a battle (natch)
+func BattleEnd(hub *Hub) func(echo.Context) error {
 	return func(c echo.Context) error {
 		sess, _ := session.Get("session", c)
 
@@ -155,9 +155,9 @@ func RoundEnd(hub *Hub) func(echo.Context) error {
 			return err
 		}
 
-		roundID := c.Param("id")
+		battleID := c.Param("id")
 
-		round, err := database.EndRound(u.ID, roundID)
+		battle, err := database.EndBattle(u.ID, battleID)
 		if err != nil {
 			c.Logger().Error(err)
 			return c.String(http.StatusNotFound, "Not found")
@@ -167,8 +167,8 @@ func RoundEnd(hub *Hub) func(echo.Context) error {
 			Type string `json:"type"`
 			ID   string `json:"id"`
 		}{
-			Type: "round-ended",
-			ID:   roundID,
+			Type: "battle-ended",
+			ID:   battleID,
 		}
 
 		b, err := json.Marshal(msg)
@@ -179,6 +179,6 @@ func RoundEnd(hub *Hub) func(echo.Context) error {
 
 		hub.broadcast <- b
 
-		return c.JSON(http.StatusOK, &round)
+		return c.JSON(http.StatusOK, &battle)
 	}
 }

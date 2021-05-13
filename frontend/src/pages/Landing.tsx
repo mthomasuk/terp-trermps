@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import { UserControlContext } from "../components/context/UserControlStore";
-import { RoundControlContext } from "../components/context/RoundControlStore";
+import { BattleControlContext } from "../components/context/BattleControlStore";
 
 const Container = styled.section`
   min-height: 100vh;
@@ -25,17 +25,17 @@ const Container = styled.section`
 
 const Landing = (): ReactElement => {
   const { getSignedInUser } = useContext(UserControlContext);
-  const { createNewRound } = useContext(RoundControlContext);
+  const { createNewBattle } = useContext(BattleControlContext);
 
   const { push } = useHistory();
 
   const user = getSignedInUser();
 
   const onClick = async () => {
-    const response = await createNewRound();
+    const response = await createNewBattle();
 
     if (response && response.id) {
-      push(`/round/${response.id}`);
+      push(`/battle/${response.id}`);
     }
   };
 
@@ -45,7 +45,7 @@ const Landing = (): ReactElement => {
         <h2>
           hi <strong>{user && user.name}</strong>
         </h2>
-        <button onClick={onClick}>Start New Round</button>
+        <button onClick={onClick}>Start New Battle</button>
       </Container>
     </>
   );

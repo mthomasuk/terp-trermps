@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import uniqBy from "lodash.uniqby";
 
-import { USER_JOINED_ROUND, ROUND_START, ROUND_END } from "../../constants";
+import { USER_JOINED_BATTLE, BATTLE_START, BATTLE_END } from "../../constants";
 
 const SOCKET_SERVER_URL =
   process.env.REACT_APP_SOCKETS_URL || "ws://localhost:4002";
@@ -11,16 +11,16 @@ let reconnect: any = null;
 export function useSocket(id: string) {
   const [messages, setMessages] = useState<any[]>([]);
 
-  const [roundHasStarted, startRound] = useState(false);
-  const [roundHasEnded, endRound] = useState(false);
+  const [battleHasStarted, startRound] = useState(false);
+  const [battleHasEnded, endRound] = useState(false);
 
-  const roundId = useRef(id).current;
+  const battleId = useRef(id).current;
 
   let socketRef: any = useRef();
 
   useEffect(() => {
     const connect = () => {
-      socketRef.current = new WebSocket(`${SOCKET_SERVER_URL}/${roundId}`);
+      socketRef.current = new WebSocket(`${SOCKET_SERVER_URL}/${battleId}`);
 
       if (socketRef.current) {
         socketRef.current.addEventListener("open", () => {
@@ -40,7 +40,7 @@ export function useSocket(id: string) {
             msgs.forEach((msg: string) => {
               const { type, ...rest } = JSON.parse(msg);
 
-              if (type === USER_JOINED_ROUND) {
+              if (type === USER_JOINED_BATTLE) {
                 const incomingMessage = {
                   ...rest,
                   type,
@@ -51,11 +51,11 @@ export function useSocket(id: string) {
                 );
               }
 
-              if (type === ROUND_START) {
+              if (type === BATTLE_START) {
                 startRound(true);
               }
 
-              if (type === ROUND_END) {
+              if (type === BATTLE_END) {
                 endRound(true);
               }
             });
@@ -72,11 +72,11 @@ export function useSocket(id: string) {
       clearInterval(reconnect);
       socketRef?.current?.close();
     };
-  }, [roundId]);
+  }, [battleId]);
 
   return {
     messages,
-    roundHasStarted,
-    roundHasEnded,
+    battleHasStarted,
+    battleHasEnded,
   };
 }

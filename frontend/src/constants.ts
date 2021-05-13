@@ -1,3 +1,3 @@
-export const ROUND_START = "round-started";
-export const ROUND_END = "round-ended";
-export const USER_JOINED_ROUND = "user-joined-round";
+export const BATTLE_START = "battle-started";
+export const BATTLE_END = "battle-ended";
+export const USER_JOINED_BATTLE = "user-joined-battle";
