@@ -36,11 +36,11 @@ func CreateBattle() (*types.Battle, error) {
 
 // RetrieveBattle retrieves a given battle
 func RetrieveBattle(battleID, userID string) (*types.Battle, error) {
-	rnd := types.Battle{}
+	bttl := types.Battle{}
 	hnds := []types.Deck{}
 
 	err := Conn.Get(
-		&rnd, `SELECT * FROM "battle" WHERE "battle"."id" = $1`, battleID,
+		&bttl, `SELECT * FROM "battle" WHERE "battle"."id" = $1`, battleID,
 	)
 	if err != nil {
 		return nil, err
@@ -60,7 +60,7 @@ func RetrieveBattle(battleID, userID string) (*types.Battle, error) {
 		return nil, err
 	}
 
-	rnd.Decks = hnds
+	bttl.Decks = hnds
 
 	for idx, hnd := range hnds {
 		if hnd.UserID == userID {
@@ -85,12 +85,18 @@ func RetrieveBattle(battleID, userID string) (*types.Battle, error) {
 				return nil, err
 			}
 
-			rnd.Decks[idx].Cards = crds
+			bttl.Decks[idx].Cards = crds
 		}
-
 	}
 
-	return &rnd, nil
+	rnds, err := GetRounds(battleID)
+	if err != nil {
+		return nil, err
+	}
+
+	bttl.Rounds = *rnds
+
+	return &bttl, nil
 }
 
 // StartBattle adds a started_at timestamp to a battle by id
@@ -126,16 +132,26 @@ func StartBattle(battleID string) (*types.Battle, error) {
 		return nil, err
 	}
 
-	rnd := types.Battle{}
-
-	err = Conn.Get(
-		&rnd, `SELECT * FROM "battle" WHERE "battle"."id" = $1`, battleID,
+	_, err = Conn.NamedExec(`
+		INSERT INTO "round" (battle_id)
+    VALUES (:battle_id)
+  `,
+		map[string]interface{}{"battle_id": battleID},
 	)
 	if err != nil {
 		return nil, err
 	}
 
-	return &rnd, nil
+	bttl := types.Battle{}
+
+	err = Conn.Get(
+		&bttl, `SELECT * FROM "battle" WHERE "battle"."id" = $1`, battleID,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &bttl, nil
 }
 
 // EndBattle updates the winner for a given battle

@@ -70,8 +70,13 @@ const Battle = ({ match }: Props): ReactElement => {
 
   const { getSignedInUser } = useContext(UserControlContext);
 
-  const { getBattleById, joinBattle, startBattle } =
+  const { getBattleById, joinBattle, startBattle, setAttribute, playHand } =
     useContext(BattleControlContext);
+
+  const currentUser = getSignedInUser();
+  const userDeck = currentBattle?.decks.find(
+    ({ user_id }: any) => user_id === currentUser.id
+  );
 
   const { push } = useHistory();
 
@@ -88,6 +93,21 @@ const Battle = ({ match }: Props): ReactElement => {
   const onStartBattle = async () => {
     await startBattle(id);
     await fetchBattle();
+  };
+
+  const onSetAttribute = async (attr: string) => {
+    await setAttribute(
+      currentBattle?.rounds[currentBattle?.rounds.length - 1].id,
+      attr
+    );
+  };
+
+  const onPlayHand = async (card: any) => {
+    await playHand(id, {
+      card_id: card.id,
+      round_id: currentBattle?.rounds[currentBattle?.rounds.length - 1].id,
+      deck_id: userDeck.id,
+    });
   };
 
   const statusMessage =
@@ -121,11 +141,6 @@ const Battle = ({ match }: Props): ReactElement => {
     );
   }, [currentBattle, messages]);
 
-  const currentUser = getSignedInUser();
-  const userDeck = currentBattle?.decks.find(
-    ({ user_id }: any) => user_id === currentUser.id
-  );
-
   return !battleHasEnded ? (
     <Wrapper>
       <Info>
@@ -157,7 +172,13 @@ const Battle = ({ match }: Props): ReactElement => {
             </button>
           </Buttons>
         )}
-        {battleInProgress && <Cards cards={userDeck.cards} />}
+        {battleInProgress && (
+          <Cards
+            cards={userDeck.cards}
+            onSetAttribute={onSetAttribute}
+            onPlayHand={onPlayHand}
+          />
+        )}
       </Info>
     </Wrapper>
   ) : (

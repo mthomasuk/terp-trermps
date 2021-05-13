@@ -25,6 +25,7 @@ type Battle struct {
 	StartedAt NullTime   `db:"started_at" json:"started_at,omitempty"`
 	Winner    NullString `json:"winner,omitempty"`
 	Decks     []Deck     `json:"decks,omitempty"`
+	Rounds    []Round    `json:"rounds,omitempty"`
 }
 
 // Deck represents a users selection of cards during a battle
@@ -36,8 +37,27 @@ type Deck struct {
 	Cards    []Card `json:"cards,omitempty"`
 }
 
-// CardInDeck is a join table linking card IDs and hand IDs
+// CardInDeck is a join table linking card IDs and deck IDs
 type CardInDeck struct {
 	CardID string `db:"card_id" json:"card_id"`
-	DeckID string `db:"hand_id" json:"hand_id"`
+	DeckID string `db:"deck_id" json:"deck_id"`
+}
+
+// Round represents the outcome of one turn for a battle
+type Round struct {
+	ID          string     `json:"id"`
+	BattleID    string     `db:"battle_id" json:"battle_id"`
+	Attribute   NullString `json:"string"`
+	WinningHand Hand       `json:"winning_hand,omitempty"`
+}
+
+// Hand represents one turn played by a user
+type Hand struct {
+	ID      string `json:"id"`
+	DeckID  string `db:"deck_id" json:"deck_id"`
+	RoundID string `db:"round_id" json:"round_id"`
+	CardID  string `db:"card_id" json:"card_id"`
+	Value   int    `json:"value"`
+	Name    string `json:"name,omitempty"`
+	UserID  string `db:"user_id" json:"user_id,omitempty"`
 }

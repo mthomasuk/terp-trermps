@@ -6,6 +6,8 @@ import Card from "../atoms/Card";
 
 interface Props {
   cards: any[];
+  onSetAttribute: (attr: string) => void;
+  onPlayHand: (hand: any) => void;
 }
 
 const Container = styled.div``;
@@ -82,7 +84,7 @@ const ToPlay = styled(Play)<{ isDraggedOver?: boolean; error?: string }>`
       : ""}
 `;
 
-const Cards = ({ cards }: Props): ReactElement => {
+const Cards = ({ cards, onSetAttribute, onPlayHand }: Props): ReactElement => {
   const [selectedCard, selectCard] = useState<any | undefined>();
   const [cardInPlay, playCard] = useState<any | undefined>();
   const [droppedCard, setDroppedCard] = useState<any | undefined>();
@@ -97,8 +99,12 @@ const Cards = ({ cards }: Props): ReactElement => {
     selectCard(card);
   };
 
-  const onSelectAttribute = (attr: string) =>
+  const onSelectAttribute = (attr: string) => {
     selectAttr((prev) => (attr === prev ? undefined : attr));
+    if (attr !== selectedAttr) {
+      onSetAttribute(attr);
+    }
+  };
 
   const onDragOver = (event: any) => {
     event.preventDefault();
@@ -123,11 +129,7 @@ const Cards = ({ cards }: Props): ReactElement => {
     selectCard(undefined);
     setDroppedCard(cardInPlay);
 
-    console.info({
-      cardInPlay,
-      selectedAttr,
-      value: selectedAttr ? cardInPlay[selectedAttr] : "",
-    });
+    onPlayHand(cardInPlay);
   };
 
   return (
