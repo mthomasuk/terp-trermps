@@ -46,8 +46,8 @@ const InPlay = styled(Play)`
   &:after {
     position: absolute;
     color: #acacac;
-    content: "Click to play card";
-    font-size: 1.5rem;
+    content: "Click to move card into hand";
+    font-size: 1.25rem;
     text-transform: uppercase;
   }
 `;
@@ -62,12 +62,12 @@ const ToPlay = styled(Play)<{ isDraggedOver?: boolean; error?: string }>`
       if (error) {
         return `
           color: #e3c20f;
-          font-size: 1.15rem;
+          font-size: 1.05rem;
           content: "${error}";
         `;
       }
       return `
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         content: "Drop to play card"
       `;
     }};

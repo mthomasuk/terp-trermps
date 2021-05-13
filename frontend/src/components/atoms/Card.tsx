@@ -2,6 +2,8 @@ import { ReactElement } from "react";
 
 import styled from "styled-components";
 
+import Glyph from "./Glyph";
+
 interface Props {
   card: any;
   played?: boolean;
@@ -50,10 +52,6 @@ const Wrapper = styled.button<{ selected?: boolean; played?: boolean }>`
       0 0 30px 10px #e3c20f;
     `
       : ""}
-`;
-
-const Image = styled.img`
-  width: 100%;
 `;
 
 const Info = styled.div`
@@ -133,7 +131,7 @@ const Card = ({
       selected={selected}
       draggable={selected}
     >
-      <Image src="https://via.placeholder.com/182x130" draggable={false} />
+      <Glyph type={card.type} />
       <Info>
         <Type>{card.type}</Type>
         <Name>{card.name}</Name>
