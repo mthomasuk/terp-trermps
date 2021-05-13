@@ -8,6 +8,7 @@ interface Props {
   selectedAttr?: string;
   onSelectCard?: (card: any) => void;
   onSelectAttribute?: (attr: any) => void;
+  onDrag?: (card: any) => void;
 }
 
 const Wrapper = styled.button<{ selected?: boolean }>`
@@ -91,10 +92,13 @@ const Card = ({
   card,
   onSelectCard,
   onSelectAttribute,
+  onDrag,
   selectedAttr,
   selected = false,
 }: Props): ReactElement => {
   const onClick = () => (onSelectCard ? onSelectCard(card) : {});
+  const onPlayCard = () => (onDrag ? onDrag(card) : {});
+
   const onSelect = (attr: any) =>
     onSelectAttribute ? onSelectAttribute(attr) : {};
 
@@ -105,8 +109,13 @@ const Card = ({
   const selectPower = () => onSelect("power");
 
   return (
-    <Wrapper onClick={onClick} selected={selected}>
-      <Image src="https://via.placeholder.com/182x130" />
+    <Wrapper
+      onClick={onClick}
+      onDrag={onPlayCard}
+      selected={selected}
+      draggable={selected}
+    >
+      <Image src="https://via.placeholder.com/182x130" draggable={false} />
       <Info>
         <Type>{card.type}</Type>
         <Name>{card.name}</Name>

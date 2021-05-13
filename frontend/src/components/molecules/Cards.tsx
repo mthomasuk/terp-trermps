@@ -34,14 +34,29 @@ const InPlay = styled.div`
   justify-content: center;
   border: 1px dashed #333;
   border-radius: 4px;
+  margin: 0 1rem;
   height: 324px;
   width: 210px;
   display: flex;
 `;
 
+const ToPlay = styled(InPlay)<{ isDraggedOver?: boolean }>`
+  transition: transform 0.25s ease-in-out;
+  ${({ isDraggedOver }) =>
+    isDraggedOver
+      ? `
+  transform: scale(1.05);
+  `
+      : ""}
+`;
+
 const Cards = ({ cards }: Props): ReactElement => {
   const [selectedCard, selectCard] = useState<any | undefined>();
+  const [cardInPlay, playCard] = useState<any | undefined>();
+
   const [selectedAttr, selectAttr] = useState<string | undefined>();
+
+  const [isDraggedOver, setDragOver] = useState<boolean>(false);
 
   const onSelect = (card: any) => {
     selectAttr(undefined);
@@ -50,6 +65,28 @@ const Cards = ({ cards }: Props): ReactElement => {
 
   const onSelectAttribute = (attr: string) =>
     selectAttr((prev) => (attr === prev ? undefined : attr));
+
+  const onDragOver = (event: any) => {
+    event.preventDefault();
+    setDragOver(true);
+  };
+
+  const onDragLeave = (event: any) => {
+    event.preventDefault();
+    setDragOver(false);
+  };
+
+  const onDrop = (event: any) => {
+    event.stopPropagation();
+
+    setDragOver(false);
+
+    console.info({
+      cardInPlay,
+      selectedAttr,
+      value: selectedAttr ? cardInPlay[selectedAttr] : "",
+    });
+  };
 
   return (
     <Container>
@@ -69,9 +106,16 @@ const Cards = ({ cards }: Props): ReactElement => {
               card={selectedCard}
               selectedAttr={selectedAttr}
               onSelectAttribute={onSelectAttribute}
+              onDrag={playCard}
             />
           )}
         </InPlay>
+        <ToPlay
+          isDraggedOver={isDraggedOver}
+          onDragOver={onDragOver}
+          onDragLeave={onDragLeave}
+          onDrop={onDrop}
+        ></ToPlay>
       </Hand>
     </Container>
   );
