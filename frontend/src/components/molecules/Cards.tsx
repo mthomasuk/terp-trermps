@@ -38,10 +38,28 @@ const InPlay = styled.div`
   height: 324px;
   width: 210px;
   display: flex;
+  position: relative;
+
+  &:after {
+    position: absolute;
+    color: #acacac;
+    content: "Click to play card";
+    font-size: 1.5rem;
+    text-transform: uppercase;
+  }
 `;
 
 const ToPlay = styled(InPlay)<{ isDraggedOver?: boolean }>`
   transition: transform 0.25s ease-in-out;
+
+  &:after {
+    position: absolute;
+    color: #acacac;
+    content: "Drop to play card";
+    font-size: 1.5rem;
+    text-transform: uppercase;
+  }
+
   ${({ isDraggedOver }) =>
     isDraggedOver
       ? `
@@ -53,6 +71,7 @@ const ToPlay = styled(InPlay)<{ isDraggedOver?: boolean }>`
 const Cards = ({ cards }: Props): ReactElement => {
   const [selectedCard, selectCard] = useState<any | undefined>();
   const [cardInPlay, playCard] = useState<any | undefined>();
+  const [droppedCard, setDroppedCard] = useState<any | undefined>();
 
   const [selectedAttr, selectAttr] = useState<string | undefined>();
 
@@ -77,9 +96,14 @@ const Cards = ({ cards }: Props): ReactElement => {
   };
 
   const onDrop = (event: any) => {
+    setDragOver(false);
+
+    if (!selectedAttr) return false;
+
     event.stopPropagation();
 
-    setDragOver(false);
+    selectCard(undefined);
+    setDroppedCard(cardInPlay);
 
     console.info({
       cardInPlay,
@@ -93,7 +117,9 @@ const Cards = ({ cards }: Props): ReactElement => {
       <Deck>
         {cards &&
           cards
-            .filter(({ id }) => id !== selectedCard?.id)
+            .filter(
+              ({ id }) => id !== selectedCard?.id && id !== droppedCard?.id
+            )
             .map((card: any) => (
               <Card key={card.id} card={card} onSelectCard={onSelect} />
             ))}
@@ -115,7 +141,11 @@ const Cards = ({ cards }: Props): ReactElement => {
           onDragOver={onDragOver}
           onDragLeave={onDragLeave}
           onDrop={onDrop}
-        ></ToPlay>
+        >
+          {droppedCard && (
+            <Card played card={droppedCard} selectedAttr={selectedAttr} />
+          )}
+        </ToPlay>
       </Hand>
     </Container>
   );

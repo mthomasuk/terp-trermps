@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 interface Props {
   card: any;
+  played?: boolean;
   selected?: boolean;
   selectedAttr?: string;
   onSelectCard?: (card: any) => void;
@@ -11,14 +12,15 @@ interface Props {
   onDrag?: (card: any) => void;
 }
 
-const Wrapper = styled.button<{ selected?: boolean }>`
+const Wrapper = styled.button<{ selected?: boolean; played?: boolean }>`
   cursor: pointer;
   background-color: #fff;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
-  margin-right: ${({ selected }) => (selected ? "0" : "-60px")};
+  margin-right: ${({ played, selected }) =>
+    played || selected ? "0" : "-60px"};
   padding: 0.5rem;
   border: solid 1px #dedede;
   box-shadow: 2px 2px 2px #ededed;
@@ -33,6 +35,15 @@ const Wrapper = styled.button<{ selected?: boolean }>`
       ? `&:hover {
       transform: translateY(-30px);
     }`
+      : ""}
+
+  ${({ played }) =>
+    played
+      ? `
+    box-shadow:
+      0 0 30px 15px #fff,
+      0 0 30px 10px #ffd700;
+    `
       : ""}
 `;
 
@@ -94,6 +105,7 @@ const Card = ({
   onSelectAttribute,
   onDrag,
   selectedAttr,
+  played = false,
   selected = false,
 }: Props): ReactElement => {
   const onClick = () => (onSelectCard ? onSelectCard(card) : {});
@@ -112,6 +124,7 @@ const Card = ({
     <Wrapper
       onClick={onClick}
       onDrag={onPlayCard}
+      played={played}
       selected={selected}
       draggable={selected}
     >
