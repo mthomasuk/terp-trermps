@@ -20,8 +20,8 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 
 	var value int
 
-	if rnd.Attribute.String == "power" {
-		value = crd.Power
+	if rnd.Attribute.String == "strength" {
+		value = crd.Strength
 	} else if rnd.Attribute.String == "skill" {
 		value = crd.Skill
 	} else if rnd.Attribute.String == "magical_force" {
@@ -83,8 +83,31 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 		return nil, err
 	}
 
+	// Deal with a draw
+
 	if len(hnds) == cntD.Count {
-		rnd.WinningHand = hnds[0]
+		win := hnds[0]
+
+		for _, hand := range hnds[1:] {
+			_, err = Conn.NamedExec(`
+    		UPDATE "card_in_deck" SET deck_id = :win_deck_id WHERE card_id = :card_id AND deck_id = :lose_deck_id`,
+				map[string]interface{}{
+					"win_deck_id":  win.DeckID,
+					"card_id":      hand.CardID,
+					"lose_deck_id": hand.DeckID,
+				},
+			)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		_, err = CreateRound(rnd.BattleID, win.UserID)
+		if err != nil {
+			return nil, err
+		}
+
+		rnd.WinningHand = win
 	}
 
 	return &rnd, nil

@@ -1,6 +1,7 @@
 package database
 
 import (
+	"math/rand"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
@@ -22,10 +23,15 @@ func CreateBattle() (*types.Battle, error) {
 		return nil, err
 	}
 
+	_, err = CreateRound(id.String(), "")
+	if err != nil {
+		return nil, err
+	}
+
 	rnd := types.Battle{}
 
 	err = Conn.Get(
-		&rnd, `SELECT * FROM "battle" WHERE "battle"."id" = $1`, id,
+		&rnd, `SELECT * FROM "battle" WHERE "battle"."id" = $1`, id.String(),
 	)
 	if err != nil {
 		return nil, err
@@ -102,17 +108,19 @@ func RetrieveBattle(battleID, userID string) (*types.Battle, error) {
 // StartBattle adds a started_at timestamp to a battle by id
 func StartBattle(battleID string) (*types.Battle, error) {
 	now := time.Now().Local()
-	hnd := []types.Deck{}
+
+	decks := []types.Deck{}
+	udecks := []types.Deck{}
 
 	err := Conn.Select(
-		&hnd, `SELECT id FROM "deck" WHERE "deck"."battle_id" = $1`, battleID,
+		&decks, `SELECT id FROM "deck" WHERE "deck"."battle_id" = $1`, battleID,
 	)
 	if err != nil {
 		return nil, err
 	}
 
 	var ids []string
-	for _, deck := range hnd {
+	for _, deck := range decks {
 		ids = append(ids, deck.ID)
 	}
 
@@ -132,11 +140,24 @@ func StartBattle(battleID string) (*types.Battle, error) {
 		return nil, err
 	}
 
+	err = Conn.Select(
+		&udecks,
+		`SELECT user_id FROM "deck" WHERE "deck"."battle_id" = $1`,
+		battleID,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	rand.Seed(time.Now().Unix())
+	leader := udecks[rand.Intn(len(udecks))].UserID
+
 	_, err = Conn.NamedExec(`
-		INSERT INTO "round" (battle_id)
-    VALUES (:battle_id)
-  `,
-		map[string]interface{}{"battle_id": battleID},
+		UPDATE "round" SET leader = :leader WHERE battle_id = :battle_id`,
+		map[string]interface{}{
+			"leader":    leader,
+			"battle_id": battleID,
+		},
 	)
 	if err != nil {
 		return nil, err

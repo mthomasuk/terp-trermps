@@ -8,6 +8,7 @@ interface Props {
   cards: any[];
   onSetAttribute: (attr: string) => void;
   onPlayHand: (hand: any) => void;
+  leader: boolean;
 }
 
 const Container = styled.div``;
@@ -84,7 +85,12 @@ const ToPlay = styled(Play)<{ isDraggedOver?: boolean; error?: string }>`
       : ""}
 `;
 
-const Cards = ({ cards, onSetAttribute, onPlayHand }: Props): ReactElement => {
+const Cards = ({
+  cards,
+  onSetAttribute,
+  onPlayHand,
+  leader = false,
+}: Props): ReactElement => {
   const [selectedCard, selectCard] = useState<any | undefined>();
   const [cardInPlay, playCard] = useState<any | undefined>();
   const [droppedCard, setDroppedCard] = useState<any | undefined>();
@@ -95,12 +101,16 @@ const Cards = ({ cards, onSetAttribute, onPlayHand }: Props): ReactElement => {
   const [isDraggedOver, setDragOver] = useState<boolean>(false);
 
   const onSelect = (card: any) => {
-    selectAttr(undefined);
     selectCard(card);
   };
 
   const onSelectAttribute = (attr: string) => {
+    if (!leader) {
+      return false;
+    }
+
     selectAttr((prev) => (attr === prev ? undefined : attr));
+
     if (attr !== selectedAttr) {
       onSetAttribute(attr);
     }
@@ -119,7 +129,7 @@ const Cards = ({ cards, onSetAttribute, onPlayHand }: Props): ReactElement => {
   const onDrop = (event: any) => {
     setDragOver(false);
 
-    if (!selectedAttr) {
+    if (!selectedAttr && leader) {
       setDropErr("Select a category first e.g. strength/skill etc.");
       return false;
     }

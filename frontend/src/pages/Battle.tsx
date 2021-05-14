@@ -6,18 +6,20 @@ import {
   ReactElement,
 } from "react";
 
+import styled from "styled-components";
+
 import { useHistory, Redirect, RouteComponentProps } from "react-router-dom";
 import { format } from "date-fns";
 
 import uniqBy from "lodash.uniqby";
-
-import styled from "styled-components";
 
 import { BattleControlContext } from "../components/context/BattleControlStore";
 import { UserControlContext } from "../components/context/UserControlStore";
 import { useSocket } from "../components/context/Websocket";
 
 import Cards from "../components/molecules/Cards";
+
+import { USER_JOINED_BATTLE } from "../constants";
 
 interface Props extends RouteComponentProps<{ id: string }> {}
 
@@ -66,19 +68,22 @@ const Battle = ({ match }: Props): ReactElement => {
   const [currentBattle, setCurrentBattle] = useState<any>();
   const [currentDecks, setCurrentDecks] = useState<any>([]);
 
-  const { messages, battleHasStarted, battleHasEnded } = useSocket(id);
+  const { messages, handsWon, battleHasStarted, battleHasEnded } =
+    useSocket(id);
 
   const { getSignedInUser } = useContext(UserControlContext);
 
   const { getBattleById, joinBattle, startBattle, setAttribute, playHand } =
     useContext(BattleControlContext);
 
+  const { push } = useHistory();
+
   const currentUser = getSignedInUser();
+
+  const currentRound = currentBattle?.rounds[currentBattle?.rounds.length - 1];
   const userDeck = currentBattle?.decks.find(
     ({ user_id }: any) => user_id === currentUser.id
   );
-
-  const { push } = useHistory();
 
   const fetchBattle = useCallback(async () => {
     const response = await getBattleById(id);
@@ -95,38 +100,27 @@ const Battle = ({ match }: Props): ReactElement => {
     await fetchBattle();
   };
 
-  const onSetAttribute = async (attr: string) => {
-    await setAttribute(
-      currentBattle?.rounds[currentBattle?.rounds.length - 1].id,
-      attr
-    );
+  const onSetAttribute = async (attribute: string) => {
+    await setAttribute(currentRound.id, attribute);
   };
 
   const onPlayHand = async (card: any) => {
     await playHand(id, {
       card_id: card.id,
-      round_id: currentBattle?.rounds[currentBattle?.rounds.length - 1].id,
+      round_id: currentRound.id,
       deck_id: userDeck.id,
     });
   };
 
-  const statusMessage =
-    currentBattle?.started_at || battleHasStarted
-      ? `started at ${format(
-          new Date(currentBattle?.started_at as string),
-          "HH:mm"
-        )}`
-      : "hasn't started yet";
-
   const canStartBattle = !battleHasStarted && !currentBattle?.started_at;
   const battleInProgress = battleHasStarted || currentBattle?.started_at;
 
-  useEffect(() => {
-    if (!battleHasStarted) {
-      joinBattle(id);
-    }
-    fetchBattle();
-  }, [battleHasStarted, joinBattle, id, fetchBattle]);
+  const statusMessage = battleInProgress
+    ? `started at ${format(
+        new Date(currentBattle?.started_at as string),
+        "HH:mm"
+      )}`
+    : "hasn't started yet";
 
   useEffect(() => {
     setCurrentDecks((decks: any) =>
@@ -134,12 +128,23 @@ const Battle = ({ match }: Props): ReactElement => {
         [
           ...decks,
           ...(currentBattle?.decks || []),
-          ...messages.filter(({ type }) => type === "user-joined-battle"),
+          ...messages.filter(({ type }) => type === USER_JOINED_BATTLE),
         ],
         "user_id"
       )
     );
   }, [currentBattle, messages]);
+
+  useEffect(() => {
+    if (!battleHasStarted) {
+      joinBattle(id);
+    }
+    fetchBattle();
+  }, [id, battleHasStarted, joinBattle, fetchBattle]);
+
+  useEffect(() => {
+    fetchBattle();
+  }, [fetchBattle, handsWon]);
 
   return !battleHasEnded ? (
     <Wrapper>
@@ -174,6 +179,7 @@ const Battle = ({ match }: Props): ReactElement => {
         )}
         {battleInProgress && (
           <Cards
+            leader={currentUser?.id === currentRound?.leader}
             cards={userDeck.cards}
             onSetAttribute={onSetAttribute}
             onPlayHand={onPlayHand}

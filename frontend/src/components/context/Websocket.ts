@@ -1,15 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import uniqBy from "lodash.uniqby";
 
-import { USER_JOINED_BATTLE, BATTLE_START, BATTLE_END } from "../../constants";
+import {
+  USER_JOINED_BATTLE,
+  BATTLE_START,
+  BATTLE_END,
+  WINNING_HAND_PLAYED,
+} from "../../constants";
 
-const SOCKET_SERVER_URL =
-  process.env.REACT_APP_SOCKETS_URL || "ws://localhost:4002";
+const { REACT_APP_SOCKETS_URL } = process.env;
+
+const SOCKET_SERVER_URL = REACT_APP_SOCKETS_URL || "ws://localhost:4002";
 
 let reconnect: any = null;
 
 export function useSocket(id: string) {
   const [messages, setMessages] = useState<any[]>([]);
+  const [handsWon, setWinningHands] = useState<any[]>([]);
 
   const [battleHasStarted, startRound] = useState(false);
   const [battleHasEnded, endRound] = useState(false);
@@ -55,6 +62,17 @@ export function useSocket(id: string) {
                 startRound(true);
               }
 
+              if (type === WINNING_HAND_PLAYED) {
+                // remove cards from UI
+                // force deck refetch
+                /*
+          				BattleID string `json:"battle_id"`
+                  HandID   string `json:"hand_id"`
+          				UserID   string `json:"user_id"`
+          				Name     string `json:"name"`
+                */
+              }
+
               if (type === BATTLE_END) {
                 endRound(true);
               }
@@ -76,6 +94,7 @@ export function useSocket(id: string) {
 
   return {
     messages,
+    handsWon,
     battleHasStarted,
     battleHasEnded,
   };

@@ -43,11 +43,13 @@ func PlayHand(hub *Hub) func(echo.Context) error {
 			msg := struct {
 				Type     string `json:"type"`
 				BattleID string `json:"battle_id"`
+				HandID   string `json:"hand_id"`
 				UserID   string `json:"user_id"`
 				Name     string `json:"name"`
 			}{
 				Type:     "winning-hand-played",
 				BattleID: battleID,
+				HandID:   round.WinningHand.ID,
 				UserID:   round.WinningHand.UserID,
 				Name:     round.WinningHand.Name,
 			}
@@ -60,8 +62,6 @@ func PlayHand(hub *Hub) func(echo.Context) error {
 
 			hub.broadcast <- b
 		}
-
-		// Move other cards into this deck, broadcast decks
 
 		return c.JSON(http.StatusOK, &round)
 	}

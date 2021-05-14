@@ -66,8 +66,12 @@ var schema = `
     id            UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
     battle_id     UUID,
     attribute     VARCHAR,
+    leader        UUID,
     FOREIGN KEY (battle_id)
       REFERENCES "battle" (id)
+      ON DELETE CASCADE,
+    FOREIGN KEY (leader)
+      REFERENCES "user" (id)
       ON DELETE CASCADE
   );
 
