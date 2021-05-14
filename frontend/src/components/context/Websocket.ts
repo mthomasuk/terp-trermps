@@ -17,7 +17,9 @@ let reconnect: any = null;
 
 export function useSocket(id: string) {
   const [messages, setMessages] = useState<any[]>([]);
-  const [handsWon, setWinningHands] = useState<any[]>([]);
+
+  const [winningHand, setWinningHand] = useState<any | undefined>();
+  const [attributeSelected, setAttribute] = useState<string | undefined>();
 
   const [battleHasStarted, startRound] = useState(false);
   const [battleHasEnded, endRound] = useState(false);
@@ -42,6 +44,9 @@ export function useSocket(id: string) {
         });
 
         socketRef.current.addEventListener("message", ({ data }: any) => {
+          setWinningHand(undefined);
+          setAttribute(undefined);
+
           try {
             const msgs = data.split("\n");
 
@@ -64,20 +69,15 @@ export function useSocket(id: string) {
               }
 
               if (type === WINNING_HAND_PLAYED) {
-                // remove cards from UI
-                // force deck refetch
-                /*
-          				BattleID string `json:"battle_id"`
-                  HandID   string `json:"hand_id"`
-          				UserID   string `json:"user_id"`
-          				Name     string `json:"name"`
-                */
-                console.info({ type, ...rest });
+                setWinningHand({
+                  user: rest.user_id,
+                  name: rest.name,
+                  card: rest.card,
+                });
               }
 
               if (type === ROUND_ATTRIBUTE_SELECTED) {
-                // display round attribute
-                console.info({ type, ...rest });
+                setAttribute(rest.attribute);
               }
 
               if (type === BATTLE_END) {
@@ -101,7 +101,8 @@ export function useSocket(id: string) {
 
   return {
     messages,
-    handsWon,
+    attributeSelected,
+    winningHand,
     battleHasStarted,
     battleHasEnded,
   };

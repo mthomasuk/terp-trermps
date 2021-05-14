@@ -15,3 +15,15 @@ func GetAllCards() (*[]types.Card, error) {
 
 	return &crds, nil
 }
+
+// GetCardByID retrieves a card row from the DB
+func GetCardByID(cardID string) (*types.Card, error) {
+	crd := types.Card{}
+
+	err := Conn.Get(&crd, `SELECT * FROM "card" WHERE "card"."id" = $1`, cardID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &crd, nil
+}

@@ -47,7 +47,7 @@ type CardInDeck struct {
 type Round struct {
 	ID          string     `json:"id"`
 	BattleID    string     `db:"battle_id" json:"battle_id"`
-	Attribute   NullString `json:"string"`
+	Attribute   NullString `json:"attribute"`
 	Leader      NullString `json:"leader,omitempty"`
 	WinningHand Hand       `json:"winning_hand,omitempty"`
 }

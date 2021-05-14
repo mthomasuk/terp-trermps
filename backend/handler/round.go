@@ -46,7 +46,7 @@ func SetRoundAttribute(hub *Hub) func(echo.Context) error {
 			Type      string `json:"type"`
 			BattleID  string `json:"battle_id"`
 			RoundID   string `json:"round_id"`
-			Attribute string `json:"user_id"`
+			Attribute string `json:"attribute"`
 		}{
 			Type:      "round-attribute-selected",
 			BattleID:  round.BattleID,

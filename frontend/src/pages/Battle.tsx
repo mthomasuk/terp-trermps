@@ -9,7 +9,6 @@ import {
 import styled from "styled-components";
 
 import { useHistory, Redirect, RouteComponentProps } from "react-router-dom";
-import { format } from "date-fns";
 
 import uniqBy from "lodash.uniqby";
 
@@ -18,6 +17,9 @@ import { UserControlContext } from "../components/context/UserControlStore";
 import { useSocket } from "../components/context/Websocket";
 
 import Cards from "../components/molecules/Cards";
+
+import Toast from "../components/atoms/Toast";
+import Card from "../components/atoms/Card";
 
 import { USER_JOINED_BATTLE } from "../constants";
 
@@ -50,19 +52,8 @@ const H1 = styled.h1`
   }
 `;
 
-const H2 = styled.h2`
-  display: block;
-  font-weight: normal;
-
-  @media only screen and (max-width: 768px) {
-    & {
-      font-size: 1rem;
-    }
-  }
-`;
-
 const Combatants = styled.div`
-  padding: 1rem;
+  padding: 0.5rem;
 `;
 
 const Buttons = styled.div`
@@ -79,8 +70,13 @@ const Battle = ({ match }: Props): ReactElement => {
   const [currentBattle, setCurrentBattle] = useState<any>();
   const [currentDecks, setCurrentDecks] = useState<any>([]);
 
-  const { messages, handsWon, battleHasStarted, battleHasEnded } =
-    useSocket(id);
+  const {
+    messages,
+    attributeSelected,
+    winningHand,
+    battleHasStarted,
+    battleHasEnded,
+  } = useSocket(id);
 
   const { getSignedInUser } = useContext(UserControlContext);
 
@@ -128,19 +124,14 @@ const Battle = ({ match }: Props): ReactElement => {
   const canStartBattle = !battleHasStarted && !currentBattle?.started_at;
   const battleInProgress = battleHasStarted || currentBattle?.started_at;
 
-  const statusMessage = battleInProgress
-    ? `started at ${format(
-        new Date(currentBattle?.started_at as string),
-        "HH:mm"
-      )}`
-    : "hasn't started yet";
-
   let playMessage = "Waiting for other player to choose card";
   if (isLeader) {
     playMessage = "Choose your attribute to play!";
   }
-  if (currentRound?.attribute) {
-    playMessage = `Attribute is ${currentRound?.attribute}!`;
+  if (attributeSelected || currentRound?.attribute) {
+    playMessage = `Attribute is ${
+      attributeSelected || currentRound?.attribute
+    }!`;
   }
 
   useEffect(() => {
@@ -165,21 +156,15 @@ const Battle = ({ match }: Props): ReactElement => {
 
   useEffect(() => {
     fetchBattle();
-  }, [fetchBattle, handsWon]);
+  }, [fetchBattle, winningHand]);
 
   return !battleHasEnded ? (
     <Wrapper>
       <Info>
-        <p>
-          <strong>Battle:</strong> {id}
-        </p>
         <Share>
           <p>Share this link to join the battle:</p>
           <pre>{window.location.href}</pre>
         </Share>
-        <H2>
-          This battle <strong>{statusMessage}</strong>
-        </H2>
         <H1>{playMessage}</H1>
         <Combatants>
           {!battleInProgress ? (
@@ -208,6 +193,12 @@ const Battle = ({ match }: Props): ReactElement => {
           />
         )}
       </Info>
+      {winningHand && (
+        <Toast
+          name={winningHand.name}
+          element={<Card next winner card={winningHand.card} />}
+        />
+      )}
     </Wrapper>
   ) : (
     <Redirect to={`/battle/${id}/results`} />

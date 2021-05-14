@@ -40,16 +40,22 @@ func PlayHand(hub *Hub) func(echo.Context) error {
 		if round.WinningHand.ID != "" {
 			battleID := c.Param("id")
 
+			crd, err := database.GetCardByID(round.WinningHand.CardID)
+			if err != nil {
+				c.Logger().Error(err)
+				return c.String(http.StatusServiceUnavailable, "Secret error I can't tell you about")
+			}
+
 			msg := struct {
-				Type     string `json:"type"`
-				BattleID string `json:"battle_id"`
-				HandID   string `json:"hand_id"`
-				UserID   string `json:"user_id"`
-				Name     string `json:"name"`
+				Type     string      `json:"type"`
+				BattleID string      `json:"battle_id"`
+				Card     *types.Card `json:"card"`
+				UserID   string      `json:"user_id"`
+				Name     string      `json:"name"`
 			}{
 				Type:     "winning-hand-played",
 				BattleID: battleID,
-				HandID:   round.WinningHand.ID,
+				Card:     crd,
 				UserID:   round.WinningHand.UserID,
 				Name:     round.WinningHand.Name,
 			}

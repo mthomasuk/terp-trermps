@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 import Glyph from "./Glyph";
 
@@ -8,6 +8,7 @@ interface Props {
   card: any;
   next?: boolean;
   played?: boolean;
+  winner?: boolean;
   selected?: boolean;
   selectedAttr?: string;
   onSelectCard?: (card: any) => void;
@@ -15,13 +16,42 @@ interface Props {
   onDrag?: (card: any) => void;
 }
 
+const flip = keyframes`
+  0% {
+    transform: rotateY(360deg);
+  }
+
+  25% {
+    transform: rotateY(270deg);
+  }
+
+  50% {
+    transform: rotateY(180deg);
+  }
+
+  75% {
+    transform: rotateY(90deg);
+  }
+
+  100% {
+    transform: rotateY(0deg);
+  }
+`;
+
+const flippy = () =>
+  css`
+    ${flip} 2s linear infinite;
+  `;
+
 const Wrapper = styled.button<{
   selected?: boolean;
   played?: boolean;
   next?: boolean;
 }>`
   cursor: pointer;
-  background-color: #fff;
+  border: 0;
+  background-color: transparent;
+  perspective: 1000px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -29,9 +59,6 @@ const Wrapper = styled.button<{
   margin-right: ${({ played, selected }) =>
     played || selected ? "0" : "-197px"};
   padding: 0.5rem;
-  border: solid 1px #dedede;
-  box-shadow: 2px 2px 2px #ededed;
-  border-radius: 4px;
   width: 200px;
   min-width: 200px;
   min-height: 312px;
@@ -60,28 +87,57 @@ const Wrapper = styled.button<{
       : ""}
 `;
 
-const Flipped = styled(Wrapper)`
-  background-color: #fff;
+const Inner = styled.div<{
+  next?: boolean;
+  winner?: boolean;
+}>`
+  border: solid 1px #dedede;
+  box-shadow: 2px 2px 2px #ededed;
+  border-radius: 4px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  animation: ${({ winner }) => (winner ? flippy : "")}
+    ${({ next }) => {
+      if (!next) {
+        return "transform: rotateY(180deg);";
+      }
+    }};
+`;
 
-  &:after {
-    background: linear-gradient(135deg, #e1e1e1 25%, transparent 25%) -50px 0,
-      linear-gradient(225deg, #e1e1e1 25%, transparent 25%) -50px 0,
-      linear-gradient(315deg, #e1e1e1 25%, transparent 25%),
-      linear-gradient(45deg, #e1e1e1 25%, transparent 25%);
-    background-color: #cfd8dc;
-    background-size: 100px 100px;
-    border-radius: 4px;
-    content: "";
-    height: 298px;
-    width: 182px;
-    position: absolute;
-  }
+const Face = styled.div`
+  background-color: #fff;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const Front = styled(Face)``;
+
+const Back = styled(Face)`
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #e1e1e1 25%, transparent 25%) -50px 0,
+    linear-gradient(225deg, #e1e1e1 25%, transparent 25%) -50px 0,
+    linear-gradient(315deg, #e1e1e1 25%, transparent 25%),
+    linear-gradient(45deg, #e1e1e1 25%, transparent 25%);
+  background-color: #cfd8dc;
+  background-size: 100px 100px;
+  border-radius: 4px;
 `;
 
 const Info = styled.div`
   border: solid 1px #dedede;
   padding: 0.5rem;
-  width: 100%;
+  width: 95%;
 `;
 
 const Type = styled.p`
@@ -135,8 +191,9 @@ const Card = ({
   played = false,
   selected = false,
   next = false,
+  winner = false,
 }: Props): ReactElement => {
-  const onClick = () => (onSelectCard ? onSelectCard(card) : {});
+  const onClick = () => (onSelectCard && next ? onSelectCard(card) : {});
   const onPlayCard = () => (onDrag ? onDrag(card) : {});
 
   const onSelect = (attr: any) =>
@@ -148,65 +205,68 @@ const Card = ({
   const selectWeapons = () => onSelect("weapons");
   const selectPower = () => onSelect("power");
 
-  return next ? (
+  return (
     <Wrapper
-      next
+      next={next}
       onClick={onClick}
       onDrag={onPlayCard}
       played={played}
       selected={selected}
       draggable={selected}
     >
-      <Glyph type={card.type} />
-      <Info>
-        <Type>{card.type}</Type>
-        <Name>{card.name}</Name>
-        <Stats>
-          <Row
-            selected={selected}
-            onClick={selectStrength}
-            isAttr={selectedAttr === "strength"}
-          >
-            <span>Strength</span>
-            <span>{card.strength}</span>
-          </Row>
-          <Row
-            selected={selected}
-            onClick={selectSkill}
-            isAttr={selectedAttr === "skill"}
-          >
-            <span>Skill</span>
-            <span>{card.skill}</span>
-          </Row>
-          <Row
-            selected={selected}
-            onClick={selectMagic}
-            isAttr={selectedAttr === "magical_force"}
-          >
-            <span>Magical Force</span>
-            <span>{card.magical_force}</span>
-          </Row>
-          <Row
-            selected={selected}
-            onClick={selectWeapons}
-            isAttr={selectedAttr === "weapons"}
-          >
-            <span>Weapons</span>
-            <span>{card.weapons}</span>
-          </Row>
-          <Row
-            selected={selected}
-            onClick={selectPower}
-            isAttr={selectedAttr === "power"}
-          >
-            <span>Power</span>
-            <span>{card.power}</span>
-          </Row>
-        </Stats>
-      </Info>
+      <Inner next={next} winner={winner}>
+        <Front>
+          <Glyph type={card.type} />
+          <Info>
+            <Type>{card.type}</Type>
+            <Name>{card.name}</Name>
+            <Stats>
+              <Row
+                selected={selected}
+                onClick={selectStrength}
+                isAttr={selectedAttr === "strength"}
+              >
+                <span>Strength</span>
+                <span>{card.strength}</span>
+              </Row>
+              <Row
+                selected={selected}
+                onClick={selectSkill}
+                isAttr={selectedAttr === "skill"}
+              >
+                <span>Skill</span>
+                <span>{card.skill}</span>
+              </Row>
+              <Row
+                selected={selected}
+                onClick={selectMagic}
+                isAttr={selectedAttr === "magical_force"}
+              >
+                <span>Magical Force</span>
+                <span>{card.magical_force}</span>
+              </Row>
+              <Row
+                selected={selected}
+                onClick={selectWeapons}
+                isAttr={selectedAttr === "weapons"}
+              >
+                <span>Weapons</span>
+                <span>{card.weapons}</span>
+              </Row>
+              <Row
+                selected={selected}
+                onClick={selectPower}
+                isAttr={selectedAttr === "power"}
+              >
+                <span>Power</span>
+                <span>{card.power}</span>
+              </Row>
+            </Stats>
+          </Info>
+        </Front>
+        <Back />
+      </Inner>
     </Wrapper>
-  ) : (
-    <Flipped />
   );
 };
 

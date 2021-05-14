@@ -1,4 +1,4 @@
-import { useState, ReactElement } from "react";
+import { useState, useEffect, ReactElement } from "react";
 
 import styled from "styled-components";
 
@@ -20,7 +20,7 @@ const Deck = styled.div`
   flex-direction: row-reverse;
   margin: 0 2rem;
   padding: 1rem;
-  padding-top: 3rem;
+  padding-top: 2rem;
   overflow-x: scroll;
   overflow-y: visible;
 `;
@@ -50,7 +50,7 @@ const InPlay = styled(Play)`
     position: absolute;
     color: #acacac;
     content: "Click to move card into hand";
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     text-transform: uppercase;
   }
 `;
@@ -70,7 +70,7 @@ const ToPlay = styled(Play)<{ isDraggedOver?: boolean; error?: string }>`
         `;
       }
       return `
-        font-size: 1.25rem;
+        font-size: 1.15rem;
         content: "Drop to play card"
       `;
     }};
@@ -141,6 +141,17 @@ const Cards = ({
 
     onPlayHand(cardInPlay);
   };
+
+  useEffect(() => {
+    selectCard(undefined);
+    playCard(undefined);
+    setDroppedCard(undefined);
+
+    selectAttr(undefined);
+    setDropErr(undefined);
+
+    setDragOver(false);
+  }, [cards]);
 
   return (
     <Container>
