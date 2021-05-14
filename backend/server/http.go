@@ -29,7 +29,7 @@ func HTTPServer(port string) {
 	e.POST("/api/battle/:id/start", handler.BattleStart(hub))
 	e.POST("/api/battle/:id/end", handler.BattleEnd(hub))
 
-	e.POST("/api/round/:id/attribute", handler.SetRoundAttribute)
+	e.POST("/api/round/:id/attribute", handler.SetRoundAttribute(hub))
 
 	e.POST("/api/hand/:id", handler.PlayHand(hub))
 

@@ -84,7 +84,8 @@ func RetrieveBattle(battleID, userID string) (*types.Battle, error) {
           "card"."power"
         FROM "card_in_deck"
         INNER JOIN "card" ON "card_in_deck"."card_id" = "card"."id"
-        WHERE "card_in_deck"."deck_id" = $1`,
+        WHERE "card_in_deck"."deck_id" = $1
+        ORDER BY "card_in_deck"."added_at" DESC`,
 				hnd.ID,
 			)
 			if err != nil {

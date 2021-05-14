@@ -6,6 +6,7 @@ import {
   BATTLE_START,
   BATTLE_END,
   WINNING_HAND_PLAYED,
+  ROUND_ATTRIBUTE_SELECTED,
 } from "../../constants";
 
 const { REACT_APP_SOCKETS_URL } = process.env;
@@ -71,6 +72,12 @@ export function useSocket(id: string) {
           				UserID   string `json:"user_id"`
           				Name     string `json:"name"`
                 */
+                console.info({ type, ...rest });
+              }
+
+              if (type === ROUND_ATTRIBUTE_SELECTED) {
+                // display round attribute
+                console.info({ type, ...rest });
               }
 
               if (type === BATTLE_END) {

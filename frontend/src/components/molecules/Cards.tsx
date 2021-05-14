@@ -15,8 +15,8 @@ const Container = styled.div``;
 
 const Deck = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  align-items: stretch;
+  justify-content: center;
   flex-direction: row-reverse;
   margin: 0 2rem;
   padding: 1rem;
@@ -150,8 +150,13 @@ const Cards = ({
             .filter(
               ({ id }) => id !== selectedCard?.id && id !== droppedCard?.id
             )
-            .map((card: any) => (
-              <Card key={card.id} card={card} onSelectCard={onSelect} />
+            .map((card: any, idx: number) => (
+              <Card
+                key={card.id}
+                next={idx === cards.length - 1}
+                card={card}
+                onSelectCard={onSelect}
+              />
             ))}
       </Deck>
       <Hand>
@@ -159,6 +164,7 @@ const Cards = ({
           {selectedCard && (
             <Card
               selected
+              next
               card={selectedCard}
               selectedAttr={selectedAttr}
               onSelectAttribute={onSelectAttribute}
@@ -174,7 +180,7 @@ const Cards = ({
           error={dropErr}
         >
           {droppedCard && (
-            <Card played card={droppedCard} selectedAttr={selectedAttr} />
+            <Card played next card={droppedCard} selectedAttr={selectedAttr} />
           )}
         </ToPlay>
       </Hand>

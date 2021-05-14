@@ -64,7 +64,7 @@ func CreateRound(battleID, userID string) (*types.Round, error) {
 }
 
 // SetAttribute sets an attribute for the round
-func SetAttribute(roundID, attribute string) error {
+func SetAttribute(roundID, attribute string) (*types.Round, error) {
 	_, err := Conn.NamedExec(`
 		UPDATE "round" SET attribute = :attribute WHERE id = :id`,
 		map[string]interface{}{
@@ -73,8 +73,15 @@ func SetAttribute(roundID, attribute string) error {
 		},
 	)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	rnd := types.Round{}
+
+	err = Conn.Get(&rnd, `SELECT * FROM "round" WHERE "round"."id" = $1`, roundID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &rnd, nil
 }

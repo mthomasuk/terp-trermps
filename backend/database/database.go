@@ -54,6 +54,7 @@ var schema = `
   CREATE TABLE IF NOT EXISTS "card_in_deck" (
     card_id       UUID,
     deck_id       UUID,
+    added_at      TIMESTAMPZ DEFAULT now(),
     FOREIGN KEY (card_id)
       REFERENCES "card" (id)
       ON DELETE CASCADE,

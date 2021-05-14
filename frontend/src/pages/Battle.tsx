@@ -135,6 +135,14 @@ const Battle = ({ match }: Props): ReactElement => {
       )}`
     : "hasn't started yet";
 
+  let playMessage = "Waiting for other player to choose card";
+  if (isLeader) {
+    playMessage = "Choose your attribute to play!";
+  }
+  if (currentRound?.attribute) {
+    playMessage = `Attribute is ${currentRound?.attribute}!`;
+  }
+
   useEffect(() => {
     setCurrentDecks((decks: any) =>
       uniqBy(
@@ -172,11 +180,7 @@ const Battle = ({ match }: Props): ReactElement => {
         <H2>
           This battle <strong>{statusMessage}</strong>
         </H2>
-        <H1>
-          {isLeader
-            ? "Choose your attribute to play!"
-            : "Waiting for other player to play hand"}
-        </H1>
+        <H1>{playMessage}</H1>
         <Combatants>
           {!battleInProgress ? (
             <div>

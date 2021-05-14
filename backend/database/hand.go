@@ -1,11 +1,15 @@
 package database
 
 import (
+	"time"
+
 	types "github.com/mthomasuk/terp-trermps/types"
 )
 
 // PlayHand submits your hand for a round
 func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
+	now := time.Now().Local()
+
 	rnd := types.Round{}
 	err := Conn.Get(&rnd, `SELECT * FROM "round" WHERE "round"."id" = $1`, roundID)
 	if err != nil {
@@ -90,9 +94,10 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 
 		for _, hand := range hnds[1:] {
 			_, err = Conn.NamedExec(`
-    		UPDATE "card_in_deck" SET deck_id = :win_deck_id WHERE card_id = :card_id AND deck_id = :lose_deck_id`,
+    		UPDATE "card_in_deck" SET deck_id = :win_deck_id, added_at = :added_at WHERE card_id = :card_id AND deck_id = :lose_deck_id`,
 				map[string]interface{}{
 					"win_deck_id":  win.DeckID,
+					"added_at":     now,
 					"card_id":      hand.CardID,
 					"lose_deck_id": hand.DeckID,
 				},

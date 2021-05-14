@@ -6,6 +6,7 @@ import Glyph from "./Glyph";
 
 interface Props {
   card: any;
+  next?: boolean;
   played?: boolean;
   selected?: boolean;
   selectedAttr?: string;
@@ -14,7 +15,11 @@ interface Props {
   onDrag?: (card: any) => void;
 }
 
-const Wrapper = styled.button<{ selected?: boolean; played?: boolean }>`
+const Wrapper = styled.button<{
+  selected?: boolean;
+  played?: boolean;
+  next?: boolean;
+}>`
   cursor: pointer;
   background-color: #fff;
   display: flex;
@@ -22,13 +27,14 @@ const Wrapper = styled.button<{ selected?: boolean; played?: boolean }>`
   justify-content: center;
   flex-direction: column;
   margin-right: ${({ played, selected }) =>
-    played || selected ? "0" : "-30px"};
+    played || selected ? "0" : "-197px"};
   padding: 0.5rem;
   border: solid 1px #dedede;
   box-shadow: 2px 2px 2px #ededed;
   border-radius: 4px;
   width: 200px;
   min-width: 200px;
+  min-height: 312px;
   z-index: 1;
   transition: transform 0.25s ease-in-out;
 
@@ -36,8 +42,8 @@ const Wrapper = styled.button<{ selected?: boolean; played?: boolean }>`
     margin-right: 0px;
   }
 
-  ${({ selected }) =>
-    !selected
+  ${({ selected, next }) =>
+    !selected && next
       ? `&:hover {
       transform: translateY(-30px);
       z-index: 2;
@@ -52,6 +58,24 @@ const Wrapper = styled.button<{ selected?: boolean; played?: boolean }>`
       0 0 30px 10px #e3c20f;
     `
       : ""}
+`;
+
+const Flipped = styled(Wrapper)`
+  background-color: #fff;
+
+  &:after {
+    background: linear-gradient(135deg, #e1e1e1 25%, transparent 25%) -50px 0,
+      linear-gradient(225deg, #e1e1e1 25%, transparent 25%) -50px 0,
+      linear-gradient(315deg, #e1e1e1 25%, transparent 25%),
+      linear-gradient(45deg, #e1e1e1 25%, transparent 25%);
+    background-color: #cfd8dc;
+    background-size: 100px 100px;
+    border-radius: 4px;
+    content: "";
+    height: 298px;
+    width: 182px;
+    position: absolute;
+  }
 `;
 
 const Info = styled.div`
@@ -110,6 +134,7 @@ const Card = ({
   selectedAttr,
   played = false,
   selected = false,
+  next = false,
 }: Props): ReactElement => {
   const onClick = () => (onSelectCard ? onSelectCard(card) : {});
   const onPlayCard = () => (onDrag ? onDrag(card) : {});
@@ -123,8 +148,9 @@ const Card = ({
   const selectWeapons = () => onSelect("weapons");
   const selectPower = () => onSelect("power");
 
-  return (
+  return next ? (
     <Wrapper
+      next
       onClick={onClick}
       onDrag={onPlayCard}
       played={played}
@@ -179,6 +205,8 @@ const Card = ({
         </Stats>
       </Info>
     </Wrapper>
+  ) : (
+    <Flipped />
   );
 };
 

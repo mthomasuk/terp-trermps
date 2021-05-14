@@ -70,13 +70,16 @@ func CreateDeck(userID, battleID string) (*types.Deck, error) {
 
 // AddCardToDeck associates a given card with a given deck
 func AddCardToDeck(cardID, deckID string) error {
+	now := time.Now().Local()
+
 	_, err := Conn.NamedExec(`
-		INSERT INTO "card_in_deck" (card_id,deck_id)
-    VALUES (:card_id,:deck_id)
+		INSERT INTO "card_in_deck" (card_id,deck_id,added_at)
+    VALUES (:card_id,:deck_id,:added_at)
   `,
 		map[string]interface{}{
-			"card_id": cardID,
-			"deck_id": deckID,
+			"card_id":  cardID,
+			"deck_id":  deckID,
+			"added_at": now,
 		},
 	)
 	if err != nil {
@@ -99,7 +102,7 @@ func RetrieveDeck(deckID string) (*types.Deck, error) {
 
 	crds := []types.Card{}
 
-	err = Conn.Select(&crds, `SELECT * FROM "card_in_deck" WHERE "deck"."id" = $1`, deckID)
+	err = Conn.Select(&crds, `SELECT * FROM "card_in_deck" WHERE "deck"."id" = $1 ORDER BY "deck"."added_at" ASC`, deckID)
 	if err != nil {
 		return nil, err
 	}
