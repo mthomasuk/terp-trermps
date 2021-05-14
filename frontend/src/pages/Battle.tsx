@@ -39,6 +39,17 @@ const Info = styled.div`
   }
 `;
 
+const H1 = styled.h1`
+  display: block;
+  font-weight: normal;
+
+  @media only screen and (max-width: 768px) {
+    & {
+      font-size: 1.15rem;
+    }
+  }
+`;
+
 const H2 = styled.h2`
   display: block;
   font-weight: normal;
@@ -81,6 +92,8 @@ const Battle = ({ match }: Props): ReactElement => {
   const currentUser = getSignedInUser();
 
   const currentRound = currentBattle?.rounds[currentBattle?.rounds.length - 1];
+  const isLeader = currentUser?.id === currentRound?.leader;
+
   const userDeck = currentBattle?.decks.find(
     ({ user_id }: any) => user_id === currentUser.id
   );
@@ -159,6 +172,11 @@ const Battle = ({ match }: Props): ReactElement => {
         <H2>
           This battle <strong>{statusMessage}</strong>
         </H2>
+        <H1>
+          {isLeader
+            ? "Choose your attribute to play!"
+            : "Waiting for other player to play hand"}
+        </H1>
         <Combatants>
           {!battleInProgress ? (
             <div>
@@ -179,7 +197,7 @@ const Battle = ({ match }: Props): ReactElement => {
         )}
         {battleInProgress && (
           <Cards
-            leader={currentUser?.id === currentRound?.leader}
+            leader={isLeader}
             cards={userDeck.cards}
             onSetAttribute={onSetAttribute}
             onPlayHand={onPlayHand}
