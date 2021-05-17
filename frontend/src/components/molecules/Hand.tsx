@@ -1,8 +1,10 @@
 import { useState, useEffect, useContext, ReactElement } from "react";
+import { useParams } from "react-router-dom";
 
 import styled from "styled-components";
 
 import { BattleControlContext } from "../context/BattleControlStore";
+import { useSocket } from "../context/Websocket";
 
 import Card from "./Card";
 
@@ -89,10 +91,16 @@ const Hand = ({
   onSelectCard,
   onSetDroppedCard,
 }: Props): ReactElement => {
-  const [cardInPlay, playCard] = useState<any | undefined>();
+  const { id }: any = useParams();
 
-  const [selectedAttr, selectAttr] = useState<string | undefined>(SA);
+  const { attributeSelected } = useSocket(id);
+
+  const [selectedAttr, selectAttr] = useState<string | undefined>(
+    attributeSelected || SA
+  );
   const [dropErr, setDropErr] = useState<string | undefined>();
+
+  const [cardInPlay, playCard] = useState<any | undefined>();
 
   const [isDraggedOver, setDragOver] = useState<boolean>(false);
 

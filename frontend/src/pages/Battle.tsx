@@ -119,7 +119,6 @@ const Battle = ({ match }: Props): ReactElement => {
           <pre>{window.location.href}</pre>
         </Share>
         <BattleStatus
-          id={id}
           isLeader={isLeader}
           selectedAttr={currentRound?.attribute}
         />
@@ -147,7 +146,7 @@ const Battle = ({ match }: Props): ReactElement => {
           />
         )}
       </Info>
-      {winningHand && winningHand.card ? (
+      {winningHand && winningHand.card && (
         <Disappear
           headline="WINNING HAND"
           info={
@@ -157,7 +156,8 @@ const Battle = ({ match }: Props): ReactElement => {
           }
           element={<Card next winner card={winningHand.card} />}
         />
-      ) : (
+      )}
+      {winningHand && !winningHand.card && (
         <Disappear
           headline="ROUND WAS A DRAW"
           info={<span>No winner</span>}

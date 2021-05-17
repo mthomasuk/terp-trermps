@@ -60,17 +60,21 @@ func PlayHand(hub *Hub) func(echo.Context) error {
 			msg.Card = crd
 			msg.UserID = round.WinningHand.UserID
 			msg.Name = round.WinningHand.Name
-		} else {
+		}
+
+		if round.IsDraw {
 			msg.Type = "round-is-a-draw"
 		}
 
-		b, err := json.Marshal(msg)
-		if err != nil {
-			c.Logger().Error(err)
-			return c.String(http.StatusServiceUnavailable, "Secret error I can't tell you about")
-		}
+		if msg.Type != "" {
+			b, err := json.Marshal(msg)
+			if err != nil {
+				c.Logger().Error(err)
+				return c.String(http.StatusServiceUnavailable, "Secret error I can't tell you about")
+			}
 
-		hub.broadcast <- b
+			hub.broadcast <- b
+		}
 
 		return c.JSON(http.StatusOK, &round)
 	}

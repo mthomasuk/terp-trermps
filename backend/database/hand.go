@@ -38,7 +38,7 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 
 	_, err = Conn.NamedExec(`
 		INSERT INTO "hand" (deck_id, round_id, card_id, value)
-    VALUES (:deck_id, :round_id, :card_id, :value)
+		VALUES (:deck_id, :round_id, :card_id, :value)
   `,
 		map[string]interface{}{
 			"deck_id":  deckID,
@@ -59,17 +59,17 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 	err = Conn.Select(
 		&hnds,
 		`SELECT "hand"."id",
-      "hand"."deck_id",
-      "hand"."round_id",
-      "hand"."card_id",
-      "hand"."value",
-      "user"."id" AS "user_id",
-      "user"."name" AS "name"
-    FROM "hand"
-    INNER JOIN "deck" ON "hand"."deck_id" = "deck"."id"
-    INNER JOIN "user" ON "deck"."user_id" = "user"."id"
-    WHERE "hand"."round_id" = $1
-    ORDER BY value DESC`,
+			"hand"."deck_id",
+			"hand"."round_id",
+			"hand"."card_id",
+			"hand"."value",
+			"user"."id" AS "user_id",
+			"user"."name" AS "name"
+		FROM "hand"
+		INNER JOIN "deck" ON "hand"."deck_id" = "deck"."id"
+		INNER JOIN "user" ON "deck"."user_id" = "user"."id"
+		WHERE "hand"."round_id" = $1
+		ORDER BY value DESC`,
 		roundID,
 	)
 	if err != nil {
@@ -91,14 +91,15 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 		win := hnds[0]
 
 		if win.Value == hnds[1].Value {
-			// Deal with a draw
 			_, err = CreateRound(rnd.BattleID, rnd.Leader.String)
 			if err != nil {
 				return nil, err
 			}
+
+			rnd.IsDraw = true
 		} else {
 			_, err = Conn.NamedExec(`
-    		UPDATE "card_in_deck" SET added_at = :added_at WHERE card_id = :card_id AND deck_id = :deck_id`,
+				UPDATE "card_in_deck" SET added_at = :added_at WHERE card_id = :card_id AND deck_id = :deck_id`,
 				map[string]interface{}{
 					"added_at": now,
 					"card_id":  win.CardID,
@@ -111,7 +112,7 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 
 			for _, hand := range hnds[1:] {
 				_, err = Conn.NamedExec(`
-      		UPDATE "card_in_deck" SET deck_id = :win_deck_id, added_at = :added_at WHERE card_id = :card_id AND deck_id = :lose_deck_id`,
+					UPDATE "card_in_deck" SET deck_id = :win_deck_id, added_at = :added_at WHERE card_id = :card_id AND deck_id = :lose_deck_id`,
 					map[string]interface{}{
 						"win_deck_id":  win.DeckID,
 						"added_at":     now,
@@ -131,7 +132,6 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 
 			rnd.WinningHand = win
 		}
-
 	}
 
 	return &rnd, nil

@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
+import { useParams } from "react-router-dom";
 
 import styled from "styled-components";
 
 import { useSocket } from "../context/Websocket";
 
 interface Props {
-  id: string;
   isLeader: boolean;
   selectedAttr?: string;
 }
@@ -21,7 +21,9 @@ const Status = styled.h1`
   }
 `;
 
-const BattleStatus = ({ id, isLeader, selectedAttr }: Props): ReactElement => {
+const BattleStatus = ({ isLeader, selectedAttr }: Props): ReactElement => {
+  const { id }: any = useParams();
+
   const { attributeSelected } = useSocket(id);
 
   let status = "Waiting for other player to choose card";
