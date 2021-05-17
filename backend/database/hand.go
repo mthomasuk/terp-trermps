@@ -154,7 +154,7 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 			// The highest counted hand equals the total number of cards
 			if hasWon {
 				_, err = Conn.NamedExec(`
-  				UPDATE "battle" SET winner = :winner WHERE id = :id`,
+					UPDATE "battle" SET winner = :winner WHERE id = :id`,
 					map[string]interface{}{
 						"winner": winner,
 						"id":     rnd.BattleID,

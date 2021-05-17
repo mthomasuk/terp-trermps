@@ -14,6 +14,7 @@ import { BattleControlContext } from "../components/context/BattleControlStore";
 import { UserControlContext } from "../components/context/UserControlStore";
 import { useSocket } from "../components/context/Websocket";
 
+import Loader from "../components/atoms/Loader";
 import Disappear from "../components/atoms/Disappear";
 
 import BattleStatus from "../components/molecules/BattleStatus";
@@ -21,6 +22,7 @@ import Card from "../components/molecules/Card";
 import FakeCard from "../components/molecules/FakeCard";
 import Cards from "../components/molecules/Cards";
 import Combatants from "../components/molecules/Combatants";
+import EnemiesCrushed from "../components/molecules/EnemiesCrushed";
 
 import { USER_JOINED_BATTLE } from "../constants";
 
@@ -72,6 +74,7 @@ const Battle = ({ match }: Props): ReactElement => {
 
   const canStartBattle = !battleHasStarted && !currentBattle?.started_at;
   const battleInProgress = battleHasStarted || currentBattle?.started_at;
+  const enemiesCrushed = battleHasEnded || currentBattle?.winner;
 
   const userDeck = currentBattle?.decks.find(
     ({ user_id }: any) => user_id === currentUser.id
@@ -110,6 +113,14 @@ const Battle = ({ match }: Props): ReactElement => {
   useEffect(() => {
     fetchBattle();
   }, [fetchBattle, winningHand]);
+
+  if (!currentBattle) {
+    return <Loader />;
+  }
+
+  if (enemiesCrushed) {
+    return <EnemiesCrushed victor={{ id: currentBattle?.winner as string }} />;
+  }
 
   return !battleHasEnded ? (
     <Wrapper>
