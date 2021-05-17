@@ -10,9 +10,41 @@ import (
 func GetRounds(battleID string) (*[]types.Round, error) {
 	rnds := []types.Round{}
 
-	err := Conn.Select(&rnds, `SELECT * FROM "round" WHERE "round"."battle_id" = $1`, battleID)
+	err := Conn.Select(
+		&rnds,
+		`SELECT * FROM "round" WHERE "round"."battle_id" = $1 ORDER BY "round"."started_at" DESC`,
+		battleID,
+	)
 	if err != nil {
 		return nil, err
+	}
+
+	for idx, rnd := range rnds {
+		win := types.Hand{}
+		err = Conn.Get(
+			&win,
+			`SELECT "hand"."id",
+        "hand"."deck_id",
+        "hand"."round_id",
+        "hand"."card_id",
+        "hand"."value",
+        "user"."id" AS "user_id",
+        "user"."name" AS "name"
+      FROM "hand"
+      INNER JOIN "deck" ON "hand"."deck_id" = "deck"."id"
+      JOIN "user" ON "deck"."user_id" = "user"."id"
+      WHERE "hand"."round_id" = $1
+      ORDER BY value DESC
+      LIMIT 1`,
+			rnd.ID,
+		)
+		if err != nil {
+			if err.Error() != noSQLResults {
+				return nil, err
+			}
+		} else {
+			rnds[idx].WinningHand = win
+		}
 	}
 
 	return &rnds, nil

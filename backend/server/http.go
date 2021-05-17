@@ -16,6 +16,7 @@ func HTTPServer(port string) {
 	e := echo.New()
 
 	e.Use(middleware.Recover())
+	e.Use(middleware.Gzip())
 
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte("poopyass"))))
 

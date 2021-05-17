@@ -4,7 +4,8 @@ import styled, { keyframes } from "styled-components";
 
 interface Props {
   element: ReactElement;
-  name: string;
+  headline: string;
+  info: ReactElement;
 }
 
 const fadeOut = keyframes`
@@ -17,7 +18,7 @@ const fadeOut = keyframes`
   }
 `;
 
-const Disappear = styled.section`
+const Fade = styled.section`
   background-color: rgba(255, 255, 255, 0.6);
   position: fixed;
   bottom: 0;
@@ -38,14 +39,12 @@ const H1 = styled.h1`
   margin: 0;
 `;
 
-const Toast = ({ element, name }: Props): ReactElement => (
-  <Disappear>
-    <H1>WINNING CARD</H1>
-    <p>
-      Played by: <strong>{name}</strong>
-    </p>
+const Disappear = ({ element, info, headline }: Props): ReactElement => (
+  <Fade>
+    <H1>{headline}</H1>
+    {info}
     <div>{element}</div>
-  </Disappear>
+  </Fade>
 );
 
-export default Toast;
+export default Disappear;

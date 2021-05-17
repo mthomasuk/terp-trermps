@@ -10,6 +10,8 @@ import (
 	_ "github.com/lib/pq"
 )
 
+const noSQLResults = "sql: no rows in result set"
+
 var schema = `
   CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
@@ -68,6 +70,7 @@ var schema = `
     battle_id     UUID,
     attribute     VARCHAR,
     leader        UUID,
+    started_at    TIMESTAMPZ DEFAULT now(),
     FOREIGN KEY (battle_id)
       REFERENCES "battle" (id)
       ON DELETE CASCADE,

@@ -2,7 +2,10 @@ import { ReactElement } from "react";
 
 import styled, { css, keyframes } from "styled-components";
 
-import Glyph from "./Glyph";
+import Glyph from "../atoms/Glyph";
+import FrontFace from "../atoms/FrontFace";
+import BackFace from "../atoms/BackFace";
+import CardStats from "../atoms/CardStats";
 
 interface Props {
   card: any;
@@ -109,31 +112,6 @@ const Inner = styled.div<{
     }};
 `;
 
-const Face = styled.div`
-  background-color: #fff;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
-
-const Front = styled(Face)``;
-
-const Back = styled(Face)`
-  transform: rotateY(180deg);
-  background: linear-gradient(135deg, #e1e1e1 25%, transparent 25%) -50px 0,
-    linear-gradient(225deg, #e1e1e1 25%, transparent 25%) -50px 0,
-    linear-gradient(315deg, #e1e1e1 25%, transparent 25%),
-    linear-gradient(45deg, #e1e1e1 25%, transparent 25%);
-  background-color: #cfd8dc;
-  background-size: 100px 100px;
-  border-radius: 4px;
-`;
-
 const Info = styled.div`
   border: solid 1px #dedede;
   padding: 0.5rem;
@@ -154,34 +132,6 @@ const Name = styled.p`
   text-transform: uppercase;
 `;
 
-const Stats = styled.div``;
-
-const Row = styled.div<{ selected?: boolean; isAttr?: boolean }>`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: all 0.25s ease-in-out;
-
-  ${({ isAttr }) =>
-    isAttr
-      ? `
-    background-color: #efefef;
-    color: #e65252;
-    padding: 0.25rem;
-    transform: scale(1.05);
-  `
-      : ""}
-
-  ${({ selected }) =>
-    selected
-      ? `&:hover {
-      background-color: #efefef;
-      padding: 0.25rem;
-      transform: scale(1.05);
-    }`
-      : ""}
-`;
-
 const Card = ({
   card,
   onSelectCard,
@@ -196,15 +146,6 @@ const Card = ({
   const onClick = () => (onSelectCard && next ? onSelectCard(card) : {});
   const onPlayCard = () => (onDrag ? onDrag(card) : {});
 
-  const onSelect = (attr: any) =>
-    onSelectAttribute ? onSelectAttribute(attr) : {};
-
-  const selectStrength = () => onSelect("strength");
-  const selectSkill = () => onSelect("skill");
-  const selectMagic = () => onSelect("magical_force");
-  const selectWeapons = () => onSelect("weapons");
-  const selectPower = () => onSelect("power");
-
   return (
     <Wrapper
       next={next}
@@ -215,56 +156,20 @@ const Card = ({
       draggable={selected}
     >
       <Inner next={next} winner={winner}>
-        <Front>
+        <FrontFace>
           <Glyph type={card.type} />
           <Info>
             <Type>{card.type}</Type>
             <Name>{card.name}</Name>
-            <Stats>
-              <Row
-                selected={selected}
-                onClick={selectStrength}
-                isAttr={selectedAttr === "strength"}
-              >
-                <span>Strength</span>
-                <span>{card.strength}</span>
-              </Row>
-              <Row
-                selected={selected}
-                onClick={selectSkill}
-                isAttr={selectedAttr === "skill"}
-              >
-                <span>Skill</span>
-                <span>{card.skill}</span>
-              </Row>
-              <Row
-                selected={selected}
-                onClick={selectMagic}
-                isAttr={selectedAttr === "magical_force"}
-              >
-                <span>Magical Force</span>
-                <span>{card.magical_force}</span>
-              </Row>
-              <Row
-                selected={selected}
-                onClick={selectWeapons}
-                isAttr={selectedAttr === "weapons"}
-              >
-                <span>Weapons</span>
-                <span>{card.weapons}</span>
-              </Row>
-              <Row
-                selected={selected}
-                onClick={selectPower}
-                isAttr={selectedAttr === "power"}
-              >
-                <span>Power</span>
-                <span>{card.power}</span>
-              </Row>
-            </Stats>
+            <CardStats
+              card={card}
+              selected={selected}
+              selectedAttr={selectedAttr}
+              onSelectAttribute={onSelectAttribute}
+            />
           </Info>
-        </Front>
-        <Back />
+        </FrontFace>
+        <BackFace />
       </Inner>
     </Wrapper>
   );

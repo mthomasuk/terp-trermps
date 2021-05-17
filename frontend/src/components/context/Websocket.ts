@@ -21,8 +21,8 @@ export function useSocket(id: string) {
   const [winningHand, setWinningHand] = useState<any | undefined>();
   const [attributeSelected, setAttribute] = useState<string | undefined>();
 
-  const [battleHasStarted, startRound] = useState(false);
-  const [battleHasEnded, endRound] = useState(false);
+  const [battleHasStarted, startBattle] = useState(false);
+  const [battleHasEnded, endBattle] = useState(false);
 
   const battleId = useRef(id).current;
 
@@ -65,7 +65,7 @@ export function useSocket(id: string) {
               }
 
               if (type === BATTLE_START) {
-                startRound(true);
+                startBattle(true);
               }
 
               if (type === WINNING_HAND_PLAYED) {
@@ -81,7 +81,7 @@ export function useSocket(id: string) {
               }
 
               if (type === BATTLE_END) {
-                endRound(true);
+                endBattle(true);
               }
             });
           } catch (err) {

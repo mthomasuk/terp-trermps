@@ -49,6 +49,7 @@ type Round struct {
 	BattleID    string     `db:"battle_id" json:"battle_id"`
 	Attribute   NullString `json:"attribute"`
 	Leader      NullString `json:"leader,omitempty"`
+	StartedAt   NullTime   `db:"started_at" json:"started_at"`
 	WinningHand Hand       `json:"winning_hand,omitempty"`
 }
 

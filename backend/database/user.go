@@ -28,7 +28,7 @@ func InsertOrLoginUser(name string, password string) (*types.User, error) {
 	err := Conn.Get(&u, `SELECT * FROM "user" WHERE name = $1`, name)
 	if err != nil {
 		// No user found, let's insert a new one
-		if err.Error() != "sql: no rows in result set" {
+		if err.Error() != noSQLResults {
 			return nil, err
 		}
 
