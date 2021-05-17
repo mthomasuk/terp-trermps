@@ -34,7 +34,7 @@ const BattleStatus = ({
   let status = "Waiting for the battle to start";
 
   if (battleInProgress) {
-    status = "Waiting for other player to choose card";
+    status = "Waiting for other player(s)";
   }
 
   if (isLeader) {
