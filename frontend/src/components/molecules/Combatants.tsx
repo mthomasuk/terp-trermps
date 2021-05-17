@@ -6,7 +6,7 @@ import uniqBy from "lodash.uniqby";
 
 interface Props {
   battleInProgress: boolean;
-  decks: any[];
+  combatants: any[];
 }
 
 const Container = styled.div`
@@ -15,19 +15,21 @@ const Container = styled.div`
 
 const Combatants = ({
   battleInProgress = false,
-  decks,
+  combatants,
 }: Props): ReactElement => {
-  const [currentDecks, setCurrentDecks] = useState<any>([]);
+  const [currentCombatants, setCurrentCombatants] = useState<any>([]);
 
   useEffect(() => {
-    setCurrentDecks((prev: any) => uniqBy([...prev, ...decks], "user_id"));
-  }, [decks]);
+    setCurrentCombatants((prev: any) =>
+      uniqBy([...prev, ...combatants], "user_id")
+    );
+  }, [combatants]);
 
   return (
     <Container>
       {!battleInProgress ? (
         <div>
-          {currentDecks.map(({ user_id, name }: any) => (
+          {currentCombatants.map(({ user_id, name }: any) => (
             <div key={user_id}>{name} is ready to do battle</div>
           ))}
         </div>

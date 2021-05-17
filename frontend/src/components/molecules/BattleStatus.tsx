@@ -7,6 +7,7 @@ import { useSocket } from "../context/Websocket";
 
 interface Props {
   isLeader: boolean;
+  battleInProgress: boolean;
   selectedAttr?: string;
 }
 
@@ -21,12 +22,20 @@ const Status = styled.h1`
   }
 `;
 
-const BattleStatus = ({ isLeader, selectedAttr }: Props): ReactElement => {
+const BattleStatus = ({
+  battleInProgress,
+  isLeader,
+  selectedAttr,
+}: Props): ReactElement => {
   const { id }: any = useParams();
 
   const { attributeSelected } = useSocket(id);
 
-  let status = "Waiting for other player to choose card";
+  let status = "Waiting for the battle to start";
+
+  if (battleInProgress) {
+    status = "Waiting for other player to choose card";
+  }
 
   if (isLeader) {
     status = "Choose your attribute to play!";

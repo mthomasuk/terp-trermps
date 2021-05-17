@@ -8,6 +8,8 @@ import {
 
 import styled from "styled-components";
 
+import uniqBy from "lodash.uniqby";
+
 import { useHistory, Redirect, RouteComponentProps } from "react-router-dom";
 
 import { BattleControlContext } from "../components/context/BattleControlStore";
@@ -70,13 +72,25 @@ const Battle = ({ match }: Props): ReactElement => {
   const currentUser = getSignedInUser();
 
   const [currentRound] = currentBattle?.rounds || [];
-  const isLeader = currentUser?.id === currentRound?.leader;
 
-  const canStartBattle = !battleHasStarted && !currentBattle?.started_at;
+  const isLeader = currentUser?.id === currentRound?.leader;
+  const fightersInArena = uniqBy(
+    [
+      ...(currentBattle ? currentBattle.decks : []),
+      ...messages.filter(({ type }) => type === USER_JOINED_BATTLE),
+    ],
+    "user_id"
+  );
+
+  const canStartBattle =
+    !battleHasStarted &&
+    !currentBattle?.started_at &&
+    fightersInArena.length > 1;
+
   const battleInProgress = battleHasStarted || currentBattle?.started_at;
   const enemiesCrushed = battleHasEnded || currentBattle?.winner;
 
-  const userDeck = currentBattle?.decks.find(
+  const userDeck = (currentBattle?.decks || []).find(
     ({ user_id }: any) => user_id === currentUser.id
   );
 
@@ -131,14 +145,12 @@ const Battle = ({ match }: Props): ReactElement => {
         </Share>
         <BattleStatus
           isLeader={isLeader}
+          battleInProgress={battleInProgress}
           selectedAttr={currentRound?.attribute}
         />
         <Combatants
           battleInProgress={battleInProgress}
-          decks={[
-            ...(currentBattle ? currentBattle.decks : []),
-            ...messages.filter(({ type }) => type === USER_JOINED_BATTLE),
-          ]}
+          combatants={fightersInArena}
         />
         {canStartBattle && (
           <Buttons>

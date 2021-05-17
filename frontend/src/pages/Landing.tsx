@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { UserControlContext } from "../components/context/UserControlStore";
 import { BattleControlContext } from "../components/context/BattleControlStore";
 
+import Button from "../components/atoms/Button";
+
 const Container = styled.section`
   min-height: 100vh;
   display: flex;
@@ -45,7 +47,7 @@ const Landing = (): ReactElement => {
         <h2>
           hi <strong>{user && user.name}</strong>
         </h2>
-        <button onClick={onClick}>Start New Battle</button>
+        <Button onClick={onClick}>Start New Battle</Button>
       </Container>
     </>
   );

@@ -94,17 +94,14 @@ const Hand = ({
   const { id }: any = useParams();
 
   const { attributeSelected } = useSocket(id);
+  const { setAttribute } = useContext(BattleControlContext);
 
-  const [selectedAttr, selectAttr] = useState<string | undefined>(
-    attributeSelected || SA
-  );
+  const [selectedAttr, selectAttr] = useState<string | undefined>();
   const [dropErr, setDropErr] = useState<string | undefined>();
 
   const [cardInPlay, playCard] = useState<any | undefined>();
 
   const [isDraggedOver, setDragOver] = useState<boolean>(false);
-
-  const { setAttribute } = useContext(BattleControlContext);
 
   const onSelectAttribute = async (attr: string) => {
     if (!leader) {
@@ -113,9 +110,8 @@ const Hand = ({
 
     if (attr !== selectedAttr) {
       await setAttribute(roundId, attr);
+      selectAttr((prev) => (attr === prev ? undefined : attr));
     }
-
-    selectAttr((prev) => (attr === prev ? undefined : attr));
   };
 
   const onDragOver = (event: any) => {
@@ -152,6 +148,15 @@ const Hand = ({
 
     setDragOver(false);
   }, [cards]);
+
+  useEffect(() => {
+    if (SA) {
+      selectAttr(SA);
+    }
+    if (attributeSelected) {
+      selectAttr(attributeSelected);
+    }
+  }, [SA, attributeSelected]);
 
   return (
     <Container>
