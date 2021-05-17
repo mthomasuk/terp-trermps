@@ -39,7 +39,7 @@ const Moji = styled.div`
 `;
 
 const Glyph = ({ type }: Props): ReactElement => (
-  <Moji>{EMOJI_MAP[type] || "✨"}</Moji>
+  <Moji>{EMOJI_MAP[type] || "❓"}</Moji>
 );
 
 export default Glyph;

@@ -37,37 +37,40 @@ func PlayHand(hub *Hub) func(echo.Context) error {
 			return c.String(http.StatusBadRequest, "Failed to submit hand")
 		}
 
-		if round.WinningHand.ID != "" {
-			battleID := c.Param("id")
+		battleID := c.Param("id")
 
+		var msg struct {
+			Type     string      `json:"type"`
+			BattleID string      `json:"battle_id"`
+			Card     *types.Card `json:"card,omitempty"`
+			UserID   string      `json:"user_id,omitempy"`
+			Name     string      `json:"name,omitempty"`
+		}
+
+		msg.BattleID = battleID
+
+		if round.WinningHand.ID != "" {
 			crd, err := database.GetCardByID(round.WinningHand.CardID)
 			if err != nil {
 				c.Logger().Error(err)
 				return c.String(http.StatusServiceUnavailable, "Secret error I can't tell you about")
 			}
 
-			msg := struct {
-				Type     string      `json:"type"`
-				BattleID string      `json:"battle_id"`
-				Card     *types.Card `json:"card"`
-				UserID   string      `json:"user_id"`
-				Name     string      `json:"name"`
-			}{
-				Type:     "winning-hand-played",
-				BattleID: battleID,
-				Card:     crd,
-				UserID:   round.WinningHand.UserID,
-				Name:     round.WinningHand.Name,
-			}
-
-			b, err := json.Marshal(msg)
-			if err != nil {
-				c.Logger().Error(err)
-				return c.String(http.StatusServiceUnavailable, "Secret error I can't tell you about")
-			}
-
-			hub.broadcast <- b
+			msg.Type = "winning-hand-played"
+			msg.Card = crd
+			msg.UserID = round.WinningHand.UserID
+			msg.Name = round.WinningHand.Name
+		} else {
+			msg.Type = "round-is-a-draw"
 		}
+
+		b, err := json.Marshal(msg)
+		if err != nil {
+			c.Logger().Error(err)
+			return c.String(http.StatusServiceUnavailable, "Secret error I can't tell you about")
+		}
+
+		hub.broadcast <- b
 
 		return c.JSON(http.StatusOK, &round)
 	}

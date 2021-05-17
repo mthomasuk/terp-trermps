@@ -87,44 +87,51 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 		return nil, err
 	}
 
-	// Deal with a draw
-
 	if len(hnds) == cntD.Count {
 		win := hnds[0]
 
-		_, err = Conn.NamedExec(`
-  		UPDATE "card_in_deck" SET added_at = :added_at WHERE card_id = :card_id AND deck_id = :deck_id`,
-			map[string]interface{}{
-				"added_at": now,
-				"card_id":  win.CardID,
-				"deck_id":  win.DeckID,
-			},
-		)
-		if err != nil {
-			return nil, err
-		}
-
-		for _, hand := range hnds[1:] {
+		if win.Value == hnds[1].Value {
+			// Deal with a draw
+			_, err = CreateRound(rnd.BattleID, rnd.Leader.String)
+			if err != nil {
+				return nil, err
+			}
+		} else {
 			_, err = Conn.NamedExec(`
-    		UPDATE "card_in_deck" SET deck_id = :win_deck_id, added_at = :added_at WHERE card_id = :card_id AND deck_id = :lose_deck_id`,
+    		UPDATE "card_in_deck" SET added_at = :added_at WHERE card_id = :card_id AND deck_id = :deck_id`,
 				map[string]interface{}{
-					"win_deck_id":  win.DeckID,
-					"added_at":     now,
-					"card_id":      hand.CardID,
-					"lose_deck_id": hand.DeckID,
+					"added_at": now,
+					"card_id":  win.CardID,
+					"deck_id":  win.DeckID,
 				},
 			)
 			if err != nil {
 				return nil, err
 			}
+
+			for _, hand := range hnds[1:] {
+				_, err = Conn.NamedExec(`
+      		UPDATE "card_in_deck" SET deck_id = :win_deck_id, added_at = :added_at WHERE card_id = :card_id AND deck_id = :lose_deck_id`,
+					map[string]interface{}{
+						"win_deck_id":  win.DeckID,
+						"added_at":     now,
+						"card_id":      hand.CardID,
+						"lose_deck_id": hand.DeckID,
+					},
+				)
+				if err != nil {
+					return nil, err
+				}
+			}
+
+			_, err = CreateRound(rnd.BattleID, win.UserID)
+			if err != nil {
+				return nil, err
+			}
+
+			rnd.WinningHand = win
 		}
 
-		_, err = CreateRound(rnd.BattleID, win.UserID)
-		if err != nil {
-			return nil, err
-		}
-
-		rnd.WinningHand = win
 	}
 
 	return &rnd, nil

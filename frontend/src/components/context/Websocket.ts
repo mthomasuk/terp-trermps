@@ -6,6 +6,7 @@ import {
   BATTLE_START,
   BATTLE_END,
   WINNING_HAND_PLAYED,
+  ROUND_IS_A_DRAW,
   ROUND_ATTRIBUTE_SELECTED,
 } from "../../constants";
 
@@ -73,6 +74,14 @@ export function useSocket(id: string) {
                   user: rest.user_id,
                   name: rest.name,
                   card: rest.card,
+                });
+              }
+
+              if (type === ROUND_IS_A_DRAW) {
+                setWinningHand({
+                  user: null,
+                  name: null,
+                  card: null,
                 });
               }
 

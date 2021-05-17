@@ -18,6 +18,7 @@ import Disappear from "../components/atoms/Disappear";
 
 import BattleStatus from "../components/molecules/BattleStatus";
 import Card from "../components/molecules/Card";
+import FakeCard from "../components/molecules/FakeCard";
 import Cards from "../components/molecules/Cards";
 import Combatants from "../components/molecules/Combatants";
 
@@ -146,15 +147,21 @@ const Battle = ({ match }: Props): ReactElement => {
           />
         )}
       </Info>
-      {winningHand && (
+      {winningHand && winningHand.card ? (
         <Disappear
+          headline="WINNING HAND"
           info={
             <span>
               Played by: <strong>{winningHand.name}</strong>
             </span>
           }
-          headline="WINNING HAND"
           element={<Card next winner card={winningHand.card} />}
+        />
+      ) : (
+        <Disappear
+          headline="ROUND WAS A DRAW"
+          info={<span>No winner</span>}
+          element={<FakeCard />}
         />
       )}
     </Wrapper>
