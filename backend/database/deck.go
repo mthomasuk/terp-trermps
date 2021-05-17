@@ -143,3 +143,37 @@ func GenerateDecks(decks []string) error {
 
 	return nil
 }
+
+// CheckForWinningDeck returns a boolean and UserID if a winner is found
+func CheckForWinningDeck(battleID string) (bool, string, error) {
+	cntW := []types.CardsLeftInDeck{}
+	cntC := count{}
+
+	err := Conn.Select(
+		&cntW,
+		`SELECT "deck"."id" AS "deck_id",
+			"user"."id" AS "user_id",
+			count("card_in_deck"."card_id")
+		FROM "deck"
+		INNER JOIN "card_in_deck" ON "deck"."id" = "card_in_deck"."deck_id"
+		INNER JOIN "user" ON "deck"."user_id" = "user"."id"
+		WHERE "deck"."battle_id" = $1
+		GROUP BY "deck"."id", "user"."id"
+		ORDER BY count DESC`,
+		battleID,
+	)
+	if err != nil {
+		return false, "", err
+	}
+
+	err = Conn.Get(&cntC, `SELECT count(id) FROM "card"`)
+	if err != nil {
+		return false, "", err
+	}
+
+	if cntW[0].Count == cntC.Count {
+		return true, cntW[0].UserID, nil
+	}
+
+	return false, "", nil
+}

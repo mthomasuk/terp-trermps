@@ -64,3 +64,10 @@ type Hand struct {
 	Name    string `json:"name,omitempty"`
 	UserID  string `db:"user_id" json:"user_id,omitempty"`
 }
+
+// CardsLeftInDeck is used to tally users based on a count of another column
+type CardsLeftInDeck struct {
+	DeckID string `db:"deck_id"`
+	Count  int
+	UserID string `db:"user_id"`
+}

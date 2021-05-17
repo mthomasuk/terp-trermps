@@ -21,6 +21,8 @@ var schema = `
     password TEXT NOT NULL
   );
 
+  CREATE INDEX ON "user" (name);
+
   CREATE TABLE IF NOT EXISTS "card" (
     id            UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
     name          TEXT NOT NULL,
@@ -53,6 +55,8 @@ var schema = `
       ON DELETE CASCADE
   );
 
+  CREATE INDEX ON "deck" (battle_id);
+
   CREATE TABLE IF NOT EXISTS "card_in_deck" (
     card_id       UUID,
     deck_id       UUID,
@@ -64,6 +68,8 @@ var schema = `
       REFERENCES "deck" (id)
       ON DELETE CASCADE
   );
+
+  CREATE INDEX ON "card_in_deck" (deck_id);
 
   CREATE TABLE IF NOT EXISTS "round" (
     id            UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
@@ -78,6 +84,8 @@ var schema = `
       REFERENCES "user" (id)
       ON DELETE CASCADE
   );
+
+  CREATE INDEX ON "round" (started_at);
 
   CREATE TABLE IF NOT EXISTS "hand" (
     id            UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
@@ -95,6 +103,8 @@ var schema = `
       REFERENCES "card" (id)
       ON DELETE CASCADE
   );
+
+  CREATE INDEX ON "hand" (round_id);
 `
 
 // Conn is an initialized DB connection

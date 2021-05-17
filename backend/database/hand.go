@@ -6,6 +6,37 @@ import (
 	types "github.com/mthomasuk/terp-trermps/types"
 )
 
+type count struct {
+	Count int
+}
+
+// GetHandsByRound retrieves all hands for a given round
+func GetHandsByRound(roundID string) ([]types.Hand, error) {
+	hnds := []types.Hand{}
+
+	err := Conn.Select(
+		&hnds,
+		`SELECT "hand"."id",
+			"hand"."deck_id",
+			"hand"."round_id",
+			"hand"."card_id",
+			"hand"."value",
+			"user"."id" AS "user_id",
+			"user"."name" AS "name"
+		FROM "hand"
+		INNER JOIN "deck" ON "hand"."deck_id" = "deck"."id"
+		INNER JOIN "user" ON "deck"."user_id" = "user"."id"
+		WHERE "hand"."round_id" = $1
+		ORDER BY value DESC`,
+		roundID,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return hnds, nil
+}
+
 // PlayHand submits your hand for a round
 func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 	now := time.Now().Local()
@@ -51,27 +82,7 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 		return nil, err
 	}
 
-	type count struct {
-		Count int
-	}
-
-	hnds := []types.Hand{}
-	err = Conn.Select(
-		&hnds,
-		`SELECT "hand"."id",
-			"hand"."deck_id",
-			"hand"."round_id",
-			"hand"."card_id",
-			"hand"."value",
-			"user"."id" AS "user_id",
-			"user"."name" AS "name"
-		FROM "hand"
-		INNER JOIN "deck" ON "hand"."deck_id" = "deck"."id"
-		INNER JOIN "user" ON "deck"."user_id" = "user"."id"
-		WHERE "hand"."round_id" = $1
-		ORDER BY value DESC`,
-		roundID,
-	)
+	hnds, err := GetHandsByRound(roundID)
 	if err != nil {
 		return nil, err
 	}
@@ -87,10 +98,12 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 		return nil, err
 	}
 
+	// Everyone has played a hand
 	if len(hnds) == cntD.Count {
 		win := hnds[0]
 
 		if win.Value == hnds[1].Value {
+			// It's a draw
 			_, err = CreateRound(rnd.BattleID, rnd.Leader.String)
 			if err != nil {
 				return nil, err
@@ -98,6 +111,7 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 
 			rnd.IsDraw = true
 		} else {
+			// There's a clear winner
 			_, err = Conn.NamedExec(`
 				UPDATE "card_in_deck" SET added_at = :added_at WHERE card_id = :card_id AND deck_id = :deck_id`,
 				map[string]interface{}{
@@ -131,6 +145,25 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 			}
 
 			rnd.WinningHand = win
+
+			hasWon, winner, err := CheckForWinningDeck(rnd.BattleID)
+			if err != nil {
+				return nil, err
+			}
+
+			// The highest counted hand equals the total number of cards
+			if hasWon {
+				_, err = Conn.NamedExec(`
+  				UPDATE "battle" SET winner = :winner WHERE id = :id`,
+					map[string]interface{}{
+						"winner": winner,
+						"id":     rnd.BattleID,
+					},
+				)
+				if err != nil {
+					return nil, err
+				}
+			}
 		}
 	}
 
