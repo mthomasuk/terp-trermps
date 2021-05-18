@@ -1,16 +1,19 @@
 import { useState, useEffect, ReactElement } from "react";
+import { useParams } from "react-router-dom";
 
 import styled from "styled-components";
+
+import { useSocket } from "../context/Websocket";
 
 import Card from "./Card";
 import Hand from "./Hand";
 
 interface Props {
   cards: any[];
-  selectedAttr?: string;
   roundId: string;
   onPlayHand: (hand: any) => void;
   leader: boolean;
+  selectedAttr?: string;
 }
 
 const Container = styled.div`
@@ -39,16 +42,24 @@ const Deck = styled.div`
 
 const Cards = ({
   cards,
-  selectedAttr,
   roundId,
   onPlayHand,
+  selectedAttr,
   leader = false,
 }: Props): ReactElement => {
+  const { id }: any = useParams();
+
+  const { attributeSelected } = useSocket(id);
+
   const [selectedCard, selectCard] = useState<any | undefined>();
   const [droppedCard, setDroppedCard] = useState<any | undefined>();
 
+  const canPlayHand = leader || attributeSelected || selectedAttr;
+
   const onSelect = (card: any) => {
-    selectCard(card);
+    if (canPlayHand) {
+      selectCard(card);
+    }
   };
 
   useEffect(() => {
@@ -72,17 +83,19 @@ const Cards = ({
               />
             ))}
       </Deck>
-      <Hand
-        cards={cards}
-        roundId={roundId}
-        onPlayHand={onPlayHand}
-        leader={leader}
-        selectedCard={selectedCard}
-        selectedAttr={selectedAttr}
-        droppedCard={droppedCard}
-        onSelectCard={selectCard}
-        onSetDroppedCard={setDroppedCard}
-      />
+      {canPlayHand && (
+        <Hand
+          cards={cards}
+          roundId={roundId}
+          onPlayHand={onPlayHand}
+          leader={leader}
+          selectedCard={selectedCard}
+          selectedAttr={selectedAttr}
+          droppedCard={droppedCard}
+          onSelectCard={selectCard}
+          onSetDroppedCard={setDroppedCard}
+        />
+      )}
     </Container>
   );
 };

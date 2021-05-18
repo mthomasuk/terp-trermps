@@ -37,11 +37,11 @@ const BattleStatus = ({
   let status = "Waiting for the battle to start";
 
   if (battleInProgress) {
-    status = "Waiting for other player(s)";
+    status = "Your enemy is plotting something...";
   }
 
   if (isLeader) {
-    status = "Choose your attribute to play!";
+    status = "Choose your card & attribute!";
   }
 
   if (attributeSelected || selectedAttr) {

@@ -53,6 +53,13 @@ const Play = styled.div`
 `;
 
 const InPlay = styled(Play)`
+  &:before {
+    position: absolute;
+    content: "✋";
+    font-size: 1.15rem;
+    top: -2rem;
+  }
+
   &:after {
     position: absolute;
     color: #acacac;
@@ -68,8 +75,28 @@ const InPlay = styled(Play)`
   }
 `;
 
-const ToPlay = styled(Play)<{ isDraggedOver?: boolean; error?: string }>`
+const ToPlay = styled(Play)<{
+  isDraggedOver?: boolean;
+  error?: string;
+  leader?: boolean;
+}>`
   transition: transform 0.25s ease-in-out;
+
+  &:before {
+    position: absolute;
+    ${({ leader }) => {
+      if (leader) {
+        return `
+          content: "🗡️";
+        `;
+      }
+      return `
+        content: "🛡️";
+      `;
+    }};
+    font-size: 1.15rem;
+    top: -2rem;
+  }
 
   &:after {
     position: absolute;
@@ -190,6 +217,7 @@ const Hand = ({
         onDragLeave={onDragLeave}
         onDrop={onDrop}
         error={dropErr}
+        leader={leader}
       >
         {droppedCard && (
           <Card
