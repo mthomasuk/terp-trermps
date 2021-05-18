@@ -13,14 +13,19 @@ interface Props {
   leader: boolean;
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
 
 const Deck = styled.div`
   display: flex;
   align-items: stretch;
   justify-content: center;
   flex-direction: row-reverse;
-  margin: 0 2rem;
+  margin: 0;
   padding: 1rem;
   padding-top: 2rem;
   overflow-x: scroll;

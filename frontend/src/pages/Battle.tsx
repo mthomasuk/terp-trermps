@@ -30,20 +30,16 @@ import { USER_JOINED_BATTLE } from "../constants";
 
 interface Props extends RouteComponentProps<{ id: string }> {}
 
-const Wrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-`;
-
 const Share = styled.div`
   font-size: 0.75rem;
 `;
 
 const Info = styled.div`
-  @media only screen and (max-width: 768px) {
-    padding: 0 0.5rem;
-  }
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 `;
 
 const Buttons = styled.div`
@@ -137,7 +133,7 @@ const Battle = ({ match }: Props): ReactElement => {
   }
 
   return !battleHasEnded ? (
-    <Wrapper>
+    <>
       <Info>
         <Share>
           <p>Share this link to join the battle:</p>
@@ -187,7 +183,7 @@ const Battle = ({ match }: Props): ReactElement => {
           element={<FakeCard />}
         />
       )}
-    </Wrapper>
+    </>
   ) : (
     <Redirect to={`/battle/${id}/results`} />
   );
