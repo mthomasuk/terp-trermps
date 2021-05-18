@@ -96,8 +96,8 @@ const Inner = styled.div<{
   winner?: boolean;
 }>`
   border: solid 1px #dedede;
-  box-shadow: 2px 2px 2px #ededed;
-  border-radius: 4px;
+  box-shadow: 1px 1px 1px #dedede;
+  border-radius: 7px;
   position: absolute;
   top: 0;
   right: 0;

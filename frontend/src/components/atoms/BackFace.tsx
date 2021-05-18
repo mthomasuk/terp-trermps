@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const Face = styled.div`
+  border-radius: 7px;
   background-color: #fff;
   position: absolute;
   width: 100%;

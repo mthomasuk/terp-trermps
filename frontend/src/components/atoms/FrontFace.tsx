@@ -7,6 +7,7 @@ interface Props {
 }
 
 const Face = styled.div`
+  border-radius: 7px;
   background-color: #fff;
   position: absolute;
   width: 100%;
