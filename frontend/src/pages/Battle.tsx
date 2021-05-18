@@ -77,7 +77,9 @@ const Battle = ({ match }: Props): ReactElement => {
   const fightersInArena = uniqBy(
     [
       ...(currentBattle ? currentBattle.decks : []),
-      ...messages.filter(({ type }) => type === USER_JOINED_BATTLE),
+      ...(messages
+        ? messages.filter(({ type }) => type === USER_JOINED_BATTLE)
+        : []),
     ],
     "user_id"
   );

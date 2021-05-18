@@ -17,7 +17,7 @@ interface Props {
   onSelectCard?: (card: any) => void;
   onSelectAttribute?: (attr: any) => void;
   onDrag?: (card: any) => void;
-  onTouch?: (event: any, card?: any) => void;
+  onTouchEnd?: (event: any, card?: any) => void;
 }
 
 const flip = keyframes`
@@ -138,7 +138,7 @@ const Card = ({
   onSelectCard,
   onSelectAttribute,
   onDrag,
-  onTouch,
+  onTouchEnd,
   selectedAttr,
   played = false,
   selected = false,
@@ -147,15 +147,15 @@ const Card = ({
 }: Props): ReactElement => {
   const onClick = () => (onSelectCard && next ? onSelectCard(card) : {});
   const onPlayCard = () => (onDrag ? onDrag(card) : {});
-  const onTouchStart = (event: any) =>
-    onTouch && next ? onTouch(event, card) : {};
+  const onDrop = (event: any) => (onTouchEnd && next ? onTouchEnd(event) : {});
 
   return (
     <Wrapper
       next={next}
       onClick={onClick}
       onDrag={onPlayCard}
-      onTouchStart={onTouchStart}
+      onTouchStart={onPlayCard}
+      onTouchEnd={onDrop}
       played={played}
       selected={selected}
       draggable={selected}

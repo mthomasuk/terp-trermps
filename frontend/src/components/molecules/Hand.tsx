@@ -146,7 +146,7 @@ const Hand = ({
     setDragOver(false);
   };
 
-  const onDrop = (event: any, card?: any) => {
+  const onDrop = (event: any) => {
     setDragOver(false);
 
     if (!selectedAttribute && leader) {
@@ -157,13 +157,13 @@ const Hand = ({
     event.stopPropagation();
 
     onSelectCard(undefined);
-    onSetDroppedCard(cardInPlay || card);
+    onSetDroppedCard(cardInPlay);
 
-    onPlayHand(cardInPlay || card);
+    onPlayHand(cardInPlay);
   };
 
   useEffect(() => {
-    playCard(undefined);
+    // playCard(undefined);
     setDropErr(undefined);
 
     setDragOver(false);
@@ -180,7 +180,7 @@ const Hand = ({
             selectedAttr={selectedAttribute}
             onSelectAttribute={onSelectAttribute}
             onDrag={playCard}
-            onTouch={onDrop}
+            onTouchEnd={onDrop}
           />
         )}
       </InPlay>
