@@ -17,6 +17,7 @@ import { UserControlContext } from "../components/context/UserControlStore";
 import { useSocket } from "../components/context/Websocket";
 
 import Loader from "../components/atoms/Loader";
+import Button from "../components/atoms/Button";
 import Disappear from "../components/atoms/Disappear";
 
 import BattleStatus from "../components/molecules/BattleStatus";
@@ -50,7 +51,7 @@ const Buttons = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 1rem;
+  margin: 1rem 0;
   width: 100%;
 `;
 
@@ -74,6 +75,7 @@ const Battle = ({ match }: Props): ReactElement => {
   const [currentRound] = currentBattle?.rounds || [];
 
   const isLeader = currentUser?.id === currentRound?.leader;
+
   const fightersInArena = uniqBy(
     [
       ...(currentBattle ? currentBattle.decks : []),
@@ -153,9 +155,7 @@ const Battle = ({ match }: Props): ReactElement => {
         {!battleInProgress && <Combatants combatants={fightersInArena} />}
         {canStartBattle && (
           <Buttons>
-            <button type="button" onClick={onStartBattle}>
-              Start battle
-            </button>
+            <Button onClick={onStartBattle}>⚔️ Start battle ⚔️</Button>
           </Buttons>
         )}
         {battleInProgress && (

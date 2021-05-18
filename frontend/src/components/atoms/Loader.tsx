@@ -20,7 +20,7 @@ const Loading = styled.div`
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background-color: #fff;
+  background-color: #ffff9d;
   display: flex;
   align-items: center;
   justify-content: center;

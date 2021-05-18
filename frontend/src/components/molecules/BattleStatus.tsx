@@ -11,7 +11,7 @@ interface Props {
   selectedAttr?: string;
 }
 
-const Status = styled.h1`
+const Status = styled.h3`
   display: block;
   font-weight: normal;
 

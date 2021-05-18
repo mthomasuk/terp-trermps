@@ -24,9 +24,16 @@ const Combatants = ({ combatants }: Props): ReactElement => {
   return (
     <Container>
       <div>
-        {currentCombatants.map(({ user_id, name }: any) => (
-          <div key={user_id}>{name} is ready to do battle</div>
-        ))}
+        {currentCombatants.map(({ user_id, name }: any, idx: number) =>
+          idx === 0 ? (
+            <h1 key={user_id}>{name}</h1>
+          ) : (
+            <span key={user_id}>
+              <h5>VS</h5>
+              <h1 key={user_id}>{name}</h1>
+            </span>
+          )
+        )}
       </div>
     </Container>
   );

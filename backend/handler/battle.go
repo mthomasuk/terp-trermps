@@ -15,7 +15,7 @@ import (
 func CreateBattle(c echo.Context) error {
 	sess, _ := session.Get("session", c)
 
-	_, ok := sess.Values["userId"].(string)
+	userID, ok := sess.Values["userId"].(string)
 	if !ok {
 		c.Logger().Error("Couldn't extract userID from session")
 		return c.String(http.StatusForbidden, "Forbidden")
@@ -25,6 +25,12 @@ func CreateBattle(c echo.Context) error {
 	if err != nil {
 		c.Logger().Error(err)
 		return c.String(http.StatusBadRequest, "Failed to create battle")
+	}
+
+	_, err = database.CreateDeck(userID, battle.ID)
+	if err != nil {
+		c.Logger().Error(err)
+		return c.String(http.StatusBadRequest, "Failed to create deck")
 	}
 
 	return c.JSON(http.StatusOK, &battle)
