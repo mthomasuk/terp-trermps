@@ -60,7 +60,7 @@ var schema = `
   CREATE TABLE IF NOT EXISTS "card_in_deck" (
     card_id       UUID,
     deck_id       UUID,
-    added_at      TIMESTAMPZ DEFAULT now(),
+    added_at      TIMESTAMPTZ DEFAULT now(),
     FOREIGN KEY (card_id)
       REFERENCES "card" (id)
       ON DELETE CASCADE,
@@ -76,7 +76,7 @@ var schema = `
     battle_id     UUID,
     attribute     VARCHAR,
     leader        UUID,
-    started_at    TIMESTAMPZ DEFAULT now(),
+    started_at    TIMESTAMPTZ DEFAULT now(),
     FOREIGN KEY (battle_id)
       REFERENCES "battle" (id)
       ON DELETE CASCADE,
