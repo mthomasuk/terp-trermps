@@ -31,7 +31,7 @@ export function useSocket(id: string) {
 
   useEffect(() => {
     const connect = () => {
-      socketRef.current = new WebSocket(`${SOCKET_SERVER_URL}/${battleId}`);
+      socketRef.current = new WebSocket(`${SOCKET_SERVER_URL}/ws/${battleId}`);
 
       if (socketRef.current) {
         socketRef.current.addEventListener("open", () => {
