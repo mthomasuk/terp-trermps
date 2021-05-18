@@ -84,7 +84,7 @@ const Hand = ({
   cards,
   leader = false,
   selectedCard,
-  selectedAttr: SA,
+  selectedAttr,
   droppedCard,
   roundId,
   onPlayHand,
@@ -96,11 +96,10 @@ const Hand = ({
   const { attributeSelected } = useSocket(id);
   const { setAttribute } = useContext(BattleControlContext);
 
-  const [selectedAttr, selectAttr] = useState<string | undefined>();
+  const selectedAttribute = attributeSelected || selectedAttr;
+
   const [dropErr, setDropErr] = useState<string | undefined>();
-
   const [cardInPlay, playCard] = useState<any | undefined>();
-
   const [isDraggedOver, setDragOver] = useState<boolean>(false);
 
   const onSelectAttribute = async (attr: string) => {
@@ -108,9 +107,8 @@ const Hand = ({
       return false;
     }
 
-    if (attr !== selectedAttr) {
+    if (attr !== selectedAttribute) {
       await setAttribute(roundId, attr);
-      selectAttr((prev) => (attr === prev ? undefined : attr));
     }
   };
 
@@ -127,7 +125,7 @@ const Hand = ({
   const onDrop = (event: any) => {
     setDragOver(false);
 
-    if (!selectedAttr && leader) {
+    if (!selectedAttribute && leader) {
       setDropErr("Select a category first e.g. strength/skill etc.");
       return false;
     }
@@ -142,21 +140,10 @@ const Hand = ({
 
   useEffect(() => {
     playCard(undefined);
-
-    selectAttr(undefined);
     setDropErr(undefined);
 
     setDragOver(false);
   }, [cards]);
-
-  useEffect(() => {
-    if (SA) {
-      selectAttr(SA);
-    }
-    if (attributeSelected) {
-      selectAttr(attributeSelected);
-    }
-  }, [SA, attributeSelected]);
 
   return (
     <Container>
@@ -166,7 +153,7 @@ const Hand = ({
             selected
             next
             card={selectedCard}
-            selectedAttr={selectedAttr}
+            selectedAttr={selectedAttribute}
             onSelectAttribute={onSelectAttribute}
             onDrag={playCard}
           />
@@ -180,7 +167,12 @@ const Hand = ({
         error={dropErr}
       >
         {droppedCard && (
-          <Card played next card={droppedCard} selectedAttr={selectedAttr} />
+          <Card
+            played
+            next
+            card={droppedCard}
+            selectedAttr={selectedAttribute}
+          />
         )}
       </ToPlay>
     </Container>
