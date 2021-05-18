@@ -25,6 +25,12 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   padding: 2rem 1rem;
+
+  @media only screen and (max-width: 768px) {
+    & {
+      flex-direction: column;
+    }
+  }
 `;
 
 const Play = styled.div`
@@ -38,6 +44,12 @@ const Play = styled.div`
   width: 210px;
   display: flex;
   position: relative;
+
+  @media only screen and (max-width: 768px) {
+    & {
+      margin: 1rem 0;
+    }
+  }
 `;
 
 const InPlay = styled(Play)`
@@ -47,6 +59,12 @@ const InPlay = styled(Play)`
     content: "Click to move card into hand";
     font-size: 1.15rem;
     text-transform: uppercase;
+
+    @media only screen and (max-width: 768px) {
+      & {
+        content: "Press to move card into hand";
+      }
+    }
   }
 `;
 
@@ -66,7 +84,13 @@ const ToPlay = styled(Play)<{ isDraggedOver?: boolean; error?: string }>`
       }
       return `
         font-size: 1.15rem;
-        content: "Drop to play card"
+        content: "Drop to play card";
+
+        @media only screen and (max-width: 768px) {
+          & {
+            content: "Press to play card";
+          }
+        }
       `;
     }};
     text-transform: uppercase;
@@ -122,7 +146,7 @@ const Hand = ({
     setDragOver(false);
   };
 
-  const onDrop = (event: any) => {
+  const onDrop = (event: any, card?: any) => {
     setDragOver(false);
 
     if (!selectedAttribute && leader) {
@@ -133,9 +157,9 @@ const Hand = ({
     event.stopPropagation();
 
     onSelectCard(undefined);
-    onSetDroppedCard(cardInPlay);
+    onSetDroppedCard(cardInPlay || card);
 
-    onPlayHand(cardInPlay);
+    onPlayHand(cardInPlay || card);
   };
 
   useEffect(() => {
@@ -156,6 +180,7 @@ const Hand = ({
             selectedAttr={selectedAttribute}
             onSelectAttribute={onSelectAttribute}
             onDrag={playCard}
+            onTouch={onDrop}
           />
         )}
       </InPlay>

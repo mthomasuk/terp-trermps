@@ -32,6 +32,10 @@ interface Props extends RouteComponentProps<{ id: string }> {}
 
 const Share = styled.div`
   font-size: 0.75rem;
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
 `;
 
 const Info = styled.div`

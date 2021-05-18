@@ -22,6 +22,9 @@ const Status = styled.h1`
   }
 `;
 
+const massageAttribute = (attr?: string): string =>
+  attr ? attr.replace("_", " ") : "";
+
 const BattleStatus = ({
   battleInProgress,
   isLeader,
@@ -42,7 +45,9 @@ const BattleStatus = ({
   }
 
   if (attributeSelected || selectedAttr) {
-    status = `Attribute is ${attributeSelected || selectedAttr}!`;
+    status = `Attribute is ${massageAttribute(
+      attributeSelected || selectedAttr
+    )}!`;
   }
 
   return <Status>{status}</Status>;

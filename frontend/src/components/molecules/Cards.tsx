@@ -18,6 +18,13 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
+
+  @media only screen and (max-width: 768px) {
+    & {
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+  }
 `;
 
 const Deck = styled.div`
@@ -28,8 +35,6 @@ const Deck = styled.div`
   margin: 0;
   padding: 1rem;
   padding-top: 2rem;
-  overflow-x: scroll;
-  overflow-y: visible;
 `;
 
 const Cards = ({
