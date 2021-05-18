@@ -39,11 +39,15 @@ const H1 = styled.h1`
   margin: 0;
 `;
 
+const Element = styled.div`
+  margin: 1.5rem 0;
+`;
+
 const Disappear = ({ element, info, headline }: Props): ReactElement => (
   <Fade>
     <H1>{headline}</H1>
-    {info}
-    <div>{element}</div>
+    <div>{info}</div>
+    <Element>{element}</Element>
   </Fade>
 );
 

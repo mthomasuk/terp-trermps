@@ -144,10 +144,7 @@ const Battle = ({ match }: Props): ReactElement => {
           battleInProgress={battleInProgress}
           selectedAttr={currentRound?.attribute}
         />
-        <Combatants
-          battleInProgress={battleInProgress}
-          combatants={fightersInArena}
-        />
+        {!battleInProgress && <Combatants combatants={fightersInArena} />}
         {canStartBattle && (
           <Buttons>
             <button type="button" onClick={onStartBattle}>
