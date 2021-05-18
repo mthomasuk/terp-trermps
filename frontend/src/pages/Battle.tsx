@@ -19,6 +19,7 @@ import { useSocket } from "../components/context/Websocket";
 import Loader from "../components/atoms/Loader";
 import Button from "../components/atoms/Button";
 import Disappear from "../components/atoms/Disappear";
+import MiniLogo from "../components/atoms/MiniLogo";
 
 import BattleStatus from "../components/molecules/BattleStatus";
 import Card from "../components/molecules/Card";
@@ -53,6 +54,13 @@ const Buttons = styled.div`
   justify-content: center;
   margin: 1rem 0;
   width: 100%;
+`;
+
+const Footer = styled.footer`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
 `;
 
 const Battle = ({ match }: Props): ReactElement => {
@@ -167,6 +175,9 @@ const Battle = ({ match }: Props): ReactElement => {
             selectedAttr={currentRound?.attribute}
           />
         )}
+        <Footer>
+          <MiniLogo />
+        </Footer>
       </Info>
       {winningHand && winningHand.card && (
         <Disappear

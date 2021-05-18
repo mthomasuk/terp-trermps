@@ -8,7 +8,7 @@ const Retro = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 230px;
+  width: 115px;
 
   h1,
   h3,
@@ -21,26 +21,26 @@ const Retro = styled.div`
   h1,
   h3 {
     color: #d72b2b;
-    font-size: 30px;
+    font-size: 18px;
     font-style: italic;
     font-weight: 600;
     text-shadow: 2px 0px #fff, 4px 0px #000;
   }
 
   h1 {
-    font-size: 80px;
-    margin: -10px 0;
+    font-size: 60px;
+    margin: -5px 0;
   }
 
   h3 {
-    letter-spacing: 0.5rem;
+    letter-spacing: 10px;
   }
 
   h5 {
     color: white;
-    font-size: 22px;
-    letter-spacing: 1.5rem;
-    text-shadow: 2px 2px #000;
+    font-size: 12px;
+    letter-spacing: 24px;
+    text-shadow: 1px 1px #000;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: #000;
   }
@@ -50,11 +50,11 @@ const Retro = styled.div`
     font-size: 0.65rem;
     position: absolute;
     bottom: 0.35rem;
-    right: -5px;
+    right: -40px;
   }
 `;
 
-const Logo = (): ReactElement => (
+const MiniLogo = (): ReactElement => (
   <Retro>
     <h5>Super</h5>
     <h1>Terp</h1>
@@ -62,4 +62,4 @@ const Logo = (): ReactElement => (
   </Retro>
 );
 
-export default Logo;
+export default MiniLogo;
