@@ -36,6 +36,11 @@ const Canvas = styled.canvas`
   pointer-events: none;
 `;
 
+const Image = styled.img`
+  max-width: 60vw;
+  margin: 0 auto;
+`;
+
 const EnemiesCrushed = ({ victor }: Props): ReactElement => {
   const ref = useRef();
 
@@ -83,7 +88,7 @@ const EnemiesCrushed = ({ victor }: Props): ReactElement => {
     <Wrapper>
       {isVictorious && <Canvas ref={ref as any}></Canvas>}
       <h1>{message}</h1>
-      {!isVictorious && <img src={skinner} alt="pathetic" />}
+      {!isVictorious && <Image src={skinner} alt="pathetic" />}
       <p>
         <Link to="/">Return from whence you came</Link>
       </p>
