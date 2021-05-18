@@ -163,7 +163,7 @@ const Hand = ({
   };
 
   useEffect(() => {
-    // playCard(undefined);
+    playCard(undefined);
     setDropErr(undefined);
 
     setDragOver(false);

@@ -109,6 +109,19 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 				return nil, err
 			}
 
+			for _, hand := range hnds {
+				_, err = Conn.NamedExec(`
+					UPDATE "card_in_deck" SET added_at = :added_at WHERE card_id = :card_id`,
+					map[string]interface{}{
+						"added_at": now,
+						"card_id":  hand.CardID,
+					},
+				)
+				if err != nil {
+					return nil, err
+				}
+			}
+
 			rnd.IsDraw = true
 		} else {
 			// There's a clear winner
