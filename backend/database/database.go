@@ -21,7 +21,7 @@ var schema = `
     password TEXT NOT NULL
   );
 
-  CREATE INDEX ON "user" (name);
+  CREATE INDEX IF NOT EXISTS user_name_idx ON "user" (name);
 
   CREATE TABLE IF NOT EXISTS "card" (
     id            UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
@@ -55,21 +55,25 @@ var schema = `
       ON DELETE CASCADE
   );
 
-  CREATE INDEX ON "deck" (battle_id);
+  CREATE INDEX IF NOT EXISTS deck_battle_id_idx ON "deck" (battle_id);
 
   CREATE TABLE IF NOT EXISTS "card_in_deck" (
     card_id       UUID,
     deck_id       UUID,
+    piled         UUID,
     added_at      TIMESTAMPTZ DEFAULT now(),
     FOREIGN KEY (card_id)
       REFERENCES "card" (id)
       ON DELETE CASCADE,
     FOREIGN KEY (deck_id)
       REFERENCES "deck" (id)
+      ON DELETE CASCADE,
+    FOREIGN KEY (piled)
+      REFERENCES "round" (id)
       ON DELETE CASCADE
   );
 
-  CREATE INDEX ON "card_in_deck" (deck_id);
+  CREATE INDEX IF NOT EXISTS card_in_deck_deck_id_idx ON "card_in_deck" (deck_id);
 
   CREATE TABLE IF NOT EXISTS "round" (
     id            UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
@@ -85,7 +89,7 @@ var schema = `
       ON DELETE CASCADE
   );
 
-  CREATE INDEX ON "round" (started_at);
+  CREATE INDEX IF NOT EXISTS round_started_at_idx ON "round" (started_at);
 
   CREATE TABLE IF NOT EXISTS "hand" (
     id            UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
@@ -104,7 +108,7 @@ var schema = `
       ON DELETE CASCADE
   );
 
-  CREATE INDEX ON "hand" (round_id);
+  CREATE INDEX IF NOT EXISTS hand_round_id_idx ON "hand" (round_id);
 `
 
 // Conn is an initialized DB connection

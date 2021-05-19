@@ -1,8 +1,6 @@
 package database
 
 import (
-	"time"
-
 	types "github.com/mthomasuk/terp-trermps/types"
 )
 
@@ -39,8 +37,6 @@ func GetHandsByRound(roundID string) ([]types.Hand, error) {
 
 // PlayHand submits your hand for a round
 func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
-	now := time.Now().Local()
-
 	rnd := types.Round{}
 	err := Conn.Get(&rnd, `SELECT * FROM "round" WHERE "round"."id" = $1`, roundID)
 	if err != nil {
@@ -99,84 +95,25 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 	}
 
 	// Everyone has played a hand
-	if len(hnds) == cntD.Count {
+	if len(hnds) >= cntD.Count {
 		win := hnds[0]
 
 		if win.Value == hnds[1].Value {
 			// It's a draw
-			_, err = CreateRound(rnd.BattleID, rnd.Leader.String)
+			err = HandleDraw(roundID, hnds)
 			if err != nil {
 				return nil, err
-			}
-
-			for _, hand := range hnds {
-				_, err = Conn.NamedExec(`
-					UPDATE "card_in_deck" SET added_at = :added_at WHERE card_id = :card_id`,
-					map[string]interface{}{
-						"added_at": now,
-						"card_id":  hand.CardID,
-					},
-				)
-				if err != nil {
-					return nil, err
-				}
 			}
 
 			rnd.IsDraw = true
 		} else {
 			// There's a clear winner
-			_, err = Conn.NamedExec(`
-				UPDATE "card_in_deck" SET added_at = :added_at WHERE card_id = :card_id AND deck_id = :deck_id`,
-				map[string]interface{}{
-					"added_at": now,
-					"card_id":  win.CardID,
-					"deck_id":  win.DeckID,
-				},
-			)
+			err = HandleWin(&rnd, hnds, win)
 			if err != nil {
 				return nil, err
 			}
 
-			for _, hand := range hnds[1:] {
-				_, err = Conn.NamedExec(`
-					UPDATE "card_in_deck" SET deck_id = :win_deck_id, added_at = :added_at WHERE card_id = :card_id AND deck_id = :lose_deck_id`,
-					map[string]interface{}{
-						"win_deck_id":  win.DeckID,
-						"added_at":     now,
-						"card_id":      hand.CardID,
-						"lose_deck_id": hand.DeckID,
-					},
-				)
-				if err != nil {
-					return nil, err
-				}
-			}
-
-			_, err = CreateRound(rnd.BattleID, win.UserID)
-			if err != nil {
-				return nil, err
-			}
-
-			rnd.WinningHand = win
-
-			hasWon, winner, err := CheckForWinningDeck(rnd.BattleID)
-			if err != nil {
-				return nil, err
-			}
-
-			// The highest counted hand equals the total number of cards
-			if hasWon {
-				_, err = Conn.NamedExec(`
-					UPDATE "battle" SET winner = :winner WHERE id = :id`,
-					map[string]interface{}{
-						"winner": winner,
-						"id":     rnd.BattleID,
-					},
-				)
-				if err != nil {
-					return nil, err
-				}
-			}
+			rnd.IsDraw = false
 		}
 	}
 

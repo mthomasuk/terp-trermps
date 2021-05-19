@@ -12,9 +12,10 @@ import {
 
 const { REACT_APP_SOCKETS_URL } = process.env;
 
-const SOCKET_SERVER_URL = REACT_APP_SOCKETS_URL
-  ? `wss://${window.location.host}`
-  : "ws://localhost:4002";
+const SOCKET_SERVER_URL =
+  REACT_APP_SOCKETS_URL === "/"
+    ? `wss://${window.location.host}`
+    : "ws://localhost:4002";
 
 let reconnect: any = null;
 

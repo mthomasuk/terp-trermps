@@ -51,7 +51,7 @@ type Round struct {
 	Leader      NullString `json:"leader,omitempty"`
 	StartedAt   NullTime   `db:"started_at" json:"started_at"`
 	WinningHand Hand       `json:"winning_hand,omitempty"`
-	IsDraw      bool
+	IsDraw      bool       `json:"-"`
 }
 
 // Hand represents one turn played by a user
