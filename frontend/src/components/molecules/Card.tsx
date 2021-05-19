@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 
 import styled, { css, keyframes } from "styled-components";
 
-import Glyph from "../atoms/Glyph";
+import CardImage from "../atoms/CardImage";
 import FrontFace from "../atoms/FrontFace";
 import BackFace from "../atoms/BackFace";
 import CardStats from "../atoms/CardStats";
@@ -65,7 +65,7 @@ const Wrapper = styled.button<{
   padding: 0.5rem;
   width: 200px;
   min-width: 200px;
-  min-height: 312px;
+  min-height: 352px;
   z-index: 1;
   transition: transform 0.25s ease-in-out;
 
@@ -162,7 +162,7 @@ const Card = ({
     >
       <Inner next={next} winner={winner}>
         <FrontFace>
-          <Glyph type={card.type} />
+          <CardImage name={card.name} />
           <Info>
             <Type>{card.type}</Type>
             <Name>{card.name}</Name>
