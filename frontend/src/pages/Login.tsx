@@ -5,6 +5,8 @@ import styled from "styled-components";
 
 import { UserControlContext } from "../components/context/UserControlStore";
 
+import Logo from "../components/atoms/Logo";
+
 const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
@@ -27,6 +29,12 @@ const Form = styled.form`
       width: 80vw;
     }
   }
+`;
+
+const Info = styled.div`
+  font-size: 0.8rem;
+  margin-bottom: 1.75rem;
+  text-align: left;
 `;
 
 const Label = styled.label`
@@ -80,7 +88,15 @@ const Login = () => {
   ) : (
     <>
       <Wrapper>
+        <Logo />
         <Form onSubmit={onSubmit}>
+          <Info>
+            <p>If you're new, just make a username and password up!</p>
+            <p>
+              Returning players can retrieve their scores/re-enter games midway
+              through
+            </p>
+          </Info>
           <Label>
             PLZ ENTER YOUR NAME:
             <Input
@@ -97,6 +113,7 @@ const Login = () => {
               onChange={updatePassword}
             />
           </Label>
+
           <button type="submit" onClick={onSubmit}>
             Login
           </button>

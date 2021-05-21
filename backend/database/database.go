@@ -57,6 +57,22 @@ var schema = `
 
   CREATE INDEX IF NOT EXISTS deck_battle_id_idx ON "deck" (battle_id);
 
+  CREATE TABLE IF NOT EXISTS "round" (
+    id            UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
+    battle_id     UUID,
+    attribute     VARCHAR,
+    leader        UUID,
+    started_at    TIMESTAMPTZ DEFAULT now(),
+    FOREIGN KEY (battle_id)
+      REFERENCES "battle" (id)
+      ON DELETE CASCADE,
+    FOREIGN KEY (leader)
+      REFERENCES "user" (id)
+      ON DELETE CASCADE
+  );
+
+  CREATE INDEX IF NOT EXISTS round_started_at_idx ON "round" (started_at);
+
   CREATE TABLE IF NOT EXISTS "card_in_deck" (
     card_id       UUID,
     deck_id       UUID,
@@ -74,22 +90,6 @@ var schema = `
   );
 
   CREATE INDEX IF NOT EXISTS card_in_deck_deck_id_idx ON "card_in_deck" (deck_id);
-
-  CREATE TABLE IF NOT EXISTS "round" (
-    id            UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
-    battle_id     UUID,
-    attribute     VARCHAR,
-    leader        UUID,
-    started_at    TIMESTAMPTZ DEFAULT now(),
-    FOREIGN KEY (battle_id)
-      REFERENCES "battle" (id)
-      ON DELETE CASCADE,
-    FOREIGN KEY (leader)
-      REFERENCES "user" (id)
-      ON DELETE CASCADE
-  );
-
-  CREATE INDEX IF NOT EXISTS round_started_at_idx ON "round" (started_at);
 
   CREATE TABLE IF NOT EXISTS "hand" (
     id            UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
