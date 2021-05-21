@@ -11,3 +11,14 @@ export const getTestStyles = (
 
   return window.getComputedStyle(components[index]);
 };
+
+export const toTitleCase = (str: string) =>
+  str
+    .split("_")
+    .map((part: string) =>
+      part.replace(
+        /\w\S*/g,
+        (txt) => `${txt.charAt(0).toUpperCase()}${txt.substr(1).toLowerCase()}`
+      )
+    )
+    .join(" ");

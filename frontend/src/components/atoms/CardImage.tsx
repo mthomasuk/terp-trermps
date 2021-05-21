@@ -12,6 +12,7 @@ import brythoni from "../../assets/images/brythoni.png";
 import dunarth from "../../assets/images/dunarth.png";
 import grus from "../../assets/images/grus.png";
 import gyea from "../../assets/images/gyea.png";
+import haas from "../../assets/images/haas.png";
 import ignorot from "../../assets/images/ignorot.png";
 import kazantatar from "../../assets/images/kazan_tatar.png";
 import ket from "../../assets/images/ket.png";
@@ -47,6 +48,7 @@ const IMAGE_MAP: { [key: string]: string } = {
   dunarth,
   grus,
   gyea,
+  haas,
   ignorot,
   "kazan tatar": kazantatar,
   ket,
@@ -67,13 +69,13 @@ const IMAGE_MAP: { [key: string]: string } = {
 };
 
 const Img = styled.div<{ url: string }>`
+  ${({ url }) => {
+    return url ? `background: url("${url}");` : "";
+  }}
   background-size: cover;
   background-position: 0 -10px;
   height: 168px;
   width: 188px;
-  ${({ url }) => {
-    return url ? `background: url("${url}");` : "";
-  }}
 `;
 
 const CardImage = ({ name }: Props) => (
