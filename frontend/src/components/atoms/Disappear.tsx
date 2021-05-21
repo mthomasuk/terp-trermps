@@ -1,11 +1,9 @@
-import { ReactElement } from "react";
-
 import styled, { keyframes } from "styled-components";
 
 interface Props {
-  element: ReactElement;
+  element: Element | JSX.Element;
   headline: string;
-  info: ReactElement;
+  info: Element | JSX.Element;
 }
 
 const fadeOut = keyframes`
@@ -43,7 +41,7 @@ const Element = styled.div`
   margin: 1.5rem 0;
 `;
 
-const Disappear = ({ element, info, headline }: Props): ReactElement => (
+const Disappear = ({ element, info, headline }: Props) => (
   <Fade>
     <H1>{headline}</H1>
     <div>{info}</div>

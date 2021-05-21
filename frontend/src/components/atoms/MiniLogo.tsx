@@ -1,5 +1,3 @@
-import { ReactElement } from "react";
-
 import styled from "styled-components";
 
 const Retro = styled.div`
@@ -54,7 +52,7 @@ const Retro = styled.div`
   }
 `;
 
-const MiniLogo = (): ReactElement => (
+const MiniLogo = () => (
   <Retro>
     <h5>Super</h5>
     <h1>Terp</h1>

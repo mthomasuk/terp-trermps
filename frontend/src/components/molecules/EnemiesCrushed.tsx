@@ -1,4 +1,4 @@
-import { useContext, useRef, useEffect, ReactElement } from "react";
+import { useContext, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import confetti from "canvas-confetti";
@@ -41,7 +41,7 @@ const Image = styled.img`
   margin: 0 auto;
 `;
 
-const EnemiesCrushed = ({ victor }: Props): ReactElement => {
+const EnemiesCrushed = ({ victor }: Props) => {
   const ref = useRef();
 
   const { getSignedInUser } = useContext(UserControlContext);

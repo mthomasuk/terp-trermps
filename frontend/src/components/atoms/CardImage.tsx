@@ -1,5 +1,3 @@
-import { ReactElement } from "react";
-
 import styled from "styled-components";
 
 import aegish from "../../assets/images/aegish.png";
@@ -80,7 +78,7 @@ const Img = styled.div<{ url: string }>`
   }}
 `;
 
-const CardImage = ({ name }: Props): ReactElement => (
+const CardImage = ({ name }: Props) => (
   <Img url={IMAGE_MAP[name.toLowerCase()] || ""} />
 );
 

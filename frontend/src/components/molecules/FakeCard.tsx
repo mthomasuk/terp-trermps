@@ -1,5 +1,3 @@
-import { ReactElement } from "react";
-
 import styled, { css, keyframes } from "styled-components";
 
 import Glyph from "../atoms/Glyph";
@@ -101,7 +99,7 @@ const fakeCard = {
   power: "?",
 };
 
-const FakeCard = (): ReactElement => (
+const FakeCard = () => (
   <Wrapper>
     <Inner>
       <FrontFace>

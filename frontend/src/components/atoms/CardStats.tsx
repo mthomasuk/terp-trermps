@@ -1,5 +1,3 @@
-import { ReactElement } from "react";
-
 import styled from "styled-components";
 
 interface Props {
@@ -42,7 +40,7 @@ const Card = ({
   onSelectAttribute,
   selectedAttr,
   selected = false,
-}: Props): ReactElement => {
+}: Props) => {
   const onSelect = (attr: any) =>
     onSelectAttribute ? onSelectAttribute(attr) : {};
 

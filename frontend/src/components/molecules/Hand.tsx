@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, ReactElement } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 
 import styled from "styled-components";
@@ -141,7 +141,7 @@ const Hand = ({
   onPlayHand,
   onSelectCard,
   onSetDroppedCard,
-}: Props): ReactElement => {
+}: Props) => {
   const { id }: any = useParams();
 
   const { attributeSelected } = useSocket(id);

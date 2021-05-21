@@ -1,5 +1,3 @@
-import { ReactElement } from "react";
-
 import styled from "styled-components";
 
 import Message from "../atoms/Message";
@@ -30,7 +28,7 @@ const List = styled.ul`
   margin: 0;
 `;
 
-const Messages = ({ messages }: { messages: any[] }): ReactElement => (
+const Messages = ({ messages }: { messages: any[] }) => (
   <Bar>
     <List>
       {messages && messages.length ? (

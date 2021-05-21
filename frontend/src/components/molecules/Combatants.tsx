@@ -1,4 +1,4 @@
-import { useEffect, useState, ReactElement } from "react";
+import { useEffect, useState } from "react";
 
 import styled from "styled-components";
 
@@ -12,7 +12,7 @@ const Container = styled.div`
   padding: 0.5rem;
 `;
 
-const Combatants = ({ combatants }: Props): ReactElement => {
+const Combatants = ({ combatants }: Props) => {
   const [currentCombatants, setCurrentCombatants] = useState<any>([]);
 
   useEffect(() => {

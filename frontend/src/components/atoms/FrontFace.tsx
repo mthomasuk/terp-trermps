@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from "react";
+import { ReactNode } from "react";
 
 import styled from "styled-components";
 
@@ -21,8 +21,6 @@ const Face = styled.div`
 
 const Front = styled(Face)``;
 
-const FrontFace = ({ children }: Props): ReactElement => (
-  <Front>{children}</Front>
-);
+const FrontFace = ({ children }: Props) => <Front>{children}</Front>;
 
 export default FrontFace;

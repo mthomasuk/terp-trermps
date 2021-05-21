@@ -1,4 +1,4 @@
-import { useContext, ReactElement } from "react";
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import styled from "styled-components";
@@ -35,7 +35,7 @@ const Disclaimer = styled.div`
   padding: 1rem;
 `;
 
-const Landing = (): ReactElement => {
+const Landing = () => {
   const { getSignedInUser } = useContext(UserControlContext);
   const { createNewBattle } = useContext(BattleControlContext);
 

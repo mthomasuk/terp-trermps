@@ -1,5 +1,3 @@
-import { ReactElement } from "react";
-
 import styled, { keyframes } from "styled-components";
 
 const spin = keyframes`
@@ -30,6 +28,6 @@ const Loading = styled.div`
   animation-timing-function: linear;
 `;
 
-const Loader = (): ReactElement => <Loading>Loading...</Loading>;
+const Loader = () => <Loading>Loading...</Loading>;
 
 export default Loader;

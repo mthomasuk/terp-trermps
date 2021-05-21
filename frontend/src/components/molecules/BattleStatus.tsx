@@ -1,4 +1,3 @@
-import { ReactElement } from "react";
 import { useParams } from "react-router-dom";
 
 import styled from "styled-components";
@@ -25,11 +24,7 @@ const Status = styled.h3`
 const massageAttribute = (attr?: string): string =>
   attr ? attr.replace("_", " ") : "";
 
-const BattleStatus = ({
-  battleInProgress,
-  isLeader,
-  selectedAttr,
-}: Props): ReactElement => {
+const BattleStatus = ({ battleInProgress, isLeader, selectedAttr }: Props) => {
   const { id }: any = useParams();
 
   const { attributeSelected } = useSocket(id);

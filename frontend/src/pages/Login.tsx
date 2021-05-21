@@ -1,4 +1,4 @@
-import { useContext, useState, ChangeEvent, ReactElement } from "react";
+import { useContext, useState, ChangeEvent } from "react";
 import { useHistory, Redirect } from "react-router-dom";
 
 import styled from "styled-components";
@@ -46,7 +46,7 @@ const Input = styled.input`
   font-size: 1rem;
 `;
 
-const Login = (): ReactElement => {
+const Login = () => {
   const [name, setName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 

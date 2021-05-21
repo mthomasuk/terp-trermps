@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactElement } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import styled from "styled-components";
@@ -46,7 +46,7 @@ const Cards = ({
   onPlayHand,
   selectedAttr,
   leader = false,
-}: Props): ReactElement => {
+}: Props) => {
   const { id }: any = useParams();
 
   const { attributeSelected } = useSocket(id);

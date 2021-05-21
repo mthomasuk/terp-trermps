@@ -1,5 +1,3 @@
-import { ReactElement } from "react";
-
 import styled from "styled-components";
 
 interface Props {
@@ -38,8 +36,6 @@ const Moji = styled.div`
   width: 100%;
 `;
 
-const Glyph = ({ type }: Props): ReactElement => (
-  <Moji>{EMOJI_MAP[type] || "❓"}</Moji>
-);
+const Glyph = ({ type }: Props) => <Moji>{EMOJI_MAP[type] || "❓"}</Moji>;
 
 export default Glyph;

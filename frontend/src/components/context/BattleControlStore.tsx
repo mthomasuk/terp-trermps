@@ -1,4 +1,4 @@
-import { ReactElement, createContext } from "react";
+import { createContext } from "react";
 
 const createNewBattle = async (): Promise<any> => {
   try {
@@ -148,11 +148,7 @@ export const BattleControlContext = createContext({
   endBattle,
 });
 
-export function BattleControlProvider({
-  children,
-}: {
-  children: ReactElement;
-}) {
+export function BattleControlProvider({ children }: { children: any }) {
   return (
     <BattleControlContext.Provider
       value={{

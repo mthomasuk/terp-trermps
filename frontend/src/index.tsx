@@ -1,4 +1,4 @@
-import { StrictMode, ReactElement } from "react";
+import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -12,7 +12,7 @@ import BattlePage from "./pages/Battle";
 
 import "./index.css";
 
-const App = (): ReactElement => (
+const App = () => (
   <StrictMode>
     <UserControlProvider>
       <BattleControlProvider>

@@ -1,5 +1,3 @@
-import { ReactElement } from "react";
-
 import styled, { css, keyframes } from "styled-components";
 
 import CardImage from "../atoms/CardImage";
@@ -144,7 +142,7 @@ const Card = ({
   selected = false,
   next = false,
   winner = false,
-}: Props): ReactElement => {
+}: Props) => {
   const onClick = () => (onSelectCard && next ? onSelectCard(card) : {});
   const onPlayCard = () => (onDrag ? onDrag(card) : {});
   const onDrop = (event: any) => (onTouchEnd && next ? onTouchEnd(event) : {});

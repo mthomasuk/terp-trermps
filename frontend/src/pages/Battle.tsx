@@ -1,10 +1,4 @@
-import {
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-  ReactElement,
-} from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 
 import styled from "styled-components";
 
@@ -63,7 +57,7 @@ const Footer = styled.footer`
   margin-bottom: 0.5rem;
 `;
 
-const Battle = ({ match }: Props): ReactElement => {
+const Battle = ({ match }: Props) => {
   const { id } = match.params;
 
   const [currentBattle, setCurrentBattle] = useState<any>();
