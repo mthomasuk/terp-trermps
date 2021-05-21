@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 
+// https://the-teacher.medium.com/how-to-test-a-react-components-css-styles-with-react-testing-library-rtl-styled-components-43f744334528
 export const getTestStyles = (
   StyledComponent: (args: any) => ReactElement,
   props: any,
