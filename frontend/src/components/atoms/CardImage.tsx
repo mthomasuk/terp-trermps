@@ -67,14 +67,12 @@ const IMAGE_MAP: { [key: string]: string } = {
 };
 
 const Img = styled.div<{ url: string }>`
+  background-size: cover;
+  background-position: 0 -10px;
+  height: 168px;
+  width: 188px;
   ${({ url }) => {
-    return `
-      background: url("${url}");
-      background-size: cover;
-      background-position: 0 -10px;
-      height: 168px;
-      width: 188px;
-    `;
+    return url ? `background: url("${url}");` : "";
   }}
 `;
 
