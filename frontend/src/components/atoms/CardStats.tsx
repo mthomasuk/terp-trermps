@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 import StatsRow from "./StatsRow";
 
+import { ATTRIBUTES } from "../../constants";
+
 interface Props {
   card: any;
   selected?: boolean;
   selectedAttr?: string;
   onSelectAttribute?: (attr: any) => void;
 }
-
-const STATS = ["strength", "skill", "magical_force", "weapons", "power"];
 
 const Stats = styled.div``;
 
@@ -24,7 +24,7 @@ const Card = ({
 
   return (
     <Stats>
-      {STATS.map((stat: string) => (
+      {ATTRIBUTES.map((stat: string) => (
         <StatsRow
           key={stat}
           attribute={{ key: stat, value: card[stat] }}

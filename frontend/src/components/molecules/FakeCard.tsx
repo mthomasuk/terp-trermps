@@ -1,6 +1,6 @@
 import styled, { css, keyframes } from "styled-components";
 
-import Glyph from "../atoms/Glyph";
+import CardImage from "../atoms/CardImage";
 import FrontFace from "../atoms/FrontFace";
 import BackFace from "../atoms/BackFace";
 import CardStats from "../atoms/CardStats";
@@ -103,7 +103,7 @@ const FakeCard = () => (
   <Wrapper>
     <Inner>
       <FrontFace>
-        <Glyph type={fakeCard.type} />
+        <CardImage name={fakeCard.name} />
         <Info>
           <Type>{fakeCard.type}</Type>
           <Name>{fakeCard.name}</Name>
