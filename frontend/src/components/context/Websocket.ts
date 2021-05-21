@@ -17,7 +17,11 @@ const SOCKET_SERVER_URL =
     ? `wss://${window.location.host}`
     : "ws://localhost:4002";
 
+const MAX_RETRIES = 10;
+const THIRTY_SECONDS = 30000;
+
 let reconnect: any = null;
+let socketRetries: number = 0;
 
 export function useSocket(id: string) {
   const [messages, setMessages] = useState<any[]>([]);
@@ -39,18 +43,21 @@ export function useSocket(id: string) {
       if (socketRef.current) {
         socketRef.current.addEventListener("open", () => {
           clearInterval(reconnect);
+          socketRetries = 0;
         });
 
         socketRef.current.addEventListener("close", () => {
           reconnect = setInterval(() => {
-            connect();
-          }, 50000);
+            if (socketRetries < MAX_RETRIES) {
+              connect();
+              socketRetries++;
+            } else {
+              clearInterval(reconnect);
+            }
+          }, THIRTY_SECONDS);
         });
 
         socketRef.current.addEventListener("message", ({ data }: any) => {
-          setWinningHand(undefined);
-          setAttribute(undefined);
-
           try {
             const msgs = data.split("\n");
 
@@ -73,6 +80,9 @@ export function useSocket(id: string) {
               }
 
               if (type === WINNING_HAND_PLAYED) {
+                setWinningHand(undefined);
+                setAttribute(undefined);
+
                 setWinningHand({
                   user: rest.user_id,
                   name: rest.name,
@@ -81,6 +91,8 @@ export function useSocket(id: string) {
               }
 
               if (type === ROUND_IS_A_DRAW) {
+                setAttribute(undefined);
+
                 setWinningHand({
                   user: null,
                   name: null,
