@@ -5,7 +5,7 @@ import { toTitleCase } from "../utils/__helpers__";
 interface Props {
   attribute: {
     key: string;
-    value: string;
+    value: number;
   };
   selected: boolean;
   isAttribute: boolean;
