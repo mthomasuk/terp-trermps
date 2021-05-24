@@ -92,11 +92,11 @@ const fakeCard = {
   id: "fake-card-uuid",
   name: "?",
   type: "?",
-  strength: "?",
-  skill: "?",
-  magical_force: "?",
-  weapons: "?",
-  power: "?",
+  strength: 0,
+  skill: 0,
+  magical_force: 0,
+  weapons: 0,
+  power: 0,
 };
 
 const FakeCard = () => (

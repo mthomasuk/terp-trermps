@@ -29,7 +29,7 @@ const Card = ({
           key={stat}
           attribute={{
             key: stat,
-            value: (card as unknown as { [key: string]: string })[stat],
+            value: (card as unknown as { [key: string]: number })[stat],
           }}
           selected={selected}
           isAttribute={selectedAttr === stat}

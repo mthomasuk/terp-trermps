@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { ReactElement } from "react";
 
 // https://the-teacher.medium.com/how-to-test-a-react-components-css-styles-with-react-testing-library-rtl-styled-components-43f744334528
@@ -25,7 +26,7 @@ export const toTitleCase = (str: string) =>
 
 const componentToHex = (c: number): string => {
   const hex = c.toString(16);
-  return hex.length == 1 ? "0" + hex : hex;
+  return hex.length === 1 ? "0" + hex : hex;
 };
 
 export const rgbToHex = (rgb: string): string => {

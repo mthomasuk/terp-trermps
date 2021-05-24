@@ -31,7 +31,7 @@ describe("BattleStatus", () => {
     expect(compRoot[0].textContent).toMatch("Waiting for the battle to start");
   });
 
-  it("renders different styles if battleInProgress is true", () => {
+  it("renders different text if battleInProgress is true", () => {
     const leaderProps = {
       ...mockProps,
       battleInProgress: true,
@@ -49,7 +49,7 @@ describe("BattleStatus", () => {
     );
   });
 
-  it("renders different styles if isLeader is true", () => {
+  it("renders different text if isLeader is true", () => {
     const leaderProps = {
       ...mockProps,
       battleInProgress: true,
@@ -66,9 +66,11 @@ describe("BattleStatus", () => {
     expect(compRoot[0].textContent).toMatch("Choose your card & attribute!");
   });
 
-  it("renders different styles if selectedAttr is populated", () => {
+  it("renders different text if selectedAttr is populated", () => {
     const leaderProps = {
       ...mockProps,
+      battleInProgress: true,
+      isLeader: true,
       selectedAttr: "strength",
     };
 
