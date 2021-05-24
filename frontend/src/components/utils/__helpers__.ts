@@ -29,10 +29,14 @@ const componentToHex = (c: number): string => {
 };
 
 export const rgbToHex = (rgb: string): string => {
-  if (rgb.indexOf("#") === 0) return rgb;
+  if (rgb.indexOf("#") === 0) {
+    return rgb;
+  }
+
   const [r, g, b] = rgb
     .replace(/[rgba\(\)\s]/g, "")
     .split(",")
     .map((s) => parseInt(s));
+
   return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
 };
