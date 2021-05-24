@@ -27,7 +27,10 @@ const Card = ({
       {ATTRIBUTES.map((stat: string) => (
         <StatsRow
           key={stat}
-          attribute={{ key: stat, value: card[stat] }}
+          attribute={{
+            key: stat,
+            value: (card as unknown as { [key: string]: string })[stat],
+          }}
           selected={selected}
           isAttribute={selectedAttr === stat}
           onSelectAttribute={onSelect}

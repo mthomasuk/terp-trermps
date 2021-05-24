@@ -77,14 +77,14 @@ declare interface SocketMessage {
 }
 
 declare interface CardInterface {
-  [id: string]: string;
-  [name: string]: string;
-  [type: string]: string;
-  [strength: string]: number;
-  [skill: string]: number;
-  [magical_force: string]: number;
-  [weapons: string]: number;
-  [power: string]: number;
+  id: string;
+  name: string;
+  type: string;
+  strength: number;
+  skill: number;
+  magical_force: number;
+  weapons: number;
+  power: number;
 }
 
 declare interface DeckInterface {
