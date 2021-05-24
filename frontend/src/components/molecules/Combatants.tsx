@@ -4,8 +4,13 @@ import styled from "styled-components";
 
 import uniqBy from "lodash.uniqby";
 
+interface Combatant {
+  user_id: string;
+  name: string;
+}
+
 interface Props {
-  combatants: any[];
+  combatants: Combatant[];
 }
 
 const Container = styled.div`
@@ -13,7 +18,7 @@ const Container = styled.div`
 `;
 
 const Combatants = ({ combatants }: Props) => {
-  const [currentCombatants, setCurrentCombatants] = useState<any>([]);
+  const [currentCombatants, setCurrentCombatants] = useState<Combatant[]>([]);
 
   useEffect(() => {
     setCurrentCombatants((prev: any) =>

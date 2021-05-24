@@ -1,11 +1,9 @@
-import { ReactElement } from "react";
-
 import styled from "styled-components";
 
 import { BATTLE_START } from "../../constants";
 
 interface Props {
-  message: any;
+  message: SocketMessage;
 }
 
 const ListItem = styled.li`

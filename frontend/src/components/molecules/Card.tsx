@@ -1,3 +1,5 @@
+import { TouchEvent } from "react";
+
 import styled, { css, keyframes } from "styled-components";
 
 import CardImage from "../atoms/CardImage";
@@ -6,16 +8,16 @@ import BackFace from "../atoms/BackFace";
 import CardStats from "../atoms/CardStats";
 
 interface Props {
-  card: any;
+  card: CardInterface;
   next?: boolean;
   played?: boolean;
   winner?: boolean;
   selected?: boolean;
   selectedAttr?: string;
-  onSelectCard?: (card: any) => void;
-  onSelectAttribute?: (attr: any) => void;
-  onDrag?: (card: any) => void;
-  onTouchEnd?: (event: any, card?: any) => void;
+  onSelectCard?: (card: CardInterface) => void;
+  onSelectAttribute?: (attr: string) => void;
+  onDrag?: (card: CardInterface) => void;
+  onTouchEnd?: (event: TouchEvent, card?: CardInterface) => void;
 }
 
 const flip = keyframes`
@@ -145,7 +147,8 @@ const Card = ({
 }: Props) => {
   const onClick = () => (onSelectCard && next ? onSelectCard(card) : {});
   const onPlayCard = () => (onDrag ? onDrag(card) : {});
-  const onDrop = (event: any) => (onTouchEnd && next ? onTouchEnd(event) : {});
+  const onDrop = (event: TouchEvent) =>
+    onTouchEnd && next ? onTouchEnd(event) : {};
 
   return (
     <Wrapper

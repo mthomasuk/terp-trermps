@@ -1,6 +1,6 @@
-import { createContext } from "react";
+import { createContext, ReactNode } from "react";
 
-const createNewBattle = async (): Promise<any> => {
+const createNewBattle = async (): Promise<BattleInterface | void> => {
   try {
     const newBattle = await fetch("/api/battle/new", {
       method: "POST",
@@ -19,7 +19,7 @@ const createNewBattle = async (): Promise<any> => {
   return;
 };
 
-const getBattleById = async (id: string): Promise<any> => {
+const getBattleById = async (id: string): Promise<BattleInterface | void> => {
   try {
     const battle = await fetch(`/api/battle/${id}`, {
       method: "GET",
@@ -38,7 +38,7 @@ const getBattleById = async (id: string): Promise<any> => {
   return;
 };
 
-const joinBattle = async (id: string): Promise<any> => {
+const joinBattle = async (id: string): Promise<BattleInterface | void> => {
   try {
     const newHand = await fetch(`/api/battle/${id}`, {
       method: "POST",
@@ -57,7 +57,7 @@ const joinBattle = async (id: string): Promise<any> => {
   return;
 };
 
-const startBattle = async (id: string): Promise<any> => {
+const startBattle = async (id: string): Promise<BattleInterface | void> => {
   try {
     const battle = await fetch(`/api/battle/${id}/start`, {
       method: "POST",
@@ -79,7 +79,7 @@ const startBattle = async (id: string): Promise<any> => {
 const setAttribute = async (
   roundId: string,
   attribute: string
-): Promise<any> => {
+): Promise<string | void> => {
   try {
     const response = await fetch(`/api/round/${roundId}/attribute`, {
       method: "POST",
@@ -99,7 +99,10 @@ const setAttribute = async (
   return;
 };
 
-const playHand = async (id: string, hand: any): Promise<any> => {
+const playHand = async (
+  id: string,
+  hand: HandInterface
+): Promise<RoundInterface | void> => {
   try {
     const response = await fetch(`/api/hand/${id}`, {
       method: "POST",
@@ -119,7 +122,7 @@ const playHand = async (id: string, hand: any): Promise<any> => {
   return;
 };
 
-const endBattle = async (id: string): Promise<any> => {
+const endBattle = async (id: string): Promise<BattleInterface | void> => {
   try {
     const battle = await fetch(`/api/battle/${id}/end`, {
       method: "POST",
@@ -148,7 +151,7 @@ export const BattleControlContext = createContext({
   endBattle,
 });
 
-export function BattleControlProvider({ children }: { children: any }) {
+export function BattleControlProvider({ children }: { children: ReactNode }) {
   return (
     <BattleControlContext.Provider
       value={{

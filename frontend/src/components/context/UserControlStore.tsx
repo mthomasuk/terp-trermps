@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, ReactNode } from "react";
 
 const hasCookie: boolean = document.cookie.includes("session");
 
@@ -26,7 +26,7 @@ export const UserControlContext = createContext({
   signOutUser: async () => {},
 });
 
-export function UserControlProvider({ children }: { children: any }) {
+export function UserControlProvider({ children }: { children: ReactNode }) {
   const [isSignedIn, setIsSignedIn] = useState(hasCookie);
 
   const signInUser = async (name: string, password: string): Promise<void> => {

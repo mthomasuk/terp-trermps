@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, DragEvent, TouchEvent } from "react";
 import { useParams } from "react-router-dom";
 
 import styled from "styled-components";
@@ -9,15 +9,15 @@ import { useSocket } from "../context/Websocket";
 import Card from "./Card";
 
 interface Props {
-  cards: any[];
+  cards: CardInterface[];
   leader: boolean;
   roundId: string;
-  selectedCard?: any;
+  selectedCard?: CardInterface;
   selectedAttr?: string;
   droppedCard?: any;
-  onPlayHand: (hand: any) => void;
-  onSelectCard: (hand: any) => void;
-  onSetDroppedCard: (hand: any) => void;
+  onPlayHand: (card: CardInterface | undefined) => void;
+  onSelectCard: (card: CardInterface | undefined) => void;
+  onSetDroppedCard: (card: CardInterface | undefined) => void;
 }
 
 const Container = styled.div`
@@ -150,7 +150,7 @@ const Hand = ({
   const selectedAttribute = attributeSelected || selectedAttr;
 
   const [dropErr, setDropErr] = useState<string | undefined>();
-  const [cardInPlay, playCard] = useState<any | undefined>();
+  const [cardInPlay, playCard] = useState<CardInterface | undefined>();
   const [isDraggedOver, setDragOver] = useState<boolean>(false);
 
   const onSelectAttribute = async (attr: string) => {
@@ -163,17 +163,17 @@ const Hand = ({
     }
   };
 
-  const onDragOver = (event: any) => {
+  const onDragOver = (event: DragEvent) => {
     event.preventDefault();
     setDragOver(true);
   };
 
-  const onDragLeave = (event: any) => {
+  const onDragLeave = (event: DragEvent) => {
     event.preventDefault();
     setDragOver(false);
   };
 
-  const onDrop = (event: any) => {
+  const onDrop = (event: DragEvent | TouchEvent) => {
     setDragOver(false);
 
     if (!selectedAttribute && leader) {

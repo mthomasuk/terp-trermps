@@ -2,6 +2,10 @@ import styled from "styled-components";
 
 import Message from "../atoms/Message";
 
+interface Props {
+  messages: SocketMessage[];
+}
+
 const Bar = styled.div`
   background: #fff;
   position: fixed;
@@ -28,7 +32,7 @@ const List = styled.ul`
   margin: 0;
 `;
 
-const Messages = ({ messages }: { messages: any[] }) => (
+const Messages = ({ messages }: Props) => (
   <Bar>
     <List>
       {messages && messages.length ? (

@@ -4,8 +4,8 @@ import { getTestStyles } from "../utils/__helpers__";
 
 import CardImage from "./CardImage";
 
-describe("React Components / Button", () => {
-  const mockName = "test-button";
+describe("CardImage", () => {
+  const mockName = "test-name";
 
   afterEach(() => {
     cleanup();

@@ -5,10 +5,10 @@ import StatsRow from "./StatsRow";
 import { ATTRIBUTES } from "../../constants";
 
 interface Props {
-  card: any;
+  card: CardInterface;
   selected?: boolean;
   selectedAttr?: string;
-  onSelectAttribute?: (attr: any) => void;
+  onSelectAttribute?: (attr: string) => void;
 }
 
 const Stats = styled.div``;
@@ -19,7 +19,7 @@ const Card = ({
   selectedAttr,
   selected = false,
 }: Props) => {
-  const onSelect = (attr: any) =>
+  const onSelect = (attr: string) =>
     onSelectAttribute ? onSelectAttribute(attr) : {};
 
   return (

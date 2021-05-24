@@ -69,3 +69,55 @@ declare module "*.module.sass" {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
+
+declare interface SocketMessage {
+  id: string;
+  body: string;
+  type: string;
+}
+
+declare interface CardInterface {
+  [id: string]: string;
+  [name: string]: string;
+  [type: string]: string;
+  [strength: string]: number;
+  [skill: string]: number;
+  [magical_force: string]: number;
+  [weapons: string]: number;
+  [power: string]: number;
+}
+
+declare interface DeckInterface {
+  id: string;
+  name: string;
+  user_id: string;
+  battle_id: string;
+  cards: CardInterface[];
+}
+
+declare interface HandInterface {
+  id?: string;
+  deck_id: string;
+  round_id: string;
+  card_id: string;
+  value?: number;
+  name?: string;
+  user_id?: string;
+}
+
+declare interface RoundInterface {
+  id: string;
+  battle_id: string;
+  attribute?: string;
+  leader?: string;
+  started_at?: string;
+  winning_hand: HandInterface;
+}
+
+declare interface BattleInterface {
+  id: string;
+  started_at?: string;
+  winner?: string;
+  decks: DeckInterface[];
+  rounds: RoundInterface[];
+}

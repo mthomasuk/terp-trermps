@@ -9,9 +9,9 @@ import Card from "./Card";
 import Hand from "./Hand";
 
 interface Props {
-  cards: any[];
+  cards: CardInterface[];
   roundId: string;
-  onPlayHand: (hand: any) => void;
+  onPlayHand: (card: CardInterface | undefined) => void;
   leader: boolean;
   selectedAttr?: string;
 }
@@ -56,7 +56,7 @@ const Cards = ({
 
   const canPlayHand = leader || attributeSelected || selectedAttr;
 
-  const onSelect = (card: any) => {
+  const onSelect = (card: CardInterface) => {
     if (canPlayHand) {
       selectCard(card);
     }

@@ -9,7 +9,7 @@ interface Props {
   };
   selected: boolean;
   isAttribute: boolean;
-  onSelectAttribute: (attr: any) => void;
+  onSelectAttribute: (attr: string) => void;
 }
 
 const Row = styled.div<{ selected?: boolean; isAttr?: boolean }>`

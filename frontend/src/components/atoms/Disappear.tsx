@@ -1,9 +1,11 @@
+import { ReactElement } from "react";
+
 import styled, { keyframes } from "styled-components";
 
 interface Props {
-  element: Element | JSX.Element;
+  element: ReactElement;
   headline: string;
-  info: Element | JSX.Element;
+  info: ReactElement;
 }
 
 const fadeOut = keyframes`
