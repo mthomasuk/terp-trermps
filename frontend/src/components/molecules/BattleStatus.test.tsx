@@ -20,6 +20,10 @@ describe("BattleStatus", () => {
     cleanup();
   });
 
+  afterAll(() => {
+    jest.resetAllMocks();
+  });
+
   it("renders default correctly", () => {
     render(<BattleStatus {...mockProps} />);
 
