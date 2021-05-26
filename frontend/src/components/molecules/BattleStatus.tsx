@@ -25,7 +25,7 @@ const massageAttribute = (attr?: string): string =>
   attr ? attr.replace("_", " ") : "";
 
 export const testIds = {
-  ROOT: "battle-status-status",
+  ROOT: "battle-status-Status",
 };
 
 const BattleStatus = ({ battleInProgress, isLeader, selectedAttr }: Props) => {

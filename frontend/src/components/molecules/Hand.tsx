@@ -21,6 +21,7 @@ interface Props {
   onPlayHand: (card: CardInterface | undefined) => void;
   onSelectCard: (card: CardInterface | undefined) => void;
   onSetDroppedCard: (card: CardInterface | undefined) => void;
+  dataTestId?: string;
 }
 
 const Container = styled.div`
@@ -36,9 +37,12 @@ const Container = styled.div`
   }
 `;
 
+export const testIds = {
+  ROOT: "hand-Container",
+};
+
 const Hand = ({
   cards,
-  leader = false,
   selectedCard,
   selectedAttr,
   droppedCard,
@@ -46,6 +50,8 @@ const Hand = ({
   onPlayHand,
   onSelectCard,
   onSetDroppedCard,
+  leader = false,
+  dataTestId = testIds.ROOT,
 }: Props) => {
   const { id }: any = useParams();
 
@@ -102,7 +108,7 @@ const Hand = ({
   }, [cards]);
 
   return (
-    <Container>
+    <Container data-testid={dataTestId}>
       <InPlay>
         {selectedCard && (
           <Card

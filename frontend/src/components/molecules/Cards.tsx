@@ -41,7 +41,9 @@ const Deck = styled.div`
 `;
 
 export const testIds = {
-  ROOT: "cards-container",
+  ROOT: "cards-Container",
+  DECK: "cards-Deck",
+  HAND: "cards-Hand",
 };
 
 const Cards = ({
@@ -72,7 +74,7 @@ const Cards = ({
 
   return (
     <Container data-testid={testIds.ROOT}>
-      <Deck>
+      <Deck data-testid={testIds.DECK}>
         {cards &&
           cards
             .filter(
@@ -89,6 +91,7 @@ const Cards = ({
       </Deck>
       {canPlayHand && (
         <Hand
+          dataTestId={testIds.HAND}
           cards={cards}
           roundId={roundId}
           onPlayHand={onPlayHand}
