@@ -40,6 +40,10 @@ const Deck = styled.div`
   padding-top: 2rem;
 `;
 
+export const testIds = {
+  ROOT: "cards-container",
+};
+
 const Cards = ({
   cards,
   roundId,
@@ -67,7 +71,7 @@ const Cards = ({
   }, [cards]);
 
   return (
-    <Container>
+    <Container data-testid={testIds.ROOT}>
       <Deck>
         {cards &&
           cards

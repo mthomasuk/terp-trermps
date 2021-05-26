@@ -24,6 +24,10 @@ const Status = styled.h3`
 const massageAttribute = (attr?: string): string =>
   attr ? attr.replace("_", " ") : "";
 
+export const testIds = {
+  ROOT: "battle-status-status",
+};
+
 const BattleStatus = ({ battleInProgress, isLeader, selectedAttr }: Props) => {
   const { id }: any = useParams();
 
@@ -45,7 +49,7 @@ const BattleStatus = ({ battleInProgress, isLeader, selectedAttr }: Props) => {
     )}!`;
   }
 
-  return <Status>{status}</Status>;
+  return <Status data-testid={testIds.ROOT}>{status}</Status>;
 };
 
 export default BattleStatus;

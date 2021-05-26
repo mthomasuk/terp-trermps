@@ -1,13 +1,9 @@
 import { render, cleanup } from "@testing-library/react";
 
-import BattleStatus from "./BattleStatus";
+import BattleStatus, { testIds } from "./BattleStatus";
 
 jest.mock("react-router-dom", () => ({
   useParams: () => ({ id: "1" }),
-}));
-
-jest.mock("../context/Websocket", () => ({
-  useSocket: () => ({ attributeSelected: "" }),
 }));
 
 describe("BattleStatus", () => {
@@ -25,32 +21,26 @@ describe("BattleStatus", () => {
   });
 
   it("renders default correctly", () => {
-    render(<BattleStatus {...mockProps} />);
+    const { getByTestId, getByText } = render(<BattleStatus {...mockProps} />);
 
-    const battleStatusClass = BattleStatus(mockProps).type.styledComponentId;
-    const compRoot = document.getElementsByClassName(battleStatusClass);
+    const compRoot = getByTestId(testIds.ROOT);
+    const content = getByText("Waiting for the battle to start");
 
-    expect(compRoot[0]).toBeDefined();
-
-    expect(compRoot[0].textContent).toMatch("Waiting for the battle to start");
+    expect(compRoot).toBeDefined();
+    expect(content).toBeDefined();
   });
 
   it("renders different text if battleInProgress is true", () => {
-    const leaderProps = {
+    const progressProps = {
       ...mockProps,
       battleInProgress: true,
     };
 
-    render(<BattleStatus {...leaderProps} />);
+    const { getByText } = render(<BattleStatus {...progressProps} />);
 
-    const battleStatusClass = BattleStatus(leaderProps).type.styledComponentId;
-    const compRoot = document.getElementsByClassName(battleStatusClass);
+    const content = getByText("Your enemy is plotting something...");
 
-    expect(compRoot[0]).toBeDefined();
-
-    expect(compRoot[0].textContent).toMatch(
-      "Your enemy is plotting something..."
-    );
+    expect(content).toBeDefined();
   });
 
   it("renders different text if isLeader is true", () => {
@@ -60,31 +50,25 @@ describe("BattleStatus", () => {
       isLeader: true,
     };
 
-    render(<BattleStatus {...leaderProps} />);
+    const { getByText } = render(<BattleStatus {...leaderProps} />);
 
-    const battleStatusClass = BattleStatus(leaderProps).type.styledComponentId;
-    const compRoot = document.getElementsByClassName(battleStatusClass);
+    const content = getByText("Choose your card & attribute!");
 
-    expect(compRoot[0]).toBeDefined();
-
-    expect(compRoot[0].textContent).toMatch("Choose your card & attribute!");
+    expect(content).toBeDefined();
   });
 
   it("renders different text if selectedAttr is populated", () => {
-    const leaderProps = {
+    const attrProps = {
       ...mockProps,
       battleInProgress: true,
       isLeader: true,
       selectedAttr: "strength",
     };
 
-    render(<BattleStatus {...leaderProps} />);
+    const { getByText } = render(<BattleStatus {...attrProps} />);
 
-    const battleStatusClass = BattleStatus(leaderProps).type.styledComponentId;
-    const compRoot = document.getElementsByClassName(battleStatusClass);
+    const content = getByText("Attribute is strength!");
 
-    expect(compRoot[0]).toBeDefined();
-
-    expect(compRoot[0].textContent).toMatch("Attribute is strength!");
+    expect(content).toBeDefined();
   });
 });
