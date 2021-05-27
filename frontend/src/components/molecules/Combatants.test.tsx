@@ -1,6 +1,7 @@
 import { render, cleanup } from "@testing-library/react";
 
 import Combatants, { testIds } from "./Combatants";
+
 describe("Combatants", () => {
   const mockProps = {
     combatants: Array(3)

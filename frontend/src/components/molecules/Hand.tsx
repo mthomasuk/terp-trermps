@@ -15,12 +15,12 @@ interface Props {
   cards: CardInterface[];
   leader: boolean;
   roundId: string;
-  selectedCard?: CardInterface;
-  selectedAttr?: string;
-  droppedCard?: any;
   onPlayHand: (card: CardInterface | undefined) => void;
   onSelectCard: (card: CardInterface | undefined) => void;
   onSetDroppedCard: (card: CardInterface | undefined) => void;
+  selectedCard?: CardInterface;
+  selectedAttr?: string;
+  droppedCard?: any;
   dataTestId?: string;
 }
 
@@ -39,6 +39,8 @@ const Container = styled.div`
 
 export const testIds = {
   ROOT: "hand-Container",
+  IN_PLAY: "hand-InPlay",
+  TO_PLAY: "hand-ToPlay",
 };
 
 const Hand = ({
@@ -109,7 +111,7 @@ const Hand = ({
 
   return (
     <Container data-testid={dataTestId}>
-      <InPlay>
+      <InPlay data-testid={testIds.IN_PLAY}>
         {selectedCard && (
           <Card
             selected
@@ -129,6 +131,7 @@ const Hand = ({
         onDrop={onDrop}
         error={dropErr}
         leader={leader}
+        data-testid={testIds.TO_PLAY}
       >
         {droppedCard && (
           <Card

@@ -18,6 +18,7 @@ interface Props {
   onSelectAttribute?: (attr: string) => void;
   onDrag?: (card: CardInterface) => void;
   onTouchEnd?: (event: TouchEvent, card?: CardInterface) => void;
+  dataTestId?: string;
 }
 
 const flip = keyframes`
@@ -46,6 +47,10 @@ const flippy = () =>
   css`
     ${flip} 2s linear infinite;
   `;
+
+export const testIds = {
+  ROOT: "card-Wrapper",
+};
 
 const Wrapper = styled.button<{
   selected?: boolean;
@@ -144,6 +149,7 @@ const Card = ({
   selected = false,
   next = false,
   winner = false,
+  dataTestId = testIds.ROOT,
 }: Props) => {
   const onClick = () => (onSelectCard && next ? onSelectCard(card) : {});
   const onPlayCard = () => (onDrag ? onDrag(card) : {});
@@ -160,6 +166,7 @@ const Card = ({
       played={played}
       selected={selected}
       draggable={selected}
+      data-testid={dataTestId}
     >
       <Inner next={next} winner={winner}>
         <FrontFace>
