@@ -1,0 +1,14 @@
+{
+  "name": "terp-trermps-tests",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+  },
+  "devDependencies": {
+    "@testing-library/cypress": "^7.0.6",
+    "@testing-library/dom": "^7.31.0",
+    "cypress": "^7.4.0"
+  }
+}

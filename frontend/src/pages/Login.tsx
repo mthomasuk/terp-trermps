@@ -54,6 +54,12 @@ const Input = styled.input`
   font-size: 1rem;
 `;
 
+export const testIds = {
+  ROOT: "login-Wrapper",
+  NAME_INPUT: "login-nameInput",
+  PASSWORD_INPUT: "login-passwordInput",
+};
+
 const Login = () => {
   const [name, setName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -86,40 +92,39 @@ const Login = () => {
   return isSignedIn ? (
     <Redirect to="/" />
   ) : (
-    <>
-      <Wrapper>
-        <Logo />
-        <Form onSubmit={onSubmit}>
-          <Info>
-            <p>If you're new, just make a username and password up!</p>
-            <p>
-              Returning players can retrieve their scores/re-enter games midway
-              through
-            </p>
-          </Info>
-          <Label>
-            PLZ ENTER YOUR NAME:
-            <Input
-              type="text"
-              placeholder="Your name, plz"
-              onChange={updateName}
-            />
-          </Label>
-          <Label>
-            PLZ ENTER A PASSWORD:
-            <Input
-              type="password"
-              placeholder="A password, plz"
-              onChange={updatePassword}
-            />
-          </Label>
-
-          <button type="submit" onClick={onSubmit}>
-            Login
-          </button>
-        </Form>
-      </Wrapper>
-    </>
+    <Wrapper>
+      <Logo />
+      <Form onSubmit={onSubmit}>
+        <Info>
+          <p>If you're new, just make a username and password up!</p>
+          <p>
+            Returning players can retrieve their scores/re-enter games midway
+            through
+          </p>
+        </Info>
+        <Label>
+          PLZ ENTER YOUR NAME:
+          <Input
+            type="text"
+            placeholder="Your name, plz"
+            onChange={updateName}
+            data-testid={testIds.NAME_INPUT}
+          />
+        </Label>
+        <Label>
+          PLZ ENTER A PASSWORD:
+          <Input
+            type="password"
+            placeholder="A password, plz"
+            onChange={updatePassword}
+            data-testid={testIds.PASSWORD_INPUT}
+          />
+        </Label>
+        <button type="submit" onClick={onSubmit}>
+          Login
+        </button>
+      </Form>
+    </Wrapper>
   );
 };
 
