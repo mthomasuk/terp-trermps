@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { UserControlContext } from "../components/context/UserControlStore";
 import { BattleControlContext } from "../components/context/BattleControlStore";
 
+import Header from "../components/atoms/Header";
 import Logo from "../components/atoms/Logo";
 import Button from "../components/atoms/Button";
 
@@ -53,6 +54,7 @@ const Landing = () => {
 
   return (
     <Container>
+      <Header />
       <Logo />
       <h3>
         Welcome <strong>{user && user.name}</strong>

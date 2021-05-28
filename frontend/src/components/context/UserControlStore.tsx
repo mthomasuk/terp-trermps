@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext, ReactNode } from "react";
+import { useHistory } from "react-router-dom";
 
 const hasCookie: boolean = document.cookie.includes("session");
 
@@ -14,7 +15,7 @@ const clearExpressCookies = (): void => {
     const cookieName = cookie.split("=")[0];
     if (cookieName.includes("session")) {
       const value = "";
-      document.cookie = `${cookieName}=${value};expires=Thu, 21 Sep 1979 00:00:01 UTC;domain=.${process.env.BASE_URL};path=/`;
+      document.cookie = `${cookieName}=${value};expires=Thu, 21 Sep 1979 00:00:01 UTC;path=/`;
     }
   });
 };
@@ -28,6 +29,8 @@ export const UserControlContext = createContext({
 
 export function UserControlProvider({ children }: { children: ReactNode }) {
   const [isSignedIn, setIsSignedIn] = useState(hasCookie);
+
+  const history = useHistory();
 
   const signInUser = async (name: string, password: string): Promise<void> => {
     window.localStorage.removeItem("user");
@@ -59,6 +62,8 @@ export function UserControlProvider({ children }: { children: ReactNode }) {
     window.localStorage.removeItem("user");
 
     setIsSignedIn(false);
+
+    history?.push("/login");
   };
 
   useEffect(() => {
