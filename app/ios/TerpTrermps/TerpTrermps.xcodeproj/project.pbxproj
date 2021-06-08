@@ -1,0 +1,603 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D351ED8C266F5C2C002485E3 /* TerpTrermpsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351ED8B266F5C2C002485E3 /* TerpTrermpsApp.swift */; };
+		D351ED8E266F5C2C002485E3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351ED8D266F5C2C002485E3 /* LoginView.swift */; };
+		D351ED90266F5C2D002485E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D351ED8F266F5C2D002485E3 /* Assets.xcassets */; };
+		D351ED93266F5C2D002485E3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D351ED92266F5C2D002485E3 /* Preview Assets.xcassets */; };
+		D351ED9E266F5C2D002485E3 /* TerpTrermpsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351ED9D266F5C2D002485E3 /* TerpTrermpsTests.swift */; };
+		D351EDA9266F5C2E002485E3 /* TerpTrermpsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351EDA8266F5C2E002485E3 /* TerpTrermpsUITests.swift */; };
+		D35BC492266F762200BF5107 /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC491266F762200BF5107 /* LogoView.swift */; };
+		D35BC494266F784D00BF5107 /* LoginFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC493266F784D00BF5107 /* LoginFormView.swift */; };
+		D35BC497266FA6E000BF5107 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC496266FA6E000BF5107 /* HomeView.swift */; };
+		D35BC49D266FACCF00BF5107 /* LogOutButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC49C266FACCF00BF5107 /* LogOutButtonView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D351ED9A266F5C2D002485E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D351ED80266F5C2C002485E3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D351ED87266F5C2C002485E3;
+			remoteInfo = TerpTrermps;
+		};
+		D351EDA5266F5C2D002485E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D351ED80266F5C2C002485E3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D351ED87266F5C2C002485E3;
+			remoteInfo = TerpTrermps;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D351ED88266F5C2C002485E3 /* TerpTrermps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TerpTrermps.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D351ED8B266F5C2C002485E3 /* TerpTrermpsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerpTrermpsApp.swift; sourceTree = "<group>"; };
+		D351ED8D266F5C2C002485E3 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		D351ED8F266F5C2D002485E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D351ED92266F5C2D002485E3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D351ED94266F5C2D002485E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D351ED99266F5C2D002485E3 /* TerpTrermpsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TerpTrermpsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D351ED9D266F5C2D002485E3 /* TerpTrermpsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerpTrermpsTests.swift; sourceTree = "<group>"; };
+		D351ED9F266F5C2D002485E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D351EDA4266F5C2D002485E3 /* TerpTrermpsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TerpTrermpsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D351EDA8266F5C2E002485E3 /* TerpTrermpsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerpTrermpsUITests.swift; sourceTree = "<group>"; };
+		D351EDAA266F5C2E002485E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D35BC491266F762200BF5107 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
+		D35BC493266F784D00BF5107 /* LoginFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFormView.swift; sourceTree = "<group>"; };
+		D35BC496266FA6E000BF5107 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		D35BC49C266FACCF00BF5107 /* LogOutButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogOutButtonView.swift; path = ../../../../../../../.Trash/LogOutButtonView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D351ED85266F5C2C002485E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351ED96266F5C2D002485E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351EDA1266F5C2D002485E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D351ED7F266F5C2C002485E3 = {
+			isa = PBXGroup;
+			children = (
+				D351ED8A266F5C2C002485E3 /* TerpTrermps */,
+				D351ED9C266F5C2D002485E3 /* TerpTrermpsTests */,
+				D351EDA7266F5C2E002485E3 /* TerpTrermpsUITests */,
+				D351ED89266F5C2C002485E3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D351ED89266F5C2C002485E3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D351ED88266F5C2C002485E3 /* TerpTrermps.app */,
+				D351ED99266F5C2D002485E3 /* TerpTrermpsTests.xctest */,
+				D351EDA4266F5C2D002485E3 /* TerpTrermpsUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D351ED8A266F5C2C002485E3 /* TerpTrermps */ = {
+			isa = PBXGroup;
+			children = (
+				D35BC495266FA63300BF5107 /* Views */,
+				D351ED8B266F5C2C002485E3 /* TerpTrermpsApp.swift */,
+				D351ED8F266F5C2D002485E3 /* Assets.xcassets */,
+				D351ED94266F5C2D002485E3 /* Info.plist */,
+				D351ED91266F5C2D002485E3 /* Preview Content */,
+			);
+			path = TerpTrermps;
+			sourceTree = "<group>";
+		};
+		D351ED91266F5C2D002485E3 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				D351ED92266F5C2D002485E3 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D351ED9C266F5C2D002485E3 /* TerpTrermpsTests */ = {
+			isa = PBXGroup;
+			children = (
+				D351ED9D266F5C2D002485E3 /* TerpTrermpsTests.swift */,
+				D351ED9F266F5C2D002485E3 /* Info.plist */,
+			);
+			path = TerpTrermpsTests;
+			sourceTree = "<group>";
+		};
+		D351EDA7266F5C2E002485E3 /* TerpTrermpsUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D351EDA8266F5C2E002485E3 /* TerpTrermpsUITests.swift */,
+				D351EDAA266F5C2E002485E3 /* Info.plist */,
+			);
+			path = TerpTrermpsUITests;
+			sourceTree = "<group>";
+		};
+		D35BC495266FA63300BF5107 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D351ED8D266F5C2C002485E3 /* LoginView.swift */,
+				D35BC493266F784D00BF5107 /* LoginFormView.swift */,
+				D35BC491266F762200BF5107 /* LogoView.swift */,
+				D35BC496266FA6E000BF5107 /* HomeView.swift */,
+				D35BC49C266FACCF00BF5107 /* LogOutButtonView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D351ED87266F5C2C002485E3 /* TerpTrermps */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D351EDAD266F5C2E002485E3 /* Build configuration list for PBXNativeTarget "TerpTrermps" */;
+			buildPhases = (
+				D351ED84266F5C2C002485E3 /* Sources */,
+				D351ED85266F5C2C002485E3 /* Frameworks */,
+				D351ED86266F5C2C002485E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TerpTrermps;
+			productName = TerpTrermps;
+			productReference = D351ED88266F5C2C002485E3 /* TerpTrermps.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D351ED98266F5C2D002485E3 /* TerpTrermpsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D351EDB0266F5C2E002485E3 /* Build configuration list for PBXNativeTarget "TerpTrermpsTests" */;
+			buildPhases = (
+				D351ED95266F5C2D002485E3 /* Sources */,
+				D351ED96266F5C2D002485E3 /* Frameworks */,
+				D351ED97266F5C2D002485E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D351ED9B266F5C2D002485E3 /* PBXTargetDependency */,
+			);
+			name = TerpTrermpsTests;
+			productName = TerpTrermpsTests;
+			productReference = D351ED99266F5C2D002485E3 /* TerpTrermpsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D351EDA3266F5C2D002485E3 /* TerpTrermpsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D351EDB3266F5C2E002485E3 /* Build configuration list for PBXNativeTarget "TerpTrermpsUITests" */;
+			buildPhases = (
+				D351EDA0266F5C2D002485E3 /* Sources */,
+				D351EDA1266F5C2D002485E3 /* Frameworks */,
+				D351EDA2266F5C2D002485E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D351EDA6266F5C2D002485E3 /* PBXTargetDependency */,
+			);
+			name = TerpTrermpsUITests;
+			productName = TerpTrermpsUITests;
+			productReference = D351EDA4266F5C2D002485E3 /* TerpTrermpsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D351ED80266F5C2C002485E3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				TargetAttributes = {
+					D351ED87266F5C2C002485E3 = {
+						CreatedOnToolsVersion = 12.5;
+					};
+					D351ED98266F5C2D002485E3 = {
+						CreatedOnToolsVersion = 12.5;
+						TestTargetID = D351ED87266F5C2C002485E3;
+					};
+					D351EDA3266F5C2D002485E3 = {
+						CreatedOnToolsVersion = 12.5;
+						TestTargetID = D351ED87266F5C2C002485E3;
+					};
+				};
+			};
+			buildConfigurationList = D351ED83266F5C2C002485E3 /* Build configuration list for PBXProject "TerpTrermps" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D351ED7F266F5C2C002485E3;
+			productRefGroup = D351ED89266F5C2C002485E3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D351ED87266F5C2C002485E3 /* TerpTrermps */,
+				D351ED98266F5C2D002485E3 /* TerpTrermpsTests */,
+				D351EDA3266F5C2D002485E3 /* TerpTrermpsUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D351ED86266F5C2C002485E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D351ED93266F5C2D002485E3 /* Preview Assets.xcassets in Resources */,
+				D351ED90266F5C2D002485E3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351ED97266F5C2D002485E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351EDA2266F5C2D002485E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D351ED84266F5C2C002485E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D35BC49D266FACCF00BF5107 /* LogOutButtonView.swift in Sources */,
+				D351ED8E266F5C2C002485E3 /* LoginView.swift in Sources */,
+				D35BC492266F762200BF5107 /* LogoView.swift in Sources */,
+				D35BC494266F784D00BF5107 /* LoginFormView.swift in Sources */,
+				D35BC497266FA6E000BF5107 /* HomeView.swift in Sources */,
+				D351ED8C266F5C2C002485E3 /* TerpTrermpsApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351ED95266F5C2D002485E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D351ED9E266F5C2D002485E3 /* TerpTrermpsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351EDA0266F5C2D002485E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D351EDA9266F5C2E002485E3 /* TerpTrermpsUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D351ED9B266F5C2D002485E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D351ED87266F5C2C002485E3 /* TerpTrermps */;
+			targetProxy = D351ED9A266F5C2D002485E3 /* PBXContainerItemProxy */;
+		};
+		D351EDA6266F5C2D002485E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D351ED87266F5C2C002485E3 /* TerpTrermps */;
+			targetProxy = D351EDA5266F5C2D002485E3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D351EDAB266F5C2E002485E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D351EDAC266F5C2E002485E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D351EDAE266F5C2E002485E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"TerpTrermps/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = TerpTrermps/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mthomasuk.TerpTrermps;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D351EDAF266F5C2E002485E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"TerpTrermps/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = TerpTrermps/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mthomasuk.TerpTrermps;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D351EDB1266F5C2E002485E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = TerpTrermpsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mthomasuk.TerpTrermpsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TerpTrermps.app/TerpTrermps";
+			};
+			name = Debug;
+		};
+		D351EDB2266F5C2E002485E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = TerpTrermpsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mthomasuk.TerpTrermpsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TerpTrermps.app/TerpTrermps";
+			};
+			name = Release;
+		};
+		D351EDB4266F5C2E002485E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = TerpTrermpsUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mthomasuk.TerpTrermpsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TerpTrermps;
+			};
+			name = Debug;
+		};
+		D351EDB5266F5C2E002485E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = TerpTrermpsUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mthomasuk.TerpTrermpsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TerpTrermps;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D351ED83266F5C2C002485E3 /* Build configuration list for PBXProject "TerpTrermps" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D351EDAB266F5C2E002485E3 /* Debug */,
+				D351EDAC266F5C2E002485E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D351EDAD266F5C2E002485E3 /* Build configuration list for PBXNativeTarget "TerpTrermps" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D351EDAE266F5C2E002485E3 /* Debug */,
+				D351EDAF266F5C2E002485E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D351EDB0266F5C2E002485E3 /* Build configuration list for PBXNativeTarget "TerpTrermpsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D351EDB1266F5C2E002485E3 /* Debug */,
+				D351EDB2266F5C2E002485E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D351EDB3266F5C2E002485E3 /* Build configuration list for PBXNativeTarget "TerpTrermpsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D351EDB4266F5C2E002485E3 /* Debug */,
+				D351EDB5266F5C2E002485E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D351ED80266F5C2C002485E3 /* Project object */;
+}
