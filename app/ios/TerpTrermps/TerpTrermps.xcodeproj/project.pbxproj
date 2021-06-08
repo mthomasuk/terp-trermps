@@ -17,6 +17,7 @@
 		D35BC494266F784D00BF5107 /* LoginFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC493266F784D00BF5107 /* LoginFormView.swift */; };
 		D35BC497266FA6E000BF5107 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC496266FA6E000BF5107 /* HomeView.swift */; };
 		D35BC49F266FCAA400BF5107 /* LogOutButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC49E266FCAA400BF5107 /* LogOutButtonView.swift */; };
+		D35BC4A2266FD02600BF5107 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4A1266FD02600BF5107 /* UserModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		D35BC493266F784D00BF5107 /* LoginFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFormView.swift; sourceTree = "<group>"; };
 		D35BC496266FA6E000BF5107 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		D35BC49E266FCAA400BF5107 /* LogOutButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOutButtonView.swift; sourceTree = "<group>"; };
+		D35BC4A1266FD02600BF5107 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 		D351ED8A266F5C2C002485E3 /* TerpTrermps */ = {
 			isa = PBXGroup;
 			children = (
+				D35BC4A0266FD01100BF5107 /* Models */,
 				D35BC495266FA63300BF5107 /* Views */,
 				D351ED8B266F5C2C002485E3 /* TerpTrermpsApp.swift */,
 				D351ED8F266F5C2D002485E3 /* Assets.xcassets */,
@@ -148,6 +151,14 @@
 				D35BC49E266FCAA400BF5107 /* LogOutButtonView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		D35BC4A0266FD01100BF5107 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D35BC4A1266FD02600BF5107 /* UserModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,6 +296,7 @@
 				D35BC494266F784D00BF5107 /* LoginFormView.swift in Sources */,
 				D35BC497266FA6E000BF5107 /* HomeView.swift in Sources */,
 				D351ED8C266F5C2C002485E3 /* TerpTrermpsApp.swift in Sources */,
+				D35BC4A2266FD02600BF5107 /* UserModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

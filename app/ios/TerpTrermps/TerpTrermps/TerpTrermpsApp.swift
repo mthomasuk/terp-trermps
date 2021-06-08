@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct TerpTrermpsApp: App {
-    var loggedInUser = UserDefaults.standard.string(forKey: "user")
+    @AppStorage("user") var loggedInUser: String = ""
     
     var body: some Scene {
         WindowGroup {
-            if loggedInUser != nil {
+            if loggedInUser != "" {
                 HomeView()
             } else {
                 LoginView()
