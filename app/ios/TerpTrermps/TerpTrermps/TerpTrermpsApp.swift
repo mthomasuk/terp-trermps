@@ -16,7 +16,7 @@ struct TerpTrermpsApp: App {
             if loggedInUser != "" {
                 HomeView().onOpenURL(perform: { url in
                     if let scheme = url.scheme,
-                    scheme.localizedCaseInsensitiveCompare("com.myApp") == .orderedSame,
+                    scheme.localizedCaseInsensitiveCompare("com.TerpTrermps") == .orderedSame,
 
                     let view = url.host {
                        var parameters: [String: String] = [:]

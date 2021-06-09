@@ -18,8 +18,14 @@ struct BattleView: View {
                 Color(red: 255/255, green: 255/255, blue: 157/255).ignoresSafeArea()
                 VStack {
                     VStack(alignment: .center) {
-                        Text("Battle ID \(battleId)")
-                    }
+                        Text("Share this link to join the battle:").padding(.vertical, 10)
+                        Link("terp-trermps://battle/\(battleId)", destination: URL(string: "terp-trermps://battle/\(battleId)")!)
+                            .font(.footnote)
+                            .multilineTextAlignment(.center)
+                    }.padding(.vertical, 10)
+                    VStack {
+                        Text("Waiting for the battle to start")
+                    }.padding(.vertical, 20)
                     LogOutButton()
                 }
             }
