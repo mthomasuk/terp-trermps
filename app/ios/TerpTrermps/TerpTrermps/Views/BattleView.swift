@@ -22,10 +22,10 @@ struct BattleView: View {
                         Link("terp-trermps://battle/\(battleId)", destination: URL(string: "terp-trermps://battle/\(battleId)")!)
                             .font(.footnote)
                             .multilineTextAlignment(.center)
-                    }.padding(.vertical, 10)
+                    }.padding(10)
                     VStack {
                         Text("Waiting for the battle to start")
-                    }.padding(.vertical, 20)
+                    }.padding(.vertical, 10)
                     LogOutButton()
                 }
             }
