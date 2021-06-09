@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LoginForm: View {
+    @EnvironmentObject var navController: NavigationModelController
+
     @State private var username: String = ""
     @State private var password: String = ""
     
@@ -19,12 +21,27 @@ struct LoginForm: View {
                 return
             }
             
-            proceedToView = logUserIn(username: username, password: password)
+            logUserIn(
+                username: username,
+                password: password,
+                completion: {
+                    (result: Bool, error: Error?) -> () in
+                    if error != nil {
+                        print(error!)
+                    } else {
+                        if result == true {
+                            DispatchQueue.main.async {
+                                self.navController.route = "home"
+                            }
+                        }
+                    }
+                }
+            )
         }
     }
 
     var body: some View {
-        NavigationLink(destination: HomeView(), isActive: $proceedToView) {}
+//        NavigationLink(destination: HomeView(), isActive: $proceedToView) {}
         VStack {
             VStack(alignment: .leading) {
                 Text("PLZ ENTER YOUR NAME:").font(.footnote)

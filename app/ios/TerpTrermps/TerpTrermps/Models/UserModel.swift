@@ -12,7 +12,7 @@ struct UserModel: Decodable {
     let name: String
 }
 
-func logUserIn(username: String, password: String) -> Bool {
+func logUserIn(username: String, password: String, completion: @escaping (Bool, Error?) -> ()) {
     UserDefaults.standard.removeObject(forKey: "user")
     
     let url = URL(string: "http://localhost:4001/api/login")!
@@ -31,24 +31,20 @@ func logUserIn(username: String, password: String) -> Bool {
     let session = URLSession.shared
     let task = session.dataTask(with: request) { (data, response, error) in
         if error != nil {
-            print(error as Any)
+            completion(false, error)
         } else if let data = data {
             JSONString = String(data: data, encoding: String.Encoding.utf8)!
             if JSONString != "" {
                 UserDefaults.standard.set(JSONString, forKey: "user")
+                completion(true, nil)
             }
         } else {
             print("Something has gone horrifically wrong")
+            completion(false, error)
         }
     }
         
     task.resume()
-    
-    if JSONString != "" {
-        return true
-    }
-
-    return false
 }
 
 func logUserOut() -> Void {

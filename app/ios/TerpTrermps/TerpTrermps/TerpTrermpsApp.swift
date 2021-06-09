@@ -11,23 +11,23 @@ import SwiftUI
 struct TerpTrermpsApp: App {
     @AppStorage("user") var loggedInUser: String = ""
     
+    @StateObject private var navController = NavigationModelController()
+
+    
     var body: some Scene {
         WindowGroup {
-            if loggedInUser != "" {
-                HomeView().onOpenURL(perform: { url in
-                    if let scheme = url.scheme,
-                    scheme.localizedCaseInsensitiveCompare("terp-trermps") == .orderedSame,
-
-                    let view = url.host {
-                        // TODO: redirect(to: view, with: parameters)
-                        if view == "battle" {
-                            print(view, url.path)
-                        }
+            NavView()
+                .environmentObject(navController)
+                .onAppear {
+                    if loggedInUser != "" {
+                        self.navController.route = "home"
                     }
-                })
-            } else {
-                LoginView()
-            }
+                }
+                .onOpenURL(perform: { url in
+                    navController.route = url.host!
+                    navController.param = url.path.replacingOccurrences(of: "/", with: "")
+                }
+            )
         }
     }
 }
