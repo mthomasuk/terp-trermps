@@ -12,6 +12,49 @@ struct UserModel: Decodable {
     let name: String
 }
 
+func logUserIn(username: String, password: String) -> Bool {
+    UserDefaults.standard.removeObject(forKey: "user")
+    
+    let url = URL(string: "http://localhost:4001/api/login")!
+    var request = URLRequest(url: url)
+    
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+    let body = ["name": username, "password": password]
+    let json = try? JSONSerialization.data(withJSONObject: body, options: [])
+    
+    request.httpMethod = "POST"
+    request.httpBody = json;
+    
+    var JSONString: String = ""
+    
+    let session = URLSession.shared
+    let task = session.dataTask(with: request) { (data, response, error) in
+        if error != nil {
+            print(error as Any)
+        } else if let data = data {
+            JSONString = String(data: data, encoding: String.Encoding.utf8)!
+            if JSONString != "" {
+                UserDefaults.standard.set(JSONString, forKey: "user")
+            }
+        } else {
+            print("Something has gone horrifically wrong")
+        }
+    }
+        
+    task.resume()
+    
+    if JSONString != "" {
+        return true
+    }
+
+    return false
+}
+
+func logUserOut() -> Void {
+    UserDefaults.standard.removeObject(forKey: "user")
+}
+
 func retriveLoggedInUser() -> UserModel? {
     let JSON = UserDefaults.standard.string(forKey: "user")
     if JSON != nil {

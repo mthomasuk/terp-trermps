@@ -12,7 +12,7 @@ struct LogOutButton: View {
     
     var signOut: () -> Void {
         return {
-            UserDefaults.standard.removeObject(forKey: "user")
+            logUserOut()
             proceedToView = true
         }
     }
@@ -27,11 +27,12 @@ struct LogOutButton: View {
                     .padding(.vertical, 5)
                     .padding(.horizontal, 10)
                     .foregroundColor(Color.black)
+                    .cornerRadius(15)
                     .background(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(Color.black, lineWidth: 0.5)
-                            .background(Color(red: 233/255, green: 237/255, blue: 233/255))
-                )
+                        Color(red: 355/255, green: 215/255, blue: 0/255)
+                            .shadow(color: Color.black, radius: 0, x: 3.0, y: 3.0)
+                    )
+
             }
         ).padding(.vertical, 10)
     }

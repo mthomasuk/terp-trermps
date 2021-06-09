@@ -8,19 +8,23 @@
 import SwiftUI
 
 struct HomeView: View {
-    let user: UserModel = retriveLoggedInUser()!
-
+    let user: UserModel? = retriveLoggedInUser()
+    
+    var userName: String = ""
+    init() {
+        if user != nil {
+            userName = user!.name
+        }
+    }
+    
     var body: some View {
         NavigationView {
             ZStack {
                 Color(red: 255/255, green: 255/255, blue: 157/255).ignoresSafeArea()
-                VStack {
-                    VStack(alignment: .center) {
-                        Logo()
-                    }
-                    VStack(alignment: .center) {
-                        Text("Welcome \(user.name)")
-                    }
+                VStack(alignment: .center) {
+                    Logo()
+                    Text("Welcome \(userName)").font(.largeTitle).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/).padding(.vertical, 10)
+                    NewBattleButton()
                     Spacer()
                     VStack(alignment: .center) {
                         Text("I do not own any of the images or text on this site - it all belongs to Waddingtons or whatever mega-corporation bought them out years ago.")
