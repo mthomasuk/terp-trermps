@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct NewBattleButton: View {
+    @EnvironmentObject var navController: NavigationModelController
+
     @State var proceedToView: Bool = false
     @State var battleId: String = ""
     
@@ -18,14 +20,18 @@ struct NewBattleButton: View {
                     print(error!)
                 } else {
                     battleId = result!
-                    proceedToView = true
+
+                    DispatchQueue.main.async {
+                        self.navController.route = "battle"
+                        self.navController.param = result!
+                    }
                 }
             })
         }
     }
 
     var body: some View {
-        NavigationLink(destination: BattleView(battleId: battleId), isActive: $proceedToView) {}
+        NavigationLink(destination: BattleController(battleId: battleId), isActive: $proceedToView) { EmptyView() }
         Button(
             action: startNewBattle,
             label: {

@@ -8,17 +8,22 @@
 import SwiftUI
 
 struct LogOutButton: View {
+    @EnvironmentObject var navController: NavigationModelController
+    
     @State var proceedToView: Bool = false
     
     var signOut: () -> Void {
         return {
             logUserOut()
-            proceedToView = true
+
+            DispatchQueue.main.async {
+                self.navController.route = "login"
+            }
         }
     }
 
     var body: some View {
-        NavigationLink(destination: LoginView(), isActive: $proceedToView) {}
+        NavigationLink(destination: LoginView(), isActive: $proceedToView) { EmptyView() }
         Button(
             action: signOut,
             label: {

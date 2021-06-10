@@ -48,7 +48,6 @@ struct LoginForm: View {
     }
 
     var body: some View {
-//        NavigationLink(destination: HomeView(), isActive: $proceedToView) {}
         VStack {
             VStack(alignment: .leading) {
                 Text("PLZ ENTER YOUR NAME:").font(.footnote)
