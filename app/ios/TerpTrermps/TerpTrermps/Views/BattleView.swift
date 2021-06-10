@@ -9,6 +9,30 @@ import SwiftUI
 
 struct BattleDisplay: View {
     var battle: BattleModel?
+    var user: UserModel?
+    
+    var currentRound: RoundModel? {
+        return self.battle!.rounds[0]
+    }
+    
+    var isLeader: Bool {
+        if self.currentRound != nil {
+            return self.currentRound!.leader == self.user!.id
+        }
+        return false
+    }
+    
+    var userDeck: DeckModel? {
+        var deck: DeckModel?
+        for (_, d) in self.battle!.decks.enumerated() {
+            if self.user != nil && d != nil {
+                if d!.user_id == self.user!.id {
+                    deck = d
+                }
+            }
+        }
+        return deck
+    }
 
     var body: some View {
         NavigationView {
@@ -23,7 +47,10 @@ struct BattleDisplay: View {
                                 .multilineTextAlignment(.center)
                         }.padding(10)
                         VStack {
-                            Text("Waiting for the battle to start")
+                            if isLeader {
+                                Text("\(user!.name) is the round leader")
+                            }
+                            Text("Waiting for the battle to start").font(.footnote)
                         }.padding(.vertical, 10)
                     }
                     Spacer()
@@ -39,6 +66,8 @@ struct BattleView: View {
     
     @State var battle: BattleModel?
     @State var loadError: Error?
+    
+    @State var user: UserModel? = retriveLoggedInUser()
 
     private func loadBattle() {
         getBattleById(
@@ -57,7 +86,7 @@ struct BattleView: View {
     var body: some View {
         NavigationView {
             if loadError == nil {
-                BattleDisplay(battle: battle).onAppear(perform: loadBattle)
+                BattleDisplay(battle: battle, user: user).onAppear(perform: loadBattle)
             } else {
                 ErrorView(error: loadError!)
             }

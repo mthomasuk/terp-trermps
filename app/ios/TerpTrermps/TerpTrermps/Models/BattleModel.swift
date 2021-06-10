@@ -12,11 +12,12 @@ struct BattleModel: Decodable {
     let started_at: String
     let winner: String
     let decks: [DeckModel?]
+    let rounds: [RoundModel?]
 }
 
 extension BattleModel {
     enum CodingKeys: String, CodingKey {
-        case id, started_at, winner, decks
+        case id, started_at, winner, decks, rounds
     }
     
     init(from decoder: Decoder) throws {
@@ -27,6 +28,7 @@ extension BattleModel {
         winner = try container.decodeIfPresent(String.self, forKey: .winner) ?? ""
         
         decks = try container.decodeIfPresent(Array<DeckModel>.self, forKey: .decks) ?? []
+        rounds = try container.decodeIfPresent(Array<RoundModel>.self, forKey: .rounds) ?? []
     }
 }
 
