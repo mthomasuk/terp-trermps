@@ -31,16 +31,16 @@ func logUserIn(username: String, password: String, completion: @escaping (Bool, 
     let session = URLSession.shared
     let task = session.dataTask(with: request) { (data, response, error) in
         if error != nil {
-            completion(false, error)
+            return completion(false, error)
         } else if let data = data {
             JSONString = String(data: data, encoding: String.Encoding.utf8)!
             if JSONString != "" {
                 UserDefaults.standard.set(JSONString, forKey: "user")
-                completion(true, nil)
+                return completion(true, nil)
             }
         } else {
             print("Something has gone horrifically wrong")
-            completion(false, error)
+            return completion(false, error)
         }
     }
         
