@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BattleDisplay: View {
+struct BattleView: View {
     var battle: BattleModel?
     var user: UserModel?
     
@@ -56,39 +56,6 @@ struct BattleDisplay: View {
                     Spacer()
                     LogOutButton()
                 }
-            }
-        }
-    }
-}
-
-struct BattleView: View {
-    var battleId: String
-    
-    @State var battle: BattleModel?
-    @State var loadError: Error?
-    
-    @State var user: UserModel? = retriveLoggedInUser()
-
-    private func loadBattle() {
-        getBattleById(
-            battleId: battleId,
-            completion: {
-                (result: BattleModel?, error: Error?) -> () in
-                if error != nil {
-                    loadError = error
-                } else {
-                    battle = result
-                }
-            }
-        )
-    }
-
-    var body: some View {
-        NavigationView {
-            if loadError == nil {
-                BattleDisplay(battle: battle, user: user).onAppear(perform: loadBattle)
-            } else {
-                ErrorView(error: loadError!)
             }
         }
     }

@@ -17,7 +17,7 @@ struct NavView: View {
             } else if self.navController.route == "home" {
                 HomeView()
             } else if self.navController.route == "battle" {
-                BattleView(battleId: String(describing: self.navController.param))
+                BattleController(battleId: String(describing: self.navController.param))
             } else {
                 LoginView()
             }
