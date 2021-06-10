@@ -30,8 +30,15 @@ struct LoginForm: View {
                         print(error!)
                     } else {
                         if result == true {
+                            let prevRoute = self.navController.prevRoute
+
                             DispatchQueue.main.async {
-                                self.navController.route = "home"
+                                if prevRoute != "" {
+                                    self.navController.route = prevRoute
+                                    self.navController.prevRoute = ""
+                                } else {
+                                    self.navController.route = "home"
+                                }
                             }
                         }
                     }

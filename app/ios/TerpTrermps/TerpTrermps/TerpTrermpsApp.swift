@@ -24,8 +24,14 @@ struct TerpTrermpsApp: App {
                     }
                 }
                 .onOpenURL(perform: { url in
-                    navController.route = url.host!
-                    navController.param = url.path.replacingOccurrences(of: "/", with: "")
+                    if loggedInUser == "" {
+                        self.navController.prevRoute = url.host!
+                        self.navController.route = "login"
+                    } else {
+                        self.navController.route = url.host!
+                    }
+                    
+                    self.navController.param = url.path.replacingOccurrences(of: "/", with: "")
                 }
             )
         }
