@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NewBattleButton: View {
-    @EnvironmentObject var navController: NavigationModelController
+    @EnvironmentObject var navController: NavigationController
 
     @State var proceedToView: Bool = false
     @State var battleId: String = ""

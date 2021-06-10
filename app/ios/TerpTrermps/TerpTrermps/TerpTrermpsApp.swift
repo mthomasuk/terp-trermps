@@ -11,8 +11,7 @@ import SwiftUI
 struct TerpTrermpsApp: App {
     @AppStorage("user") var loggedInUser: String = ""
     
-    @StateObject private var navController = NavigationModelController()
-
+    @StateObject private var navController = NavigationController()
     
     var body: some Scene {
         WindowGroup {

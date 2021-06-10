@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct BattleView: View {
+    @EnvironmentObject var ws: WebsocketController
+    
     var battle: BattleModel?
     var user: UserModel?
     
@@ -52,6 +54,13 @@ struct BattleView: View {
                             }
                             Text("Waiting for the battle to start").font(.footnote)
                         }.padding(.vertical, 10)
+                        VStack {
+                            ForEach(self.ws.messages, id: \.self) { message in
+                                Text(message)
+                                    .font(.footnote)
+                                    .multilineTextAlignment(.center)
+                            }
+                        }.padding(20)
                     }
                     Spacer()
                     LogOutButton()

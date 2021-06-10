@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginForm: View {
-    @EnvironmentObject var navController: NavigationModelController
+    @EnvironmentObject var navController: NavigationController
 
     @State private var username: String = ""
     @State private var password: String = ""

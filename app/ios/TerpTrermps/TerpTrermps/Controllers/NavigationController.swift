@@ -7,7 +7,7 @@
 
 import Foundation
 
-class NavigationModelController: ObservableObject {
+class NavigationController: ObservableObject {
     @Published var route: String
     @Published var param: String
     @Published var prevRoute: String

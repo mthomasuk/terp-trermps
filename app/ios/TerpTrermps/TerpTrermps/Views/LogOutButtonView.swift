@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LogOutButton: View {
-    @EnvironmentObject var navController: NavigationModelController
+    @EnvironmentObject var navController: NavigationController
     
     @State var proceedToView: Bool = false
     

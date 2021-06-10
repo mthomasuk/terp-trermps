@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NavView: View {
-    @EnvironmentObject var navController: NavigationModelController
+    @EnvironmentObject var navController: NavigationController
 
     var body: some View {
         NavigationView {
