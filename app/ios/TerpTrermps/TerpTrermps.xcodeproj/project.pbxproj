@@ -23,6 +23,11 @@
 		D35BC4AA2670AE1400BF5107 /* BattleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4A92670AE1400BF5107 /* BattleModel.swift */; };
 		D35BC4B0267114DB00BF5107 /* NavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4AF267114DB00BF5107 /* NavigationModel.swift */; };
 		D35BC4B2267115AB00BF5107 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4B1267115AB00BF5107 /* NavigationView.swift */; };
+		D35BC4B6267211B600BF5107 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4B5267211B600BF5107 /* ErrorView.swift */; };
+		D35BC4B8267213D200BF5107 /* CardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4B7267213D200BF5107 /* CardModel.swift */; };
+		D35BC4BA2672142100BF5107 /* DeckModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4B92672142100BF5107 /* DeckModel.swift */; };
+		D35BC4BC2672146E00BF5107 /* HandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4BB2672146E00BF5107 /* HandModel.swift */; };
+		D35BC4BE267214B100BF5107 /* RoundModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4BD267214B100BF5107 /* RoundModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +70,11 @@
 		D35BC4A92670AE1400BF5107 /* BattleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleModel.swift; sourceTree = "<group>"; };
 		D35BC4AF267114DB00BF5107 /* NavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationModel.swift; sourceTree = "<group>"; };
 		D35BC4B1267115AB00BF5107 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
+		D35BC4B5267211B600BF5107 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		D35BC4B7267213D200BF5107 /* CardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModel.swift; sourceTree = "<group>"; };
+		D35BC4B92672142100BF5107 /* DeckModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckModel.swift; sourceTree = "<group>"; };
+		D35BC4BB2672146E00BF5107 /* HandModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandModel.swift; sourceTree = "<group>"; };
+		D35BC4BD267214B100BF5107 /* RoundModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +172,7 @@
 				D35BC4A52670AD2100BF5107 /* NewBattleButtonView.swift */,
 				D35BC4A72670AD4100BF5107 /* BattleView.swift */,
 				D35BC4B1267115AB00BF5107 /* NavigationView.swift */,
+				D35BC4B5267211B600BF5107 /* ErrorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -172,6 +183,10 @@
 				D35BC4A1266FD02600BF5107 /* UserModel.swift */,
 				D35BC4A92670AE1400BF5107 /* BattleModel.swift */,
 				D35BC4AF267114DB00BF5107 /* NavigationModel.swift */,
+				D35BC4B7267213D200BF5107 /* CardModel.swift */,
+				D35BC4B92672142100BF5107 /* DeckModel.swift */,
+				D35BC4BB2672146E00BF5107 /* HandModel.swift */,
+				D35BC4BD267214B100BF5107 /* RoundModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -306,15 +321,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				D351ED8E266F5C2C002485E3 /* LoginView.swift in Sources */,
+				D35BC4BA2672142100BF5107 /* DeckModel.swift in Sources */,
 				D35BC4A62670AD2100BF5107 /* NewBattleButtonView.swift in Sources */,
 				D35BC49F266FCAA400BF5107 /* LogOutButtonView.swift in Sources */,
+				D35BC4B8267213D200BF5107 /* CardModel.swift in Sources */,
 				D35BC492266F762200BF5107 /* LogoView.swift in Sources */,
+				D35BC4BC2672146E00BF5107 /* HandModel.swift in Sources */,
 				D35BC494266F784D00BF5107 /* LoginFormView.swift in Sources */,
 				D35BC497266FA6E000BF5107 /* HomeView.swift in Sources */,
 				D35BC4B0267114DB00BF5107 /* NavigationModel.swift in Sources */,
 				D351ED8C266F5C2C002485E3 /* TerpTrermpsApp.swift in Sources */,
 				D35BC4AA2670AE1400BF5107 /* BattleModel.swift in Sources */,
 				D35BC4A82670AD4100BF5107 /* BattleView.swift in Sources */,
+				D35BC4B6267211B600BF5107 /* ErrorView.swift in Sources */,
+				D35BC4BE267214B100BF5107 /* RoundModel.swift in Sources */,
 				D35BC4B2267115AB00BF5107 /* NavigationView.swift in Sources */,
 				D35BC4A2266FD02600BF5107 /* UserModel.swift in Sources */,
 			);

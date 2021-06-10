@@ -38,6 +38,7 @@ struct BattleView: View {
     var battleId: String
     
     @State var battle: BattleModel?
+    @State var loadError: Error?
 
     private func loadBattle() {
         getBattleById(
@@ -45,7 +46,7 @@ struct BattleView: View {
             completion: {
                 (result: BattleModel?, error: Error?) -> () in
                 if error != nil {
-                    print(error!)
+                    loadError = error
                 } else {
                     battle = result
                 }
@@ -55,7 +56,11 @@ struct BattleView: View {
 
     var body: some View {
         NavigationView {
-            BattleDisplay(battle: battle).onAppear(perform: loadBattle)
+            if loadError == nil {
+                BattleDisplay(battle: battle).onAppear(perform: loadBattle)
+            } else {
+                ErrorView(error: loadError!)
+            }
         }
     }
 }

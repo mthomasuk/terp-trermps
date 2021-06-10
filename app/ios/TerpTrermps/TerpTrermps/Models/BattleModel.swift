@@ -9,8 +9,25 @@ import Foundation
 
 struct BattleModel: Decodable {
     let id: String
-    let started_at: String?
-    let winner: String?
+    let started_at: String
+    let winner: String
+    let decks: [DeckModel?]
+}
+
+extension BattleModel {
+    enum CodingKeys: String, CodingKey {
+        case id, started_at, winner, decks
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        id = try container.decodeIfPresent(String.self, forKey: .id) ?? ""
+        started_at = try container.decodeIfPresent(String.self, forKey: .started_at) ?? ""
+        winner = try container.decodeIfPresent(String.self, forKey: .winner) ?? ""
+        
+        decks = try container.decodeIfPresent(Array<DeckModel>.self, forKey: .decks) ?? []
+    }
 }
 
 func createBattle(completion: @escaping (String?, Error?) -> ()) {
