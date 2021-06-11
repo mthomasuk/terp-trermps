@@ -43,7 +43,9 @@ struct BattleView: View {
                 VStack {
                     if battle != nil {
                         VStack(alignment: .center) {
-                            Text("Share this link to join the battle:").padding(.vertical, 10)
+                            Text("Share this link to join the battle:")
+                                .font(.footnote)
+                                .padding(.vertical, 10)
                             Link("terp-trermps://battle/\(battle!.id)", destination: URL(string: "terp-trermps://battle/\(battle!.id)")!)
                                 .font(.footnote)
                                 .multilineTextAlignment(.center)
@@ -55,11 +57,17 @@ struct BattleView: View {
                             Text("Waiting for the battle to start").font(.footnote)
                         }.padding(.vertical, 10)
                         VStack {
-                            ForEach(self.ws.messages, id: \.self) { message in
-                                Text(message.name)
-                                    .font(.headline)
+                            ForEach(ws.messages.indices, id: \.self) { index in
+                                Text(ws.messages[index].name)
+                                    .font(.largeTitle)
                                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                                     .multilineTextAlignment(.center)
+                                if index != (ws.messages.count - 1) {
+                                    Text("VS")
+                                        .font(.headline)
+                                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                                        .padding(.vertical, 10)
+                                }
                             }
                         }.padding(20)
                     }
@@ -67,7 +75,7 @@ struct BattleView: View {
                     LogOutButton()
                 }
             }
-        }
+        }.navigationBarHidden(true) 
     }
 }
 

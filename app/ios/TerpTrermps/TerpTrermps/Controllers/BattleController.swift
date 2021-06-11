@@ -53,10 +53,13 @@ struct BattleController: View {
     var body: some View {
         NavigationView {
             if loadError == nil {
-                BattleView(battle: battle, user: user)
-                    .onAppear(perform: onAppear)
-                    .onDisappear(perform: onDisappear)
-                    .environmentObject(ws)
+                BattleView(
+                    battle: battle,
+                    user: user
+                )
+                .onAppear(perform: onAppear)
+                .onDisappear(perform: onDisappear)
+                .environmentObject(ws)
             } else {
                 ErrorView(error: loadError!)
             }
