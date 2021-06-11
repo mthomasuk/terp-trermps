@@ -9,13 +9,16 @@
 import Foundation
 
 class WebsocketController: ObservableObject {
-    @Published var messages: [String]
+    @Published var messages: [SocketMessageModel]
+    
+    @Published var battleHasStarted: Bool = false
+    @Published var battleHasEnded: Bool = false
     
     private var connection: URLSessionWebSocketTask?
     
     init() {
-        self.messages = []
         self.connection = nil
+        self.messages = []
     }
     
     func connect(battleId: String) -> Void {
@@ -25,14 +28,19 @@ class WebsocketController: ObservableObject {
         connection?.receive(completionHandler: onReceive)
         connection?.resume()
         
-        connection?.sendPing{ error in
-            if error != nil {
-                print(error!.localizedDescription)
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            self.connection?.sendPing{ error in
+                if error != nil {
+                    print(error!.localizedDescription)
+                    timer.invalidate()
+                }
             }
         }
     }
     
     private func onReceive(incoming: Result<URLSessionWebSocketTask.Message, Error>) {
+        connection?.receive(completionHandler: onReceive)
+
         switch incoming {
             case .success(let message):
                 onMessage(message: message)
@@ -44,13 +52,48 @@ class WebsocketController: ObservableObject {
     private func onMessage(message: URLSessionWebSocketTask.Message) {
         switch message {
             case .string(let text):
-                DispatchQueue.main.async {
-                    self.messages.append(text)
+                let parsed = self.decodeJSON(jsonString: text)
+                if parsed != nil {
+                    self.handleSocketMessage(msg: parsed!)
                 }
             case .data(let data):
                 print("WS received binary data: \(data)")
             @unknown default:
                 print("WS being weird")
+        }
+    }
+    
+    private func decodeJSON(jsonString: String) -> SocketMessageModel? {
+        let decoder = JSONDecoder()
+        do {
+            let data: Data = jsonString.data(using: String.Encoding.utf8)!
+            let smm = try decoder.decode(SocketMessageModel.self, from: data)
+            return smm
+        } catch {
+            return nil
+        }
+    }
+    
+    private func handleSocketMessage(msg: SocketMessageModel) {
+        switch msg.type {
+            case .USER_JOINED_BATTLE:
+                DispatchQueue.main.async {
+                    self.messages.append(msg)
+                }
+            case .BATTLE_START:
+                DispatchQueue.main.async {
+                    self.battleHasStarted = true
+                }
+            case .BATTLE_END:
+                DispatchQueue.main.async {
+                    self.battleHasEnded = true
+                }
+            case .WINNING_HAND_PLAYED:
+                print("WINNING HAND PLAYED")
+            case .ROUND_ATTRIBUTE_SELECTED:
+                print(msg.attribute)
+            case .ROUND_IS_A_DRAW:
+                print("ROUND IS A DRAW")
         }
     }
     

@@ -24,7 +24,7 @@ extension RoundModel {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        id = try container.decodeIfPresent(String.self, forKey: .id) ?? ""
+        id = try container.decode(String.self, forKey: .id)
         battle_id = try container.decodeIfPresent(String.self, forKey: .battle_id) ?? ""
         attribute = try container.decodeIfPresent(String.self, forKey: .attribute) ?? ""
         leader = try container.decodeIfPresent(String.self, forKey: .leader) ?? ""

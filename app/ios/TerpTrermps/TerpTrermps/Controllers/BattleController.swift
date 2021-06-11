@@ -17,22 +17,36 @@ struct BattleController: View {
 
     @StateObject private var ws: WebsocketController = WebsocketController()
 
-    private func loadBattle() {
+    private func onAppear() {
         getBattleById(
             battleId: battleId,
             completion: {
                 (result: BattleModel?, error: Error?) -> () in
                 if error != nil {
-                    loadError = error
+                    return loadError = error
                 } else {
                     battle = result
                     ws.connect(battleId: battleId)
+                    
+                    let battleHasStarted: Bool = ws.battleHasStarted || battle!.started_at != ""
+                    
+                    if !battleHasStarted {
+                        joinBattle(
+                            battleId: battleId,
+                            completion: {
+                                (error: Error?) -> () in
+                                if error != nil {
+                                    return loadError = error
+                                }
+                            }
+                        )
+                    }
                 }
             }
         )
     }
     
-    private func disconnect() {
+    private func onDisappear() {
         ws.disconnect()
     }
 
@@ -40,8 +54,8 @@ struct BattleController: View {
         NavigationView {
             if loadError == nil {
                 BattleView(battle: battle, user: user)
-                    .onAppear(perform: loadBattle)
-                    .onDisappear(perform: disconnect)
+                    .onAppear(perform: onAppear)
+                    .onDisappear(perform: onDisappear)
                     .environmentObject(ws)
             } else {
                 ErrorView(error: loadError!)

@@ -63,7 +63,7 @@ export function UserControlProvider({ children }: { children: ReactNode }) {
 
     setIsSignedIn(false);
 
-    history?.push("/login");
+    history.push("/login");
   };
 
   useEffect(() => {

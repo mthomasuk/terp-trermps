@@ -56,8 +56,9 @@ struct BattleView: View {
                         }.padding(.vertical, 10)
                         VStack {
                             ForEach(self.ws.messages, id: \.self) { message in
-                                Text(message)
-                                    .font(.footnote)
+                                Text(message.name)
+                                    .font(.headline)
+                                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                                     .multilineTextAlignment(.center)
                             }
                         }.padding(20)

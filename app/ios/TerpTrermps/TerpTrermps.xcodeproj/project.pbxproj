@@ -30,6 +30,8 @@
 		D35BC4BE267214B100BF5107 /* RoundModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4BD267214B100BF5107 /* RoundModel.swift */; };
 		D35BC4C126722A0600BF5107 /* BattleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4C026722A0600BF5107 /* BattleController.swift */; };
 		D35BC4C5267245CE00BF5107 /* WebsocketController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4C4267245CE00BF5107 /* WebsocketController.swift */; };
+		D35BC4C72673AD1200BF5107 /* SocketMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4C62673AD1200BF5107 /* SocketMessageModel.swift */; };
+		D35BC4C92673B1FA00BF5107 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4C82673B1FA00BF5107 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		D35BC4BD267214B100BF5107 /* RoundModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundModel.swift; sourceTree = "<group>"; };
 		D35BC4C026722A0600BF5107 /* BattleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleController.swift; sourceTree = "<group>"; };
 		D35BC4C4267245CE00BF5107 /* WebsocketController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsocketController.swift; sourceTree = "<group>"; };
+		D35BC4C62673AD1200BF5107 /* SocketMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketMessageModel.swift; sourceTree = "<group>"; };
+		D35BC4C82673B1FA00BF5107 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +140,7 @@
 				D351ED8F266F5C2D002485E3 /* Assets.xcassets */,
 				D351ED94266F5C2D002485E3 /* Info.plist */,
 				D351ED91266F5C2D002485E3 /* Preview Content */,
+				D35BC4C82673B1FA00BF5107 /* Constants.swift */,
 			);
 			path = TerpTrermps;
 			sourceTree = "<group>";
@@ -191,6 +196,7 @@
 				D35BC4B92672142100BF5107 /* DeckModel.swift */,
 				D35BC4BB2672146E00BF5107 /* HandModel.swift */,
 				D35BC4BD267214B100BF5107 /* RoundModel.swift */,
+				D35BC4C62673AD1200BF5107 /* SocketMessageModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -345,9 +351,11 @@
 				D35BC4C5267245CE00BF5107 /* WebsocketController.swift in Sources */,
 				D35BC497266FA6E000BF5107 /* HomeView.swift in Sources */,
 				D35BC4B0267114DB00BF5107 /* NavigationController.swift in Sources */,
+				D35BC4C92673B1FA00BF5107 /* Constants.swift in Sources */,
 				D351ED8C266F5C2C002485E3 /* TerpTrermpsApp.swift in Sources */,
 				D35BC4C126722A0600BF5107 /* BattleController.swift in Sources */,
 				D35BC4AA2670AE1400BF5107 /* BattleModel.swift in Sources */,
+				D35BC4C72673AD1200BF5107 /* SocketMessageModel.swift in Sources */,
 				D35BC4A82670AD4100BF5107 /* BattleView.swift in Sources */,
 				D35BC4B6267211B600BF5107 /* ErrorView.swift in Sources */,
 				D35BC4BE267214B100BF5107 /* RoundModel.swift in Sources */,
