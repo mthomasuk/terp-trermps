@@ -32,6 +32,7 @@
 		D35BC4C5267245CE00BF5107 /* WebsocketController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4C4267245CE00BF5107 /* WebsocketController.swift */; };
 		D35BC4C72673AD1200BF5107 /* SocketMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4C62673AD1200BF5107 /* SocketMessageModel.swift */; };
 		D35BC4C92673B1FA00BF5107 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4C82673B1FA00BF5107 /* Constants.swift */; };
+		D35BC4D12677819200BF5107 /* CombatantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4D02677819200BF5107 /* CombatantsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		D35BC4C4267245CE00BF5107 /* WebsocketController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsocketController.swift; sourceTree = "<group>"; };
 		D35BC4C62673AD1200BF5107 /* SocketMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketMessageModel.swift; sourceTree = "<group>"; };
 		D35BC4C82673B1FA00BF5107 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D35BC4D02677819200BF5107 /* CombatantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombatantsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +185,7 @@
 				D35BC4A72670AD4100BF5107 /* BattleView.swift */,
 				D35BC4B1267115AB00BF5107 /* NavigationView.swift */,
 				D35BC4B5267211B600BF5107 /* ErrorView.swift */,
+				D35BC4D02677819200BF5107 /* CombatantsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				D35BC4BA2672142100BF5107 /* DeckModel.swift in Sources */,
 				D35BC4A62670AD2100BF5107 /* NewBattleButtonView.swift in Sources */,
 				D35BC49F266FCAA400BF5107 /* LogOutButtonView.swift in Sources */,
+				D35BC4D12677819200BF5107 /* CombatantsView.swift in Sources */,
 				D35BC4B8267213D200BF5107 /* CardModel.swift in Sources */,
 				D35BC492266F762200BF5107 /* LogoView.swift in Sources */,
 				D35BC4BC2672146E00BF5107 /* HandModel.swift in Sources */,

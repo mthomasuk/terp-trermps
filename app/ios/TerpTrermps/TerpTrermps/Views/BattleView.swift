@@ -35,6 +35,13 @@ struct BattleView: View {
         }
         return deck
     }
+    
+    var combatants: [String] {
+        let f = self.ws.messages.map{ $0.name }
+        let d = self.battle!.decks.map{ $0!.name }
+        
+        return Array(Set(f + d))
+    }
 
     var body: some View {
         NavigationView {
@@ -57,18 +64,7 @@ struct BattleView: View {
                             Text("Waiting for the battle to start").font(.footnote)
                         }.padding(.vertical, 10)
                         VStack {
-                            ForEach(ws.messages.indices, id: \.self) { index in
-                                Text(ws.messages[index].name)
-                                    .font(.largeTitle)
-                                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                    .multilineTextAlignment(.center)
-                                if index != (ws.messages.count - 1) {
-                                    Text("VS")
-                                        .font(.headline)
-                                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                        .padding(.vertical, 10)
-                                }
-                            }
+                            CombatantsView(combatants: combatants)
                         }.padding(20)
                     }
                     Spacer()

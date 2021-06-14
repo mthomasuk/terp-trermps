@@ -31,7 +31,6 @@ struct NewBattleButton: View {
     }
 
     var body: some View {
-        NavigationLink(destination: BattleController(battleId: battleId), isActive: $proceedToView) { EmptyView() }
         Button(
             action: startNewBattle,
             label: {

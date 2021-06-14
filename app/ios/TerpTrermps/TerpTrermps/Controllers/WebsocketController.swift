@@ -9,17 +9,12 @@
 import Foundation
 
 class WebsocketController: ObservableObject {
-    @Published var messages: [SocketMessageModel]
+    @Published var messages: [SocketMessageModel] = []
     
     @Published var battleHasStarted: Bool = false
     @Published var battleHasEnded: Bool = false
     
     private var connection: URLSessionWebSocketTask?
-    
-    init() {
-        self.connection = nil
-        self.messages = []
-    }
     
     func connect(battleId: String) -> Void {
         let url = URL(string: "ws://localhost:4002/ws/\(battleId)")!
