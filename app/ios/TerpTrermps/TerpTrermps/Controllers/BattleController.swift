@@ -16,6 +16,20 @@ struct BattleController: View {
     @State var user: UserModel? = retriveLoggedInUser()
 
     @StateObject private var ws: WebsocketController = WebsocketController()
+    
+    func refetch() {
+        getBattleById(
+            battleId: battleId,
+            completion: {
+                (result: BattleModel?, error: Error?) -> () in
+                if error != nil {
+                    return loadError = error
+                } else {
+                    battle = result
+                }
+            }
+        )
+    }
 
     private func onAppear() {
         getBattleById(
@@ -55,7 +69,8 @@ struct BattleController: View {
             if loadError == nil {
                 BattleView(
                     battle: battle,
-                    user: user
+                    user: user,
+                    refetch: refetch
                 )
                 .onAppear(perform: onAppear)
                 .onDisappear(perform: onDisappear)

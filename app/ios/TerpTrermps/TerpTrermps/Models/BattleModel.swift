@@ -100,3 +100,23 @@ func joinBattle(battleId: String, completion: @escaping (Error?) -> ()) {
         }
     }.resume()
 }
+
+func startBattle(battleId: String, completion: @escaping (Error?) -> ()) {
+    let url = URL(string: "http://localhost:4001/api/battle/\(battleId)/start")!
+    var request = URLRequest(url: url)
+    
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "POST"
+    
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) -> Void in
+        if error != nil {
+            return completion(error)
+        } else if data != nil {
+            return completion(nil)
+        } else {
+            print("Something has gone horrifically wrong")
+            return completion(nil)
+        }
+    }.resume()
+}

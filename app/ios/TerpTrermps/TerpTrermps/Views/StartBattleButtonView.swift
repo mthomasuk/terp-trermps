@@ -1,29 +1,23 @@
 //
-//  NewBattleButtonView.swift
+//  StartBattleButtonView.swift
 //  TerpTrermps
 //
-//  Created by Mark Thomas on 09/06/2021.
+//  Created by Mark Thomas on 14/06/2021.
 //
 
 import SwiftUI
 
-struct NewBattleButton: View {
-    @EnvironmentObject var navController: NavigationController
-
-    @State var battleId: String = ""
+struct StartBattleButton: View {
+    var battleId: String
+    var refetch: () -> ()
     
-    var startNewBattle: () -> Void {
+    var beginBattle: () -> Void {
         return {
-            createBattle(completion: {(result: String?, error: Error?) -> () in
+            startBattle(battleId: battleId, completion: {(error: Error?) -> () in
                 if error != nil {
-                    print(error!)
+                    print(error!.localizedDescription)
                 } else {
-                    battleId = result!
-
-                    DispatchQueue.main.async {
-                        self.navController.route = "battle"
-                        self.navController.param = result!
-                    }
+                    refetch()
                 }
             })
         }
@@ -31,9 +25,9 @@ struct NewBattleButton: View {
 
     var body: some View {
         Button(
-            action: startNewBattle,
+            action: beginBattle,
             label: {
-                Text("Start New Battle")
+                Text("⚔️ Begin battle ⚔️")
                     .font(.body)
                     .padding(.vertical, 8)
                     .padding(.horizontal, 14)

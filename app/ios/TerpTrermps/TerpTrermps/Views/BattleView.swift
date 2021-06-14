@@ -12,6 +12,7 @@ struct BattleView: View {
     
     var battle: BattleModel?
     var user: UserModel?
+    var refetch: () -> ()
     
     var currentRound: RoundModel? {
         return self.battle!.rounds[0]
@@ -42,6 +43,14 @@ struct BattleView: View {
         
         return Array(Set(f + d))
     }
+    
+    var battleInProgress: Bool {
+        return self.ws.battleHasStarted || battle!.started_at != ""
+    }
+    
+    var canStartBattle: Bool {
+        return !self.ws.battleHasStarted && battle!.started_at == "" && combatants.count > 1
+    }
 
     var body: some View {
         NavigationView {
@@ -58,14 +67,22 @@ struct BattleView: View {
                                 .multilineTextAlignment(.center)
                         }.padding(10)
                         VStack {
-                            if isLeader {
-                                Text("\(user!.name) is the round leader")
-                            }
-                            Text("Waiting for the battle to start").font(.footnote)
+                            BattleStatusView(
+                                isLeader: isLeader,
+                                battleInProgress: battleInProgress,
+                                selectedAttribute: currentRound != nil ? currentRound!.attribute : ""
+                            )
                         }.padding(.vertical, 10)
-                        VStack {
-                            CombatantsView(combatants: combatants)
-                        }.padding(20)
+                        if !battleInProgress {
+                            VStack {
+                                CombatantsView(combatants: combatants)
+                            }.padding(20)
+                        }
+                        if canStartBattle {
+                            VStack {
+                                StartBattleButton(battleId: battle!.id, refetch: refetch)
+                            }.padding(20)
+                        }
                     }
                     Spacer()
                     LogOutButton()

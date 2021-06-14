@@ -14,6 +14,8 @@ class WebsocketController: ObservableObject {
     @Published var battleHasStarted: Bool = false
     @Published var battleHasEnded: Bool = false
     
+    @Published var atttributeSelected: String = ""
+    
     private var connection: URLSessionWebSocketTask?
     
     func connect(battleId: String) -> Void {
