@@ -10,22 +10,23 @@ import SwiftUI
 struct BattleController: View {
     var battleId: String
     
-    @State var battle: BattleModel?
+    
     @State var loadError: Error?
     
     @State var user: UserModel? = retriveLoggedInUser()
 
+    @StateObject private var battle: BattleModel = BattleModel()
     @StateObject private var ws: WebsocketController = WebsocketController()
     
     func refetch() {
         getBattleById(
             battleId: battleId,
             completion: {
-                (result: BattleModel?, error: Error?) -> () in
+                (result: BattleStruct?, error: Error?) -> () in
                 if error != nil {
                     return loadError = error
                 } else {
-                    battle = result
+                    battle.data = result
                 }
             }
         )
@@ -35,14 +36,17 @@ struct BattleController: View {
         getBattleById(
             battleId: battleId,
             completion: {
-                (result: BattleModel?, error: Error?) -> () in
+                (result: BattleStruct?, error: Error?) -> () in
                 if error != nil {
                     return loadError = error
                 } else {
-                    battle = result
+                    DispatchQueue.main.async {
+                        battle.data = result
+                    }
+
                     ws.connect(battleId: battleId)
                     
-                    let battleHasStarted: Bool = ws.battleHasStarted || battle!.started_at != ""
+                    let battleHasStarted: Bool = ws.battleHasStarted || result!.started_at != ""
                     
                     if !battleHasStarted {
                         joinBattle(

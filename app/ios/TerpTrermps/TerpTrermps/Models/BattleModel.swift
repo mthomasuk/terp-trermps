@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct BattleModel: Decodable {
+class BattleModel: ObservableObject {
+    @Published var data: BattleStruct?
+}
+
+struct BattleStruct: Decodable {
     let id: String
     let started_at: String
     let winner: String
@@ -15,7 +19,7 @@ struct BattleModel: Decodable {
     let rounds: [RoundModel?]
 }
 
-extension BattleModel {
+extension BattleStruct {
     enum CodingKeys: String, CodingKey {
         case id, started_at, winner, decks, rounds
     }
@@ -55,7 +59,7 @@ func createBattle(completion: @escaping (String?, Error?) -> ()) {
     }.resume()
 }
 
-func getBattleById(battleId: String, completion: @escaping (BattleModel?, Error?) -> ()) {
+func getBattleById(battleId: String, completion: @escaping (BattleStruct?, Error?) -> ()) {
     let url = URL(string: "http://localhost:4001/api/battle/\(battleId)")!
     var request = URLRequest(url: url)
     
@@ -69,7 +73,7 @@ func getBattleById(battleId: String, completion: @escaping (BattleModel?, Error?
         } else if let data = data {
             let decoder = JSONDecoder()
             do {
-                let battle = try decoder.decode(BattleModel.self, from: data)
+                let battle = try decoder.decode(BattleStruct.self, from: data)
                 return completion(battle, nil)
             } catch {
                 return completion(nil, error)

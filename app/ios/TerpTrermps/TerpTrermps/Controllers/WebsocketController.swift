@@ -88,7 +88,9 @@ class WebsocketController: ObservableObject {
             case .WINNING_HAND_PLAYED:
                 print("WINNING HAND PLAYED")
             case .ROUND_ATTRIBUTE_SELECTED:
-                print(msg.attribute)
+                DispatchQueue.main.async {
+                    self.atttributeSelected = msg.attribute
+                }
             case .ROUND_IS_A_DRAW:
                 print("ROUND IS A DRAW")
         }
