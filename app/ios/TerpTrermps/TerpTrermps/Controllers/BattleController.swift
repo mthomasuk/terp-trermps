@@ -26,7 +26,9 @@ struct BattleController: View {
                 if error != nil {
                     return loadError = error
                 } else {
-                    battle.data = result
+                    DispatchQueue.main.async {
+                        battle.data = result
+                    }
                 }
             }
         )

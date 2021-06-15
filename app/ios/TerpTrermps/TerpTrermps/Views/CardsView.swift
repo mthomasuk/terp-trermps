@@ -38,10 +38,10 @@ struct CardsView: View {
     }
     
     var body: some View {
-        VStack(alignment: .center) {
+        ZStack(alignment: .center) {
             ForEach(filteredCards.indices, id: \.self) { index in
-                Text(filteredCards[index]!.name)
+                CardView(card: filteredCards[index]!, index: index)
             }
-        }
+        }.offset(x: 50)
     }
 }

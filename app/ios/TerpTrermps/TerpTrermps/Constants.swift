@@ -16,12 +16,4 @@ struct Constants {
         case ROUND_ATTRIBUTE_SELECTED = "round-attribute-selected"
         case ROUND_IS_A_DRAW = "round-is-a-draw"
     }
-    
-    let Attributes: [String] = [
-        "strength",
-        "skill",
-        "magical_force",
-        "weapons",
-        "power"
-    ]
 }

@@ -80,6 +80,7 @@ class WebsocketController: ObservableObject {
             case .BATTLE_START:
                 DispatchQueue.main.async {
                     self.battleHasStarted = true
+                    
                 }
             case .BATTLE_END:
                 DispatchQueue.main.async {

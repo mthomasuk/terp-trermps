@@ -36,6 +36,7 @@
 		D35BC4D326779E9E00BF5107 /* StartBattleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4D226779E9E00BF5107 /* StartBattleButtonView.swift */; };
 		D35BC4D52677A11E00BF5107 /* BattleStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4D42677A11E00BF5107 /* BattleStatusView.swift */; };
 		D35BC4D72677A65B00BF5107 /* CardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4D62677A65B00BF5107 /* CardsView.swift */; };
+		D35BC4D92678AFD100BF5107 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35BC4D82678AFD100BF5107 /* CardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		D35BC4D226779E9E00BF5107 /* StartBattleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartBattleButtonView.swift; sourceTree = "<group>"; };
 		D35BC4D42677A11E00BF5107 /* BattleStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleStatusView.swift; sourceTree = "<group>"; };
 		D35BC4D62677A65B00BF5107 /* CardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsView.swift; sourceTree = "<group>"; };
+		D35BC4D82678AFD100BF5107 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +197,7 @@
 				D35BC4D226779E9E00BF5107 /* StartBattleButtonView.swift */,
 				D35BC4D42677A11E00BF5107 /* BattleStatusView.swift */,
 				D35BC4D62677A65B00BF5107 /* CardsView.swift */,
+				D35BC4D82678AFD100BF5107 /* CardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				D35BC4AA2670AE1400BF5107 /* BattleModel.swift in Sources */,
 				D35BC4C72673AD1200BF5107 /* SocketMessageModel.swift in Sources */,
 				D35BC4A82670AD4100BF5107 /* BattleView.swift in Sources */,
+				D35BC4D92678AFD100BF5107 /* CardView.swift in Sources */,
 				D35BC4B6267211B600BF5107 /* ErrorView.swift in Sources */,
 				D35BC4BE267214B100BF5107 /* RoundModel.swift in Sources */,
 				D35BC4B2267115AB00BF5107 /* NavigationView.swift in Sources */,

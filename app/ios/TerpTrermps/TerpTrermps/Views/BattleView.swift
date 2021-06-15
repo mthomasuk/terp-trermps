@@ -43,7 +43,12 @@ struct BattleView: View {
     }
     
     var battleInProgress: Bool {
-        return self.ws.battleHasStarted || battle.data!.started_at != ""
+        let bip = self.ws.battleHasStarted || self.battle.data!.started_at != ""
+        if bip {
+            self.refetch()
+        }
+
+        return bip
     }
     
     var canStartBattle: Bool {
