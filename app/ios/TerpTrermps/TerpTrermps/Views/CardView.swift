@@ -9,12 +9,10 @@ import SwiftUI
 
 func mapToImagePath(name: String) -> String {
     switch name.lowercased() {
-        case "kazan tartar":
-            return "kazan_tartar"
+        case "kazan-tatar":
+            return "kazan_tatar"
         case "tchu-ick":
             return "tchu_ick"
-        case "var":
-            return "vari"
         default:
            return name.lowercased()
     }
@@ -23,6 +21,27 @@ func mapToImagePath(name: String) -> String {
 struct CardView: View {
     var card: CardModel
     var index: Int
+    var selectedAttribute: String
+    
+    var str: Bool {
+        return selectedAttribute == "strength"
+    }
+    
+    var skl: Bool {
+        return selectedAttribute == "skill"
+    }
+    
+    var mf: Bool {
+        return selectedAttribute == "magical_force"
+    }
+    
+    var wpn: Bool {
+        return selectedAttribute == "weapons"
+    }
+    
+    var pwr: Bool {
+        return selectedAttribute == "power"
+    }
     
     var body: some View {
         VStack {
@@ -34,31 +53,33 @@ struct CardView: View {
             Text(card.name.uppercased()).fontWeight(.bold).font(.system(size: 18))
             VStack {
                 HStack {
-                    Text("Strength").font(.system(size: 14))
+                    Text("Strength").font(.system(size: 14)).foregroundColor(str ? Color.red : Color.black)
                     Spacer()
-                    Text("\(card.strength)").font(.system(size: 14))
+                    Text("\(card.strength)").font(.system(size: 14)).foregroundColor(str ? Color.red : Color.black)
                 }
                 HStack {
-                    Text("Skill").font(.system(size: 14))
+                    Text("Skill").font(.system(size: 14)).foregroundColor(skl ? Color.red : Color.black)
                     Spacer()
-                    Text("\(card.skill)").font(.system(size: 14))
+                    Text("\(card.skill)").font(.system(size: 14)).foregroundColor(skl ? Color.red : Color.black)
                 }
                 HStack {
-                    Text("Magical Force").font(.system(size: 14))
+                    Text("Magical Force").font(.system(size: 14)).foregroundColor(mf ? Color.red : Color.black)
                     Spacer()
-                    Text("\(card.magical_force)").font(.system(size: 14))
+                    Text("\(card.magical_force)").font(.system(size: 14)).foregroundColor(mf ? Color.red : Color.black)
                 }
                 HStack {
-                    Text("Weapons").font(.system(size: 14))
+                    Text("Weapons").font(.system(size: 14)).foregroundColor(wpn ? Color.red : Color.black)
                     Spacer()
-                    Text("\(card.weapons)").font(.system(size: 14))
+                    Text("\(card.weapons)").font(.system(size: 14)).foregroundColor(wpn ? Color.red : Color.black)
                 }
                 HStack {
-                    Text("Power").font(.system(size: 14))
+                    Text("Power").font(.system(size: 14)).foregroundColor(pwr ? Color.red : Color.black)
                     Spacer()
-                    Text("\(card.power)").font(.system(size: 14))
+                    Text("\(card.power)").font(.system(size: 14)).foregroundColor(pwr ? Color.red : Color.black)
                 }
-            }.padding(10)
+            }
+            .padding(.vertical, 5)
+            .padding(.horizontal, 10)
         }
         .frame(width: 200.0, height: 352.0)
         .padding(5)
@@ -67,7 +88,7 @@ struct CardView: View {
             RoundedRectangle(cornerRadius: 10)
                 .stroke(Color(red: 222/255, green: 222/255, blue: 222/255), lineWidth: 1)
         )
-        .offset(x: CGFloat(index * -5), y: 0)
+        .offset(x: CGFloat(index * -4), y: 0)
 
     }
 }

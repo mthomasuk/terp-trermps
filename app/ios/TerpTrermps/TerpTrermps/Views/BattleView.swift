@@ -10,7 +10,7 @@ import SwiftUI
 struct BattleView: View {
     @EnvironmentObject var ws: WebsocketController
     @ObservedObject var battle: BattleModel
-
+    
     var user: UserModel?
     var refetch: () -> ()
     
@@ -30,8 +30,6 @@ struct BattleView: View {
                 deck = d
             }
         }
-
-        print(deck!)
         return deck
     }
     
@@ -43,12 +41,13 @@ struct BattleView: View {
     }
     
     var battleInProgress: Bool {
-        let bip = self.ws.battleHasStarted || self.battle.data!.started_at != ""
-        if bip {
-            self.refetch()
+        if self.battle.data!.started_at == "" {
+            if self.ws.battleHasStarted {
+                self.refetch()
+            }
+            return self.ws.battleHasStarted
         }
-
-        return bip
+        return self.battle.data!.started_at != ""
     }
     
     var canStartBattle: Bool {

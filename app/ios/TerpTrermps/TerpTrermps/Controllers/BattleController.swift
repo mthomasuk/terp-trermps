@@ -10,7 +10,6 @@ import SwiftUI
 struct BattleController: View {
     var battleId: String
     
-    
     @State var loadError: Error?
     
     @State var user: UserModel? = retriveLoggedInUser()

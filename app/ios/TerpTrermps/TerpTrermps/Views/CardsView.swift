@@ -40,8 +40,12 @@ struct CardsView: View {
     var body: some View {
         ZStack(alignment: .center) {
             ForEach(filteredCards.indices, id: \.self) { index in
-                CardView(card: filteredCards[index]!, index: index)
+                CardView(
+                    card: filteredCards[index]!,
+                    index: index,
+                    selectedAttribute: selectedAttribute
+                )
             }
-        }.offset(x: 50)
+        }.offset(x: 40)
     }
 }

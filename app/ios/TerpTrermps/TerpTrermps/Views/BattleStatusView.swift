@@ -26,11 +26,11 @@ struct BattleStatusView: View {
         }
         
         if self.ws.atttributeSelected != "" {
-            str = "Attribute is \(self.ws.atttributeSelected.replacingOccurrences(of: "_", with: " "))"
+            str = "Attribute is \(self.ws.atttributeSelected.replacingOccurrences(of: "_", with: " "))!"
         }
         
         if selectedAttribute != "" {
-            str = "Attribute is \(selectedAttribute.replacingOccurrences(of: "_", with: " "))"
+            str = "Attribute is \(selectedAttribute.replacingOccurrences(of: "_", with: " "))!"
         }
 
         return str
@@ -38,7 +38,7 @@ struct BattleStatusView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Text(status).font(.footnote)
+            Text(status)
         }
     }
 }
