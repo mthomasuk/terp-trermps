@@ -3,7 +3,7 @@
 <img width="1511" alt="Screenshot 2021-05-21 at 13 57 54" src="https://user-images.githubusercontent.com/5039295/119140917-9aa15300-ba3c-11eb-839a-90d0aed60b55.png">
 
 ## Excuse me, what r u doing?
-You remember Waddingtons Super Top Trumps - Dragons & Magic Beasts edition, don't you?? No? Oh okay. Well it's that, but, you know, on a computer and much more fragile and rubbish. By the way, as if the disclaimer wasn't clear enough, I DO NOT OWN ANY OF IMAGES OR NAMES on these cards, they are super copyright Waddingtons (probably). I am making approximately sweet fuck all off this, so hopefully that's cool and I won't get sued. 
+You remember Waddingtons Super Top Trumps - Dragons & Magic Beasts edition, don't you?? No? Oh okay. Well it's that, but, you know, on a computer and much more fragile and rubbish. By the way, as if the disclaimer wasn't clear enough, I DO NOT OWN ANY OF IMAGES OR NAMES on these cards, they are super copyright Waddingtons (probably). I am making approximately sweet bupkiss off this, so hopefully that's cool and I won't get sued. 
 
 ## How does this grim charade work?
 Ahem, to quote the INCREDIBLE instruction card included with all packs of Super Top Trumps:
