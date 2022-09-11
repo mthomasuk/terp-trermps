@@ -35,23 +35,25 @@ export function UserControlProvider({ children }: { children: ReactNode }) {
   const signInUser = async (name: string, password: string): Promise<void> => {
     window.localStorage.removeItem("user");
 
-    try {
-      const user = await fetch("/api/login", {
-        method: "POST",
-        body: JSON.stringify({ name, password }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const user = await fetch("/api/login", {
+      method: "POST",
+      body: JSON.stringify({ name, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("INVALID CREDENTIALS");
+        }
+
+        return response.json();
       })
-        .then((response) => response.json())
-        .then((data) => data);
+      .then((data) => data);
 
-      setIsSignedIn(true);
+    setIsSignedIn(true);
 
-      window.localStorage.setItem("user", JSON.stringify(user));
-    } catch (error) {
-      console.warn(error);
-    }
+    window.localStorage.setItem("user", JSON.stringify(user));
 
     return;
   };

@@ -17,10 +17,14 @@ const SOCKET_SERVER_URL =
     ? `wss://${window.location.host}`
     : "ws://localhost:4002";
 
-const MAX_RETRIES = 10;
-const THIRTY_SECONDS = 30000;
+const MAX_RETRIES = 5;
+
+const ONE_SECOND = 1000;
+const FIVE_SECONDS = 5000;
 
 let reconnect: any = null;
+let pingPong: any = null;
+
 let socketRetries: number = 0;
 
 export function useSocket(id: string) {
@@ -43,7 +47,16 @@ export function useSocket(id: string) {
       if (socketRef.current) {
         socketRef.current.addEventListener("open", () => {
           clearInterval(reconnect);
+
           socketRetries = 0;
+
+          pingPong = setInterval(() => {
+            if (socketRef.current.readyState !== 1) {
+              return;
+            }
+
+            socketRef.current.send("PING");
+          }, ONE_SECOND);
         });
 
         socketRef.current.addEventListener("close", () => {
@@ -53,8 +66,9 @@ export function useSocket(id: string) {
               socketRetries++;
             } else {
               clearInterval(reconnect);
+              clearInterval(pingPong);
             }
-          }, THIRTY_SECONDS);
+          }, FIVE_SECONDS);
         });
 
         socketRef.current.addEventListener("message", ({ data }: any) => {
@@ -109,7 +123,7 @@ export function useSocket(id: string) {
               }
             });
           } catch (err) {
-            console.info({ data });
+            console.warn({ err });
           }
         });
       }
@@ -119,6 +133,8 @@ export function useSocket(id: string) {
 
     return () => {
       clearInterval(reconnect);
+      clearInterval(pingPong);
+
       socketRef?.current?.close();
     };
   }, [battleId]);

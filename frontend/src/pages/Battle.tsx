@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useEffect, useContext, useCallback, useMemo } from "react";
 
 import styled from "styled-components";
 
@@ -96,10 +96,6 @@ const Battle = ({ match }: Props) => {
   const battleInProgress = battleHasStarted || currentBattle?.started_at;
   const enemiesCrushed = battleHasEnded || currentBattle?.winner;
 
-  const userDeck = (currentBattle?.decks || []).find(
-    ({ user_id }: any) => user_id === currentUser.id
-  );
-
   const fetchBattle = useCallback(async () => {
     const response = await getBattleById(id);
 
@@ -114,6 +110,19 @@ const Battle = ({ match }: Props) => {
     await startBattle(id);
     await fetchBattle();
   };
+
+  const userDeck = useMemo(
+    () =>
+      (currentBattle?.decks || []).find(
+        ({ user_id }: any) => user_id === currentUser.id
+      ),
+    [currentBattle?.decks, currentUser.id]
+  );
+
+  const totalCards = useMemo(
+    () => (userDeck?.cards?.length ?? 0) * (currentBattle?.decks?.length ?? 0),
+    [userDeck?.cards, currentBattle?.decks]
+  );
 
   const onPlayHand = async (card: any) => {
     await playHand(id, {
@@ -153,6 +162,8 @@ const Battle = ({ match }: Props) => {
           isLeader={isLeader}
           battleInProgress={battleInProgress}
           selectedAttr={currentRound?.attribute}
+          noOfCards={userDeck?.cards?.length ?? 0}
+          totalCards={totalCards}
         />
         {!battleInProgress && <Combatants combatants={fightersInArena} />}
         {canStartBattle && (
@@ -163,7 +174,7 @@ const Battle = ({ match }: Props) => {
         {battleInProgress && (
           <Cards
             leader={isLeader}
-            cards={userDeck.cards}
+            cards={userDeck?.cards}
             roundId={currentRound?.id}
             onPlayHand={onPlayHand}
             selectedAttr={currentRound?.attribute}
@@ -181,7 +192,11 @@ const Battle = ({ match }: Props) => {
               Played by: <strong>{winningHand.name}</strong>
             </span>
           }
-          element={<Card next winner card={winningHand.card} />}
+          element={
+            <>
+              <Card next winner card={winningHand.card} />
+            </>
+          }
         />
       )}
       {winningHand && !winningHand.card && (

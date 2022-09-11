@@ -82,7 +82,14 @@ const Login = () => {
 
         push("/");
       } catch (error) {
-        console.warn(error);
+        if ((error as Error).message === "INVALID CREDENTIALS") {
+          alert("Incorrect password!");
+        } else {
+          alert(
+            "Something went wrong and you know what? I have no idea what it is. Fuck you."
+          );
+          console.warn(error);
+        }
       }
     } else {
       alert("Please provide a name and password");

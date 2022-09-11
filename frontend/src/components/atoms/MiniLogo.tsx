@@ -26,18 +26,18 @@ const Retro = styled.div`
   }
 
   h1 {
-    font-size: 60px;
+    font-size: 55px;
     margin: -5px 0;
   }
 
   h3 {
-    letter-spacing: 10px;
+    letter-spacing: 8px;
   }
 
   h5 {
     color: white;
     font-size: 12px;
-    letter-spacing: 24px;
+    letter-spacing: 18px;
     text-shadow: 1px 1px #000;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: #000;

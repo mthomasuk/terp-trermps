@@ -8,6 +8,8 @@ interface Props {
   isLeader: boolean;
   battleInProgress: boolean;
   selectedAttr?: string;
+  noOfCards: number;
+  totalCards: number;
 }
 
 const Status = styled.h3`
@@ -28,7 +30,13 @@ export const testIds = {
   ROOT: "battle-status-Status",
 };
 
-const BattleStatus = ({ battleInProgress, isLeader, selectedAttr }: Props) => {
+const BattleStatus = ({
+  battleInProgress,
+  isLeader,
+  selectedAttr,
+  noOfCards,
+  totalCards,
+}: Props) => {
   const { id }: any = useParams();
 
   const { attributeSelected } = useSocket(id);
@@ -49,7 +57,16 @@ const BattleStatus = ({ battleInProgress, isLeader, selectedAttr }: Props) => {
     )}!`;
   }
 
-  return <Status data-testid={testIds.ROOT}>{status}</Status>;
+  return (
+    <div>
+      {battleInProgress && (
+        <>
+          <strong># of cards in your hand:</strong> {noOfCards}/{totalCards}
+        </>
+      )}
+      <Status data-testid={testIds.ROOT}>{status}</Status>
+    </div>
+  );
 };
 
 export default BattleStatus;
