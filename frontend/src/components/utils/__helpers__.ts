@@ -43,7 +43,7 @@ export const rgbToHex = (rgb: string): string => {
     return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
   } catch (error) {
     throw new Error(
-      `Failed to convert rgb input (${rgb}) to hex: ${error.message}`
+      `Failed to convert rgb input (${rgb}) to hex: ${(error as Error).message}`
     );
   }
 };
