@@ -10,5 +10,5 @@ require (
 	github.com/labstack/echo/v4 v4.9.0
 	github.com/lib/pq v1.10.1
 	github.com/satori/go.uuid v1.2.0
-	golang.org/x/crypto v0.1.0
+	golang.org/x/crypto v0.17.0
 )
