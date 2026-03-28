@@ -1,10 +1,8 @@
 import { useState, useEffect, useContext, DragEvent, TouchEvent } from "react";
-import { useParams } from "react-router-dom";
 
 import styled from "styled-components";
 
 import { BattleControlContext } from "../context/BattleControlStore";
-import { useSocket } from "../context/Websocket";
 
 import InPlay from "../atoms/InPlay";
 import ToPlay from "../atoms/ToPlay";
@@ -20,6 +18,7 @@ interface Props {
   onSetDroppedCard: (card: CardInterface | undefined) => void;
   selectedCard?: CardInterface;
   selectedAttr?: string;
+  attributeSelected?: string;
   droppedCard?: any;
   dataTestId?: string;
 }
@@ -47,6 +46,7 @@ const Hand = ({
   cards,
   selectedCard,
   selectedAttr,
+  attributeSelected,
   droppedCard,
   roundId,
   onPlayHand,
@@ -55,9 +55,6 @@ const Hand = ({
   leader = false,
   dataTestId = testIds.ROOT,
 }: Props) => {
-  const { id }: any = useParams();
-
-  const { attributeSelected } = useSocket(id);
   const { setAttribute } = useContext(BattleControlContext);
 
   const selectedAttribute = attributeSelected || selectedAttr;
