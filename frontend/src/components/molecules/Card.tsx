@@ -1,4 +1,4 @@
-import { TouchEvent } from "react";
+import { memo, TouchEvent } from "react";
 
 import styled, { css, keyframes } from "styled-components";
 
@@ -188,4 +188,4 @@ const Card = ({
   );
 };
 
-export default Card;
+export default memo(Card);

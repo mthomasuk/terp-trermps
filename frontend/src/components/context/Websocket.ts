@@ -19,13 +19,8 @@ const SOCKET_SERVER_URL =
 
 const MAX_RETRIES = 5;
 
-const ONE_SECOND = 1000;
+const THIRTY_SECONDS = 30000;
 const FIVE_SECONDS = 5000;
-
-let reconnect: any = null;
-let pingPong: any = null;
-
-let socketRetries: number = 0;
 
 export function useSocket(id: string) {
   const [messages, setMessages] = useState<any[]>([]);
@@ -38,7 +33,10 @@ export function useSocket(id: string) {
 
   const battleId = useRef(id).current;
 
-  let socketRef: any = useRef();
+  const socketRef: any = useRef();
+  const reconnectRef = useRef<any>(null);
+  const pingPongRef = useRef<any>(null);
+  const socketRetriesRef = useRef<number>(0);
 
   useEffect(() => {
     const connect = () => {
@@ -46,27 +44,27 @@ export function useSocket(id: string) {
 
       if (socketRef.current) {
         socketRef.current.addEventListener("open", () => {
-          clearInterval(reconnect);
+          clearInterval(reconnectRef.current);
 
-          socketRetries = 0;
+          socketRetriesRef.current = 0;
 
-          pingPong = setInterval(() => {
+          pingPongRef.current = setInterval(() => {
             if (socketRef.current.readyState !== 1) {
               return;
             }
 
             socketRef.current.send("PING");
-          }, ONE_SECOND);
+          }, THIRTY_SECONDS);
         });
 
         socketRef.current.addEventListener("close", () => {
-          reconnect = setInterval(() => {
-            if (socketRetries < MAX_RETRIES) {
+          reconnectRef.current = setInterval(() => {
+            if (socketRetriesRef.current < MAX_RETRIES) {
               connect();
-              socketRetries++;
+              socketRetriesRef.current++;
             } else {
-              clearInterval(reconnect);
-              clearInterval(pingPong);
+              clearInterval(reconnectRef.current);
+              clearInterval(pingPongRef.current);
             }
           }, FIVE_SECONDS);
         });
@@ -132,8 +130,8 @@ export function useSocket(id: string) {
     connect();
 
     return () => {
-      clearInterval(reconnect);
-      clearInterval(pingPong);
+      clearInterval(reconnectRef.current);
+      clearInterval(pingPongRef.current);
 
       socketRef?.current?.close();
     };

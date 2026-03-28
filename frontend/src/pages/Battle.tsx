@@ -104,7 +104,7 @@ const Battle = ({ match }: Props) => {
     } else {
       push("/");
     }
-  }, [getBattleById, setCurrentBattle, push, id]);
+  }, [getBattleById, push, id]);
 
   const onStartBattle = async () => {
     await startBattle(id);
@@ -121,7 +121,7 @@ const Battle = ({ match }: Props) => {
 
   const totalCards = useMemo(
     () => (userDeck?.cards?.length ?? 0) * (currentBattle?.decks?.length ?? 0),
-    [userDeck?.cards, currentBattle?.decks]
+    [userDeck?.cards?.length, currentBattle?.decks?.length]
   );
 
   const onPlayHand = async (card: any) => {
