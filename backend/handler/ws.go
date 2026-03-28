@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"net/url"
 
 	"github.com/gorilla/websocket"
 
@@ -14,7 +15,15 @@ var upgrader = websocket.Upgrader{
 }
 
 func checkOrigin(r *http.Request) bool {
-	return true
+	origin := r.Header.Get("Origin")
+	if origin == "" {
+		return true
+	}
+	u, err := url.Parse(origin)
+	if err != nil {
+		return false
+	}
+	return u.Host == r.Host
 }
 
 // WsHandler is a generic websocket handler

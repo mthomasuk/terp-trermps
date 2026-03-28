@@ -1,15 +1,13 @@
 package helpers
 
 import (
-	"math/rand"
-	"time"
+	"crypto/rand"
+	"math/big"
 )
 
 // GetRandomLetter generates a random uppercase letter
 func GetRandomLetter() string {
-	rand.Seed(time.Now().Unix())
+	n, _ := rand.Int(rand.Reader, big.NewInt(26))
 
-	randomChar := 'A' + rune(rand.Intn(26))
-
-	return string(randomChar)
+	return string('A' + rune(n.Int64()))
 }

@@ -98,7 +98,7 @@ func PlayHand(roundID, deckID, cardID string) (*types.Round, error) {
 	if len(hnds) >= cntD.Count {
 		win := hnds[0]
 
-		if win.Value == hnds[1].Value {
+		if len(hnds) > 1 && win.Value == hnds[1].Value {
 			// It's a draw
 			err = HandleDraw(roundID, hnds)
 			if err != nil {

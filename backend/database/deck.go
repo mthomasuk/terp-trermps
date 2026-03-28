@@ -102,7 +102,7 @@ func RetrieveDeck(deckID string) (*types.Deck, error) {
 
 	crds := []types.Card{}
 
-	err = Conn.Select(&crds, `SELECT * FROM "card_in_deck" WHERE "deck"."id" = $1 ORDER BY "deck"."added_at" ASC`, deckID)
+	err = Conn.Select(&crds, `SELECT * FROM "card_in_deck" WHERE "card_in_deck"."deck_id" = $1 ORDER BY "card_in_deck"."added_at" ASC`, deckID)
 	if err != nil {
 		return nil, err
 	}
@@ -119,8 +119,8 @@ func GenerateDecks(decks []string) error {
 		return err
 	}
 
-	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(len(*crds), func(i, j int) { (*crds)[i], (*crds)[j] = (*crds)[j], (*crds)[i] })
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	r.Shuffle(len(*crds), func(i, j int) { (*crds)[i], (*crds)[j] = (*crds)[j], (*crds)[i] })
 
 	chunks := chunkCards(*crds, int(len(*crds)/len(decks)))
 
@@ -171,7 +171,7 @@ func CheckForWinningDeck(battleID string) (bool, string, error) {
 		return false, "", err
 	}
 
-	if cntW[0].Count == cntC.Count {
+	if len(cntW) > 0 && cntW[0].Count == cntC.Count {
 		return true, cntW[0].UserID, nil
 	}
 
