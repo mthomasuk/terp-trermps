@@ -1,7 +1,9 @@
 package database
 
 import (
+	"fmt"
 	"math/rand"
+	"strings"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
@@ -89,6 +91,26 @@ func AddCardToDeck(cardID, deckID string) error {
 	return nil
 }
 
+// addCardsToDeck inserts all cards for a deck in a single batch query
+func addCardsToDeck(cardIDs []string, deckID string) error {
+	if len(cardIDs) == 0 {
+		return nil
+	}
+
+	now := time.Now().Local()
+	valueStrings := make([]string, len(cardIDs))
+	valueArgs := make([]interface{}, 0, len(cardIDs)*3)
+
+	for i, cardID := range cardIDs {
+		valueStrings[i] = fmt.Sprintf("($%d, $%d, $%d)", i*3+1, i*3+2, i*3+3)
+		valueArgs = append(valueArgs, cardID, deckID, now)
+	}
+
+	query := `INSERT INTO "card_in_deck" (card_id, deck_id, added_at) VALUES ` + strings.Join(valueStrings, ", ")
+	_, err := Conn.Exec(query, valueArgs...)
+	return err
+}
+
 // RetrieveDeck retrieves a given deck and assigned cards
 func RetrieveDeck(deckID string) (*types.Deck, error) {
 	hnd := types.Deck{}
@@ -102,7 +124,7 @@ func RetrieveDeck(deckID string) (*types.Deck, error) {
 
 	crds := []types.Card{}
 
-	err = Conn.Select(&crds, `SELECT * FROM "card_in_deck" WHERE "deck"."id" = $1 ORDER BY "deck"."added_at" ASC`, deckID)
+	err = Conn.Select(&crds, `SELECT * FROM "card_in_deck" WHERE "card_in_deck"."deck_id" = $1 ORDER BY "card_in_deck"."added_at" ASC`, deckID)
 	if err != nil {
 		return nil, err
 	}
@@ -119,25 +141,26 @@ func GenerateDecks(decks []string) error {
 		return err
 	}
 
-	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(len(*crds), func(i, j int) { (*crds)[i], (*crds)[j] = (*crds)[j], (*crds)[i] })
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	r.Shuffle(len(*crds), func(i, j int) { (*crds)[i], (*crds)[j] = (*crds)[j], (*crds)[i] })
 
 	chunks := chunkCards(*crds, int(len(*crds)/len(decks)))
 
-	dealt := make(map[string]bool)
+	seen := make(map[string]bool)
 
 	for idx, chunk := range chunks {
+		cardIDs := make([]string, 0, len(chunk))
 		for _, card := range chunk {
-			if dealt[card.ID] {
+			if seen[card.ID] {
 				continue
 			}
+			cardIDs = append(cardIDs, card.ID)
+			seen[card.ID] = true
+		}
 
-			err = AddCardToDeck(card.ID, decks[idx])
-			if err != nil {
-				break
-			}
-
-			dealt[card.ID] = true
+		err = addCardsToDeck(cardIDs, decks[idx])
+		if err != nil {
+			return err
 		}
 	}
 
@@ -171,7 +194,7 @@ func CheckForWinningDeck(battleID string) (bool, string, error) {
 		return false, "", err
 	}
 
-	if cntW[0].Count == cntC.Count {
+	if len(cntW) > 0 && cntW[0].Count == cntC.Count {
 		return true, cntW[0].UserID, nil
 	}
 

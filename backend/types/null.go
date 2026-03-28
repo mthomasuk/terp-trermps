@@ -6,7 +6,6 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"reflect"
 	"time"
 )
 
@@ -21,7 +20,7 @@ func (ni *NullInt64) Scan(value interface{}) error {
 	}
 
 	// if nil then make Valid false
-	if reflect.TypeOf(value) == nil {
+	if value == nil {
 		*ni = NullInt64{i.Int64, false}
 	} else {
 		*ni = NullInt64{i.Int64, true}
@@ -40,7 +39,7 @@ func (nb *NullBool) Scan(value interface{}) error {
 	}
 
 	// if nil then make Valid false
-	if reflect.TypeOf(value) == nil {
+	if value == nil {
 		*nb = NullBool{b.Bool, false}
 	} else {
 		*nb = NullBool{b.Bool, true}
@@ -60,7 +59,7 @@ func (nf *NullFloat64) Scan(value interface{}) error {
 	}
 
 	// if nil then make Valid false
-	if reflect.TypeOf(value) == nil {
+	if value == nil {
 		*nf = NullFloat64{f.Float64, false}
 	} else {
 		*nf = NullFloat64{f.Float64, true}
@@ -80,7 +79,7 @@ func (ns *NullString) Scan(value interface{}) error {
 	}
 
 	// if nil then make Valid false
-	if reflect.TypeOf(value) == nil {
+	if value == nil {
 		*ns = NullString{s.String, false}
 	} else {
 		*ns = NullString{s.String, true}
@@ -100,7 +99,7 @@ func (nt *NullTime) Scan(value interface{}) error {
 	}
 
 	// if nil then make Valid false
-	if reflect.TypeOf(value) == nil {
+	if value == nil {
 		*nt = NullTime{t.Time, false}
 	} else {
 		*nt = NullTime{t.Time, true}

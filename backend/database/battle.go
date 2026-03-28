@@ -150,7 +150,6 @@ func StartBattle(battleID string) (*types.Battle, error) {
 		return nil, err
 	}
 
-	rand.Seed(time.Now().Unix())
 	leader := udecks[rand.Intn(len(udecks))].UserID
 
 	_, err = Conn.NamedExec(`

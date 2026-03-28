@@ -43,7 +43,7 @@ func PlayHand(hub *Hub) func(echo.Context) error {
 			Type     string      `json:"type"`
 			BattleID string      `json:"battle_id"`
 			Card     *types.Card `json:"card,omitempty"`
-			UserID   string      `json:"user_id,omitempy"`
+			UserID   string      `json:"user_id,omitempty"`
 			Name     string      `json:"name,omitempty"`
 		}
 

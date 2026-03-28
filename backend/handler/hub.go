@@ -35,9 +35,9 @@ const (
 // CreateHub created a new hub, duh
 func CreateHub() *Hub {
 	return &Hub{
-		broadcast:  make(chan []byte),
-		register:   make(chan *Client),
-		unregister: make(chan *Client),
+		broadcast:  make(chan []byte, 256),
+		register:   make(chan *Client, 32),
+		unregister: make(chan *Client, 32),
 		clients:    make(map[*Client]bool),
 	}
 }
@@ -56,10 +56,10 @@ func (h *Hub) Run() {
 			}
 
 		case message := <-h.broadcast:
-			for client := range h.clients {
-				m := make(map[string]string)
-				_ = json.Unmarshal(message, &m)
+			m := make(map[string]string)
+			_ = json.Unmarshal(message, &m)
 
+			for client := range h.clients {
 				if m["battle_id"] == client.id {
 					select {
 					case client.send <- message:
