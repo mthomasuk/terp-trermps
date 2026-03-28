@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/jmoiron/sqlx"
 	// need to import pq for postgres
@@ -72,6 +73,7 @@ var schema = `
   );
 
   CREATE INDEX IF NOT EXISTS round_started_at_idx ON "round" (started_at);
+  CREATE INDEX IF NOT EXISTS round_battle_id_idx ON "round" (battle_id);
 
   CREATE TABLE IF NOT EXISTS "card_in_deck" (
     card_id       UUID,
@@ -90,6 +92,7 @@ var schema = `
   );
 
   CREATE INDEX IF NOT EXISTS card_in_deck_deck_id_idx ON "card_in_deck" (deck_id);
+  CREATE INDEX IF NOT EXISTS card_in_deck_card_id_idx ON "card_in_deck" (card_id);
 
   CREATE TABLE IF NOT EXISTS "hand" (
     id            UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
@@ -109,6 +112,7 @@ var schema = `
   );
 
   CREATE INDEX IF NOT EXISTS hand_round_id_idx ON "hand" (round_id);
+  CREATE INDEX IF NOT EXISTS hand_deck_id_idx ON "hand" (deck_id);
 `
 
 // Conn is an initialized DB connection
@@ -148,7 +152,8 @@ func Run() {
 	}
 
 	Conn.SetMaxIdleConns(5)
-	Conn.SetMaxOpenConns(10)
+	Conn.SetMaxOpenConns(25)
+	Conn.SetConnMaxLifetime(5 * time.Minute)
 
 	Conn.MustExec(schema)
 }

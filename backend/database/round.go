@@ -151,14 +151,14 @@ func HandleDraw(roundID string, hands []types.Hand) error {
 		if err != nil {
 			return err
 		}
+	}
 
-		_, err = Conn.NamedExec(`
-			UPDATE "round" SET attribute = NULL WHERE id = :round_id`,
-			map[string]interface{}{"round_id": roundID},
-		)
-		if err != nil {
-			return err
-		}
+	_, err = Conn.NamedExec(`
+		UPDATE "round" SET attribute = NULL WHERE id = :round_id`,
+		map[string]interface{}{"round_id": roundID},
+	)
+	if err != nil {
+		return err
 	}
 
 	return nil
