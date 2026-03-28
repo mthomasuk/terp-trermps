@@ -1,13 +1,10 @@
-import { useParams } from "react-router-dom";
-
 import styled from "styled-components";
-
-import { useSocket } from "../context/Websocket";
 
 interface Props {
   isLeader: boolean;
   battleInProgress: boolean;
   selectedAttr?: string;
+  attributeSelected?: string;
   noOfCards: number;
   totalCards: number;
 }
@@ -34,12 +31,10 @@ const BattleStatus = ({
   battleInProgress,
   isLeader,
   selectedAttr,
+  attributeSelected,
   noOfCards,
   totalCards,
 }: Props) => {
-  const { id }: any = useParams();
-
-  const { attributeSelected } = useSocket(id);
 
   let status = "Waiting for the battle to start";
 

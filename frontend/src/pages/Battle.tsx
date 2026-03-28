@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import uniqBy from "lodash.uniqby";
 
-import { useHistory, Redirect, RouteComponentProps } from "react-router-dom";
+import { useHistory, RouteComponentProps } from "react-router-dom";
 
 import { BattleControlContext } from "../components/context/BattleControlStore";
 import { UserControlContext } from "../components/context/UserControlStore";
@@ -62,7 +62,7 @@ const Battle = ({ match }: Props) => {
 
   const [currentBattle, setCurrentBattle] = useState<any>();
 
-  const { messages, winningHand, battleHasStarted, battleHasEnded } =
+  const { messages, winningHand, battleHasStarted, battleHasEnded, attributeSelected } =
     useSocket(id);
 
   const { getSignedInUser } = useContext(UserControlContext);
@@ -104,7 +104,7 @@ const Battle = ({ match }: Props) => {
     } else {
       push("/");
     }
-  }, [getBattleById, setCurrentBattle, push, id]);
+  }, [getBattleById, push, id]);
 
   const onStartBattle = async () => {
     await startBattle(id);
@@ -121,7 +121,7 @@ const Battle = ({ match }: Props) => {
 
   const totalCards = useMemo(
     () => (userDeck?.cards?.length ?? 0) * (currentBattle?.decks?.length ?? 0),
-    [userDeck?.cards, currentBattle?.decks]
+    [userDeck?.cards?.length, currentBattle?.decks?.length]
   );
 
   const onPlayHand = async (card: any) => {
@@ -151,7 +151,7 @@ const Battle = ({ match }: Props) => {
     return <EnemiesCrushed victor={{ id: currentBattle?.winner as string }} />;
   }
 
-  return !battleHasEnded ? (
+  return (
     <>
       <Info>
         <Share>
@@ -162,6 +162,7 @@ const Battle = ({ match }: Props) => {
           isLeader={isLeader}
           battleInProgress={battleInProgress}
           selectedAttr={currentRound?.attribute}
+          attributeSelected={attributeSelected}
           noOfCards={userDeck?.cards?.length ?? 0}
           totalCards={totalCards}
         />
@@ -178,6 +179,7 @@ const Battle = ({ match }: Props) => {
             roundId={currentRound?.id}
             onPlayHand={onPlayHand}
             selectedAttr={currentRound?.attribute}
+            attributeSelected={attributeSelected}
           />
         )}
         <Footer>
@@ -207,8 +209,6 @@ const Battle = ({ match }: Props) => {
         />
       )}
     </>
-  ) : (
-    <Redirect to={`/battle/${id}/results`} />
   );
 };
 

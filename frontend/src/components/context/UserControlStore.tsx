@@ -72,7 +72,7 @@ export function UserControlProvider({ children }: { children: ReactNode }) {
     if (hasCookie) {
       setIsSignedIn(true);
     }
-  }, [isSignedIn]);
+  }, []);
 
   return (
     <UserControlContext.Provider

@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 
 import styled from "styled-components";
-
-import { useSocket } from "../context/Websocket";
 
 import Card from "./Card";
 import Hand from "./Hand";
@@ -14,6 +11,7 @@ interface Props {
   onPlayHand: (card: CardInterface | undefined) => void;
   leader: boolean;
   selectedAttr?: string;
+  attributeSelected?: string;
 }
 
 const Container = styled.div`
@@ -51,11 +49,9 @@ const Cards = ({
   roundId,
   onPlayHand,
   selectedAttr,
+  attributeSelected,
   leader = false,
 }: Props) => {
-  const { id }: any = useParams();
-
-  const { attributeSelected } = useSocket(id);
 
   const [selectedCard, selectCard] = useState<any | undefined>();
   const [droppedCard, setDroppedCard] = useState<any | undefined>();
@@ -98,6 +94,7 @@ const Cards = ({
           leader={leader}
           selectedCard={selectedCard}
           selectedAttr={selectedAttr}
+          attributeSelected={attributeSelected}
           droppedCard={droppedCard}
           onSelectCard={selectCard}
           onSetDroppedCard={setDroppedCard}

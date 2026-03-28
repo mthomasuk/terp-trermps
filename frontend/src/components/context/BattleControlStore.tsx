@@ -1,4 +1,4 @@
-import { createContext, ReactNode } from "react";
+import { createContext, useMemo, ReactNode } from "react";
 
 const createNewBattle = async (): Promise<BattleInterface | void> => {
   try {
@@ -152,18 +152,21 @@ export const BattleControlContext = createContext({
 });
 
 export function BattleControlProvider({ children }: { children: ReactNode }) {
+  const value = useMemo(
+    () => ({
+      createNewBattle,
+      getBattleById,
+      joinBattle,
+      startBattle,
+      setAttribute,
+      playHand,
+      endBattle,
+    }),
+    []
+  );
+
   return (
-    <BattleControlContext.Provider
-      value={{
-        createNewBattle,
-        getBattleById,
-        joinBattle,
-        startBattle,
-        setAttribute,
-        playHand,
-        endBattle,
-      }}
-    >
+    <BattleControlContext.Provider value={value}>
       {children}
     </BattleControlContext.Provider>
   );

@@ -1,4 +1,4 @@
-import { useContext, useRef, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import confetti from "canvas-confetti";
@@ -42,8 +42,6 @@ const Image = styled.img`
 `;
 
 const EnemiesCrushed = ({ victor }: Props) => {
-  const ref = useRef();
-
   const { getSignedInUser } = useContext(UserControlContext);
 
   const user = getSignedInUser();
@@ -57,7 +55,10 @@ const EnemiesCrushed = ({ victor }: Props) => {
     : `WARRIOR ${victor.name || victor.id} (that's not you) HAS DESTROYED YOU!`;
 
   useEffect(() => {
-    let interval: any;
+    if (!isVictorious) return;
+
+    let bursts = 0;
+    const MAX_BURSTS = 10;
 
     const fireConfetti = async () => {
       await confetti({
@@ -71,22 +72,21 @@ const EnemiesCrushed = ({ victor }: Props) => {
       });
     };
 
-    if (isVictorious && ref.current) {
-      interval = setInterval(() => {
-        fireConfetti();
-      }, 1000);
-    }
-
-    return () => {
-      if (interval) {
-        return clearInterval(interval);
+    const interval = setInterval(() => {
+      if (bursts >= MAX_BURSTS) {
+        clearInterval(interval);
+        return;
       }
-    };
-  }, [isVictorious, ref]);
+      fireConfetti();
+      bursts++;
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isVictorious]);
 
   return (
     <Wrapper>
-      {isVictorious && <Canvas ref={ref as any}></Canvas>}
+      {isVictorious && <Canvas></Canvas>}
       <h1>{message}</h1>
       {!isVictorious && <Image src={skinner} alt="pathetic" />}
       <p>
