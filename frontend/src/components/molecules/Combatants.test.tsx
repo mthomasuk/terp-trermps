@@ -17,7 +17,7 @@ describe("Combatants", () => {
   });
 
   afterAll(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it("renders default correctly", () => {

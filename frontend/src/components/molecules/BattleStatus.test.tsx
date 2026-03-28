@@ -2,7 +2,7 @@ import { render, cleanup } from "@testing-library/react";
 
 import BattleStatus, { testIds } from "./BattleStatus";
 
-jest.mock("react-router-dom", () => ({
+vi.mock("react-router-dom", () => ({
   useParams: () => ({ id: "1" }),
 }));
 
@@ -17,7 +17,7 @@ describe("BattleStatus", () => {
   });
 
   afterAll(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it("renders default correctly", () => {

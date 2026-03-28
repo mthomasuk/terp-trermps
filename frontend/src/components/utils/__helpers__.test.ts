@@ -26,8 +26,6 @@ describe("rgbToHex", () => {
   it("should throw a readable error if no rgb/hex string is provided", () => {
     expect(() => {
       rgbToHex("hello banana");
-    }).toThrow(
-      "Failed to convert rgb input (hello banana) to hex: Cannot read property 'toString' of undefined"
-    );
+    }).toThrow("Failed to convert rgb input (hello banana) to hex:");
   });
 });

@@ -10,10 +10,8 @@ import {
   ROUND_ATTRIBUTE_SELECTED,
 } from "../../constants";
 
-const { REACT_APP_SOCKETS_URL } = process.env;
-
 const SOCKET_SERVER_URL =
-  REACT_APP_SOCKETS_URL === "/"
+  import.meta.env.VITE_SOCKETS_URL === "/"
     ? `wss://${window.location.host}`
     : "ws://localhost:4002";
 
@@ -85,7 +83,7 @@ export function useSocket(id: string) {
                 };
 
                 setMessages((messages: any[]) =>
-                  uniqBy([...messages, incomingMessage], "user_id")
+                  uniqBy([...messages, incomingMessage], "user_id"),
                 );
               }
 

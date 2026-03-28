@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { UserControlProvider } from "./components/context/UserControlStore";
@@ -28,4 +28,4 @@ const App = () => (
   </StrictMode>
 );
 
-ReactDOM.render(<App />, document.getElementById("root"));
+createRoot(document.getElementById("root")!).render(<App />);

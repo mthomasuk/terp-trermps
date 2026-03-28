@@ -2,7 +2,7 @@ import { render, cleanup } from "@testing-library/react";
 
 import Cards, { testIds } from "./Cards";
 
-jest.mock("react-router-dom", () => ({
+vi.mock("react-router-dom", () => ({
   useParams: () => ({ id: "1" }),
 }));
 
@@ -21,7 +21,7 @@ describe("Cards", () => {
         power: 10,
       })),
     roundId: "12345",
-    onPlayHand: jest.fn(),
+    onPlayHand: vi.fn(),
     leader: false,
   };
 
@@ -30,7 +30,7 @@ describe("Cards", () => {
   });
 
   afterAll(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it("renders default correctly", () => {
